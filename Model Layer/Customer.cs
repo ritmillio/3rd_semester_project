@@ -1,14 +1,14 @@
 namespace Model_Layor{
     public class Customer{
-        private var name;
+        private string name;
         private bool isAdmin;
-        private var passportNo;
-        public Customer(var name , bool isAdmin , var passportNo){
+        private string passportNo;
+        public Customer(string name , bool isAdmin , string passportNo){
             this.name = name;
             this.isAdmin = isAdmin;
             this.passportNo = passportNo;
         }
-        public var Name
+        public string Name
         {
             get { return name; }
             set { name = value; }
@@ -19,7 +19,7 @@ namespace Model_Layor{
             set {isAdmin = value;}
         }
 
-        public var PassportNo{
+        public string PassportNo{
             get{return passportNo;}
             set{passportNo = value;}
         }

@@ -1,15 +1,15 @@
 namespace Model_Layor{
 
     public class Reservation{
-        private var bookingNo;
-        private var seats = new List<Seat>();
-        private var price;
+        private string bookingNo;
+        private List seats = new List<Seat>();
+        private int price;
 
-        public Reservation(var bookingNo , var price){
+        public Reservation(string bookingNo , int price){
             this.bookingNo = bookingNo;
             this.price = price;
         }
-        public var bookingNo
+        public string bookingNo
         {
             get { return bookingNo; }
             set { bookingNo = value; }

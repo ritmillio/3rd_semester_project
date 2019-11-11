@@ -1,20 +1,22 @@
 using System;
 
 namespace Model_Layer{
-    public class Model : Flight{
-        private var id;
-        private var numberOfSeats;
+    public class Model {
+        private long id; // maybe string ? 
+        private byte numberOfSeats;
 
-        public Model(var id, var numberOfSeats){
+        public Model(long id,
+                     byte numberOfSeats)
+        {
             this.id = id;
             this.numberOfSeats = numberOfSeats;
         }
 
-        public var Id{
+        public long Id{
             get{return id;}
             set{id = value;}
         }
-        public var NumberOfSeats{
+        public byte NumberOfSeats{
             get{return numberOfSeats;}
             set{numberOfSeats = value;}
         }
