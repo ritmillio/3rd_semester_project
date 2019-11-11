@@ -1,15 +1,17 @@
 namespace Model_Layer
 {
     public class Flight
-    {
-        private var flightNo;
-        private var model;
-        private var departureTime;
-        private var arrivalTime;
-        private var destination;
-        private var departureLocation;
+    {/* 
+        private string flightNo;
+        private string model;
+        private string departureTime; //not sure
+        // DateTime departuretime = new DateTime(); could be i guess
+        private string arrivalTime; // not sure
+        // DateTime arrivalTime = new DateTime(); could be i guess
+        private string destination;
+        private string departureLocation;*/
 
-        public Flight(string flightNo , string model , var departureTime , var arrivalTime , var destination , var departureLocation){
+        public Flight(string flightNo , string model , string departureTime , string arrivalTime , string destination , string departureLocation){
             this.flightNo = flightNo;
             this.model = model;
             this.departureTime = departureTime;
@@ -18,27 +20,27 @@ namespace Model_Layer
             this.departureLocation = departureLocation;
         }
 
-        public var flightNo{
+        public string flightNo{
             get{return flightNo ;}
             set{this.flightNo = value;}
         }
-        public var model{
+        public string model{
             get{return model ;}
             set{this.model = value;}
         }
-        public var departureTime{
+        public string departureTime{
             get{return departureTime ;}
             set{this.departureTime = value;}
         }
-        public var arrivalTime{
+        public string arrivalTime{
             get{return arrivalTime ;}
             set{this.arrivalTime = value;}
         }
-        public var destination{
+        public string destination{
             get{return destination ;}
             set{this.destination = value;}
         }
-        public var departureLocation{
+        public string departureLocation{
             get{return departureLocation ;}
             set{this.departureLocation = value;}
         }
