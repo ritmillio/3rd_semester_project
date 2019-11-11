@@ -1,27 +1,27 @@
+using System.Collections.Generic;
+
 namespace Model_Layor{
 
     public class Reservation{
         private string bookingNo;
-        private List seats = new List<Seat>();
+        private List<string> seats = new List<string>(); 
         private int price;
 
         public Reservation(string bookingNo , int price){
-            this.bookingNo = bookingNo;
+            this.SetbookingNo(bookingNo);
             this.price = price;
         }
-        public string bookingNo
-        {
-            get { return bookingNo; }
-            set { bookingNo = value; }
-        }
-        public var Price
+        
+        //bookingNo getter/setter
+        public string GetbookingNo()
+        { return GetbookingNo(); }
+        public void SetbookingNo(string value)
+        { SetbookingNo(value); }
+
+        public int Price
         {
             get { return price; }
             set { price = value; }
         }
-        public List<Seat> Seats{
-            get{return seats;}
-            set{seats = value;}
-        }
-    }''
+    }
 }

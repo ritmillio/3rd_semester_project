@@ -2,14 +2,14 @@ namespace Model_Layer{
 
     public class Seat
     {
-        private var type;
-        private var row; 
-        private var column;
+        private string type;
+        private byte row; 
+        private byte column;
         private bool isAvailable;
         private bool modified{get;set;}
-        private var price;
+        private int price;
 
-        public Seat(var type , var row , var column , bool isAvailable , var price){
+        public Seat(string type , byte row , byte column , bool isAvailable , int price){
             this.type = type; 
             this.row = row;
             this.column = column;
@@ -17,15 +17,15 @@ namespace Model_Layer{
             this.price = price;
         }
         
-        public var Type{
+        public string Type{
             get{return type;}
             set{ type = value;}
         }
-        public var Row{
+        public byte Row{
             get{return row;}
             set{row = value;}
         }
-        public var Column{
+        public byte Column{
             get{return column;}
             set{column = value;}
         }
@@ -36,9 +36,9 @@ namespace Model_Layer{
                 modified = true;
             }
         }
-        public var Price{
+        public int Price{
             get{return price;}
-            set{price=value;}
+            set{price = value;}
         }
  
 
