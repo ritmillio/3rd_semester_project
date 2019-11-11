@@ -1,4 +1,6 @@
-namespace Model_Layor{
+using System;
+
+namespace Model_Layer{
     public class Model : Flight{
         private var id;
         private var numberOfSeats;
@@ -14,11 +16,7 @@ namespace Model_Layor{
         }
         public var NumberOfSeats{
             get{return numberOfSeats;}
-            set{if(numberOfSeats>50){
-                throw new ArgumentException("Too many");
-            }else{
-                numberOfSeats = value;
-            }}
+            set{numberOfSeats = value;}
         }
     }
 }
