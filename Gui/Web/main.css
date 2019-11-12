@@ -38,7 +38,23 @@
     margin-right: 16px;
     font-size: 17px;
   }
+  .main{
+    min-height: 100%;
+}
+.content{
+    padding: 20px;
+    padding-bottom: 50px;
+}
+.table{
+  width: 100%;
+  text-decoration: none;
+  align-content: center
   
+}
+.footer{
+    height: 50px;
+    margin-top: -50px;
+}
 
   @media screen and (max-width: 600px) {
     .topnav a, .topnav input[type=text] {
@@ -53,16 +69,4 @@
       border: 1px solid #ccc;
     }
   }
-.main{
-    min-height: 100%;
-}
-.content{
-    padding: 20px;
-    padding-bottom: 50px;
-}
-.footer{
-    height: 50px;
-    margin-top: -50px;
-}
-
 
