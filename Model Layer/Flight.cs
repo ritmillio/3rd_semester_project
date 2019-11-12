@@ -2,7 +2,7 @@
 namespace Model_Layer
 {
     public class Flight
-    {/* 
+    {
         private string flightNo;
         private string model;
         private string departureTime; //not sure
@@ -10,7 +10,7 @@ namespace Model_Layer
         private string arrivalTime; // not sure
         // DateTime arrivalTime = new DateTime(); could be i guess
         private string destination;
-        private string departureLocation;*/
+        private string departureLocation;
 
         public Flight(string flightNo , string model , string departureTime , string arrivalTime , string destination , string departureLocation){
             this.flightNo = flightNo;
@@ -21,31 +21,31 @@ namespace Model_Layer
             this.departureLocation = departureLocation;
         }
 
-        public string flightNo{
+        public string FlightNo{
             get{return flightNo ;}
             set{this.flightNo = value;}
         }
-        public string model{
+        public string Model{
             get{return model ;}
             set{this.model = value;}
         }
-        public string departureTime{
+        public string DepartureTime{
             get{return departureTime ;}
             set{this.departureTime = value;}
         }
-        public string arrivalTime{
+        public string ArrivalTime{
             get{return arrivalTime ;}
             set{this.arrivalTime = value;}
         }
-        public string destination{
+        public string Destination{
             get{return destination ;}
             set{this.destination = value;}
         }
-        public string departureLocation{
+        public string DepartureLocation{
             get{return departureLocation ;}
             set{this.departureLocation = value;}
         }
 
-        
+        //newFlight
     }
 }
