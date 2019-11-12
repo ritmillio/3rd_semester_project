@@ -38,21 +38,11 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="..\ModelLayer\Customer.cs">
-          <Link>ModelLayer\Customer.cs</Link>
-        </Compile>
-        <Compile Include="..\ModelLayer\Flight.cs">
-          <Link>ModelLayer\Flight.cs</Link>
-        </Compile>
-        <Compile Include="..\ModelLayer\PlaneModel.cs">
-          <Link>ModelLayer\PlaneModel.cs</Link>
-        </Compile>
-        <Compile Include="..\ModelLayer\Reservation.cs">
-          <Link>ModelLayer\Reservation.cs</Link>
-        </Compile>
-        <Compile Include="..\ModelLayer\Seat.cs">
-          <Link>ModelLayer\Seat.cs</Link>
-        </Compile>
+        <Compile Include="Model_Layer\Customer.cs" />
+        <Compile Include="Model_Layer\Flight.cs" />
+        <Compile Include="Model_Layer\PlaneModel.cs" />
+        <Compile Include="Model_Layer\Reservation.cs" />
+        <Compile Include="Model_Layer\Seat.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

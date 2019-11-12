@@ -1,4 +1,4 @@
-namespace Model_Layer{
+namespace Sem3Project.Model_Layer{
     public class Customer{
         private string name;
         private bool isAdmin;

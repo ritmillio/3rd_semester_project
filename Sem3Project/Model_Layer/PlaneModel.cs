@@ -1,6 +1,4 @@
-using System;
-
-namespace Model_Layer{
+namespace Sem3Project.Model_Layer{
     public class Model {
         private long id; // maybe string ? 
         private byte numberOfSeats;

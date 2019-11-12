@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Model_Layer{
+namespace Sem3Project.Model_Layer{
 
     public class Reservation{
         private string bookingNo;
