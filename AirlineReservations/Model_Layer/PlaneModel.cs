@@ -1,4 +1,4 @@
-namespace Sem3Project.Model_Layer{
+namespace AirlineReservations.Model_Layer{
     public class Model {
         private long id; // maybe string ? 
         private byte numberOfSeats;
