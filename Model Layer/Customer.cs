@@ -1,4 +1,4 @@
-namespace Model_Layor{
+namespace Model_Layer{
     public class Customer{
         private string name;
         private bool isAdmin;

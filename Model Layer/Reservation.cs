@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Model_Layor{
+namespace Model_Layer{
 
     public class Reservation{
         private string bookingNo;
