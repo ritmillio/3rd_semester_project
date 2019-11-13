@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control_Layer\Flight_Controller.cs" />
     <Compile Include="Model_Layer\Customer.cs" />
     <Compile Include="Model_Layer\Flight.cs" />
     <Compile Include="Model_Layer\PlaneModel.cs" />
