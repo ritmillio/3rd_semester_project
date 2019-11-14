@@ -7,13 +7,13 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    interface Reservation
+    interface ReservationDBIF
     {
-        void InsertReservation(Reservation reservation);
-        Reservation GetReservationById(int bookingNo);
+        void InsertReservation(ReservationDBIF reservation);
+        ReservationDBIF GetReservationById(int bookingNo);
         void DeleteReservation(int bookingNo);
-        void UpdateReservation(int bookingNo, Reservation reservation);
-        List<Reservation> GetAllReservations();
+        void UpdateReservation(int bookingNo, ReservationDBIF reservation);
+        List<ReservationDBIF> GetAllReservations();
 
     }
 }

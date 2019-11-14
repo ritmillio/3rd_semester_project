@@ -19,27 +19,78 @@ namespace AirlineReservations.DatabaseLayer
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
             conStringBuilder.Password = "Password1!";
+        }
+
+        private Model objectBuilder(SqlDataReader dataReader)
+        {
+            Model model = null;
+            if (dataReader.Read())
+            {
+                model = new Model(dataReader.GetString(0), dataReader.GetInt32(1));
+            }
+            
+            return model;
+        }
+
+        public void DeleteModelById(string modelId)
+        {
             con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string deleteModel = "DELETE * FROM Model WHERE modelId = @modelId";
+            using(SqlCommand command = new SqlCommand(deleteModel, con))
+            {
+                command.Parameters.AddWithValue("@modelId", modelId);
+                command.ExecuteNonQuery();
+            }
+            con.Dispose();
         }
 
-        public void DeleteModel(string modelId)
+        public Model GetModelById(string modelId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Model GetModel(string modelId)
-        {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
+            using(SqlCommand command = new SqlCommand(getModel, con))
+            {
+                command.Parameters.AddWithValue("@modelId", modelId);
+                SqlDataReader dataReader = command.ExecuteReader();
+                if(objectBuilder(dataReader) != null)
+                {
+                    return objectBuilder(dataReader);
+                }
+            }
+            return null;
         }
 
         public void InsertModel(Model model)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string insertModel = "INSERT INTO Model(modelId, numberOfSeats) VALUES(@modelId, @numberOfSeats)";
+
+            using (SqlCommand command = new SqlCommand(insertModel, con))
+            {
+                command.Parameters.AddWithValue("@modelId", model.Id);
+                command.Parameters.AddWithValue("@numberOfSeats", model.NumberOfSeats);
+                command.ExecuteNonQuery();
+            }
+
+            con.Dispose();
         }
 
         public void updateModel(string modelID, Model model)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string updateModel = "UPDATE Model SET modelId = @modelId, numberOfSeats = @numberOfSeats WHERE modelId = @modelId";
+
+            using(SqlCommand command = new SqlCommand(updateModel, con))
+            {
+                command.Parameters.AddWithValue("@modelId", model.Id);
+                command.Parameters.AddWithValue("numberOfSeats", model.NumberOfSeats);
+            }
+
+            con.Dispose();
         }
     }
 }

@@ -10,8 +10,8 @@ namespace AirlineReservations.DatabaseLayer
     public interface ModelDBIF
     {
         void InsertModel(Model model);
-        Model GetModel(string modelId);
-        void DeleteModel(string modelId);
+        Model GetModelById(string modelId);
+        void DeleteModelById(string modelId);
         void updateModel(string modelID, Model model);
 
     }

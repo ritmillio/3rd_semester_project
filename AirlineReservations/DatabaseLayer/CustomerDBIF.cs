@@ -7,12 +7,12 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    interface Customer
+    interface CustomerDBIF
     {
-        void InsertCustomer(Customer cust);
-        Customer GetCustomerById(string customerId);
+        void InsertCustomer(CustomerDBIF cust);
+        CustomerDBIF GetCustomerById(string customerId);
         void DeleteCustomer(string customerId);
-        void UpdateCUstomer(string customerId, Customer cust);
-        List<Customer> GetAllCustomers();
+        void UpdateCUstomer(string customerId, CustomerDBIF cust);
+        List<CustomerDBIF> GetAllCustomers();
     }
 }
