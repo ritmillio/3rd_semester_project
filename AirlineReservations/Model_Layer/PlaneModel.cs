@@ -1,20 +1,20 @@
 namespace AirlineReservations.Model_Layer{
     public class Model {
-        private long id; // maybe string ? 
-        private byte numberOfSeats;
+        private string id;
+        private int numberOfSeats;
 
-        public Model(long id,
-                     byte numberOfSeats)
+        public Model(string id,
+                     int numberOfSeats)
         {
             this.id = id;
             this.numberOfSeats = numberOfSeats;
         }
 
-        public long Id{
+        public string Id{
             get{return id;}
             set{id = value;}
         }
-        public byte NumberOfSeats{
+        public int NumberOfSeats{
             get{return numberOfSeats;}
             set{numberOfSeats = value;}
         }
