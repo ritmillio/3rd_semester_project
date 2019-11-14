@@ -56,10 +56,13 @@ namespace AirlineReservations.DatabaseLayer
                 SqlDataReader dataReader = command.ExecuteReader();
                 if(objectBuilder(dataReader) != null)
                 {
+                    con.Dispose();
                     return objectBuilder(dataReader);
                 }
             }
+            con.Dispose();
             return null;
+            
         }
 
         public void InsertModel(Model model)
@@ -82,11 +85,10 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string updateModel = "UPDATE Model SET modelId = @modelId, numberOfSeats = @numberOfSeats WHERE modelId = @modelId";
+            string updateModel = "UPDATE Model SET numberOfSeats = @numberOfSeats WHERE modelId = @modelId";
 
             using(SqlCommand command = new SqlCommand(updateModel, con))
             {
-                command.Parameters.AddWithValue("@modelId", model.Id);
                 command.Parameters.AddWithValue("numberOfSeats", model.NumberOfSeats);
             }
 
