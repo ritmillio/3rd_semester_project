@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,12 +8,19 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
+    enum SqlResult
+    {
+        Failure,
+        Success
+    }
+
     interface FlightDBIF
     {
-        void InsertFlight(Flight flight);
+        int InsertFlight(Flight flight);
         Flight GetFlightById(string flightNo);
-        void DeleteFlight(string flightNo);
-        void UpdateFlight(string flightNo, Flight flight);
-        List<Flight> GetAllFlights();
+        int DeleteFlight(string flightNo);
+        int UpdateFlight(string flightNo, Flight flight);
+        ArrayList GetAllFlights();
+        
     }
 }
