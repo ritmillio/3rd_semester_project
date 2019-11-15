@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Control_Layer\Customer_Controller.cs" />
     <Compile Include="Control_Layer\Flight_Controller.cs" />
+    <Compile Include="Control_Layer\Reservation_Controller.cs" />
     <Compile Include="Control_Layer\Seat_Controller.cs" />
     <Compile Include="DatabaseLayer\CustomerDBIF.cs" />
     <Compile Include="DatabaseLayer\FlightDBIF.cs" />
