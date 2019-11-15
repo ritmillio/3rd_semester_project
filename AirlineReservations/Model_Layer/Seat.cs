@@ -2,33 +2,24 @@ namespace AirlineReservations.Model_Layer{
 
     public class Seat
     {
+        private string SeatId { get; }
         private string type;
-        private byte row; 
-        private byte column;
         private bool isAvailable;
         private bool modified{get;set;}
         private int price;
 
-        public Seat(string type , byte row , byte column , bool isAvailable , int price){
+        public Seat(string type , bool isAvailable , int price, string seatId){
             this.type = type; 
-            this.row = row;
-            this.column = column;
             this.isAvailable = isAvailable;
             this.price = price;
+            SeatId = seatId;
         }
         
         public string Type{
             get{return type;}
             set{ type = value;}
         }
-        public byte Row{
-            get{return row;}
-            set{row = value;}
-        }
-        public byte Column{
-            get{return column;}
-            set{column = value;}
-        }
+        
         public bool IsAvailable{
             get{return isAvailable;}
             set{
