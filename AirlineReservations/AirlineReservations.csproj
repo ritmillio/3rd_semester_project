@@ -39,6 +39,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Control_Layer\Flight_Controller.cs" />
+    <Compile Include="DatabaseLayer\CustomerDBIF.cs" />
+    <Compile Include="DatabaseLayer\FlightDBIF.cs" />
+    <Compile Include="DatabaseLayer\ModelDB.cs" />
+    <Compile Include="DatabaseLayer\ModelDBIF.cs" />
+    <Compile Include="DatabaseLayer\ReservationDBIF.cs" />
+    <Compile Include="DatabaseLayer\SeatDBIF.cs" />
     <Compile Include="Model_Layer\Customer.cs" />
     <Compile Include="Model_Layer\Flight.cs" />
     <Compile Include="Model_Layer\PlaneModel.cs" />
