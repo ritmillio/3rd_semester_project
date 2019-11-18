@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace AirlineReservations.DatabaseLayer
 {
     interface SeatDBIF
     {
-        void InsertSeat(Seat seat);
+        int InsertSeat(Seat seat);
         Seat GetSeatById(string seatId);
-        void DeleteSeat(string seatId);
-        void UpdateSeat(string seatId, Seat seat);
-        List<Seat> GetAllSeats();
+        int DeleteSeat(string seatId);
+        int UpdateSeat(string seatId, Seat seat);
+        ArrayList GetAllSeats();
     }
 }

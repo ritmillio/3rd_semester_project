@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace AirlineReservations.DatabaseLayer
 {
     interface ReservationDBIF
     {
-        void InsertReservation(ReservationDBIF reservation);
-        ReservationDBIF GetReservationById(int bookingNo);
-        void DeleteReservation(int bookingNo);
-        void UpdateReservation(int bookingNo, ReservationDBIF reservation);
-        List<ReservationDBIF> GetAllReservations();
+        int InsertReservation(ReservationDBIF reservation);
+        Reservation GetReservationById(int bookingNo);
+        int DeleteReservation(int bookingNo);
+        int UpdateReservation(int bookingNo, Reservation reservation);
+        ArrayList GetAllReservations();
 
     }
 }

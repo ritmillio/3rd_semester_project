@@ -23,16 +23,11 @@ namespace AirlineReservations.DatabaseLayer
 
         private Model objectBuilder(SqlDataReader dataReader)
         {
-            Model model = null;
-            if (dataReader.Read())
-            {
-                model = new Model(dataReader.GetString(0), dataReader.GetInt32(1));
-            }
-            
+            Model model = new Model(dataReader.GetString(0), dataReader.GetInt32(1));
             return model;
         }
 
-        public void DeleteModelById(string modelId)
+        public int DeleteModelById(string modelId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -40,9 +35,15 @@ namespace AirlineReservations.DatabaseLayer
             using(SqlCommand command = new SqlCommand(deleteModel, con))
             {
                 command.Parameters.AddWithValue("@modelId", modelId);
-                command.ExecuteNonQuery();
+                int result = command.ExecuteNonQuery();
+                if(result == 0)
+                {
+                    con.Dispose();
+                    return (int)SqlResult.Failure;
+                }
+                con.Dispose();
+                return (int)SqlResult.Success;
             }
-            con.Dispose();
         }
 
         public Model GetModelById(string modelId)
@@ -54,7 +55,7 @@ namespace AirlineReservations.DatabaseLayer
             {
                 command.Parameters.AddWithValue("@modelId", modelId);
                 SqlDataReader dataReader = command.ExecuteReader();
-                if(objectBuilder(dataReader) != null)
+                if(dataReader.Read())
                 {
                     con.Dispose();
                     return objectBuilder(dataReader);
@@ -65,7 +66,7 @@ namespace AirlineReservations.DatabaseLayer
             
         }
 
-        public void InsertModel(Model model)
+        public int InsertModel(Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -75,13 +76,18 @@ namespace AirlineReservations.DatabaseLayer
             {
                 command.Parameters.AddWithValue("@modelId", model.Id);
                 command.Parameters.AddWithValue("@numberOfSeats", model.NumberOfSeats);
-                command.ExecuteNonQuery();
+                int result = command.ExecuteNonQuery();
+                if(result == 0)
+                {
+                    con.Dispose();
+                    return (int)SqlResult.Failure;
+                }
+                con.Dispose();
+                return (int)SqlResult.Success;
             }
-
-            con.Dispose();
         }
 
-        public void updateModel(string modelID, Model model)
+        public int UpdateModel(string modelID, Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -90,9 +96,15 @@ namespace AirlineReservations.DatabaseLayer
             using(SqlCommand command = new SqlCommand(updateModel, con))
             {
                 command.Parameters.AddWithValue("numberOfSeats", model.NumberOfSeats);
+                int result = command.ExecuteNonQuery();
+                if(result == 0)
+                {
+                    con.Dispose();
+                    return (int)SqlResult.Failure;
+                }
+                con.Dispose();
+                return (int)SqlResult.Success;
             }
-
-            con.Dispose();
         }
     }
 }
