@@ -25,6 +25,12 @@ namespace AirlineReservations.Control_Layer
             return (int)SuccessState.Success;
         }
         
+        //Return the flight object of a flight with a given id
+        public Flight GetFlight(string fightID)
+        {
+            return new Flight("", "", "", "", "", ""); // stub
+        }
+        
         //Return a list of all active flights
         public List<Flight> ListActiveFlights()
         {
@@ -39,18 +45,6 @@ namespace AirlineReservations.Control_Layer
         
         //Remove a given flight
         public int RemoveFlight(string flightID)
-        {
-            return (int) SuccessState.Success;
-        }
-        
-        //Reserve a given seat(s) for a given flight (add multiple to avoid race conditions)
-        public int ReserveSeat(List<Seat> seats)
-        {
-            return (int) SuccessState.Success;
-        }
-        
-        //Cancel seat reservation (multiple are not needed, no race conditions)
-        public int CancelSeat(Seat seat)
         {
             return (int) SuccessState.Success;
         }

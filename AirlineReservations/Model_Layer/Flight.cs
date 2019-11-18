@@ -45,7 +45,5 @@ namespace AirlineReservations.Model_Layer
             get{return departureLocation ;}
             set{this.departureLocation = value;}
         }
-
-        //newFlight
     }
 }

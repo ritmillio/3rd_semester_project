@@ -3,3 +3,4 @@
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.csproj.CoreCompileInputs.cache
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.exe
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.pdb
+/home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.csprojResolveAssemblyReference.cache
