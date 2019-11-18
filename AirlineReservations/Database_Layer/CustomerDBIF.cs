@@ -11,7 +11,7 @@ namespace AirlineReservations.DatabaseLayer
     public interface CustomerDBIF
     {
         int InsertCustomer(Customer cust);
-        CustomerDBIF GetCustomerById(string customerId);
+        Customer GetCustomerById(string customerId);
         int DeleteCustomer(string customerId);
         int UpdateCUstomer(string customerId, Customer cust);
         ArrayList GetAllCustomers();
