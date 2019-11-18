@@ -8,7 +8,7 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    interface SeatDBIF
+    public interface SeatDBIF
     {
         int InsertSeat(Seat seat);
         Seat GetSeatById(string seatId);
