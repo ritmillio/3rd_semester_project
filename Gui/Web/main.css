@@ -40,16 +40,22 @@
   }
   .main{
     min-height: 100%;
+    
 }
 .content{
     padding: 20px;
     padding-bottom: 50px;
 }
+.companypicture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
 .table{
   width: 100%;
   text-decoration: none;
   align-content: center
-  q
 }
 .footer{
     height: 50px;
