@@ -13,24 +13,45 @@ namespace AirlineReservations.DatabaseLayer
     {
         SqlConnectionStringBuilder conStringBuilder;
         SqlConnection con;
+        CustomerReservationRelationDB relationDB;
         public ReservationDB()
         {
             conStringBuilder.InitialCatalog = "dmaa0918_1071480";
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
             conStringBuilder.Password = "Password1!";
+
+            relationDB = new CustomerReservationRelationDB();
         }
 
         private Reservation objectBuilder(SqlDataReader dataReader)
         {
             Reservation reservation = new Reservation(dataReader.GetString(0), dataReader.GetInt32(2));
-            
             return reservation;
         }
 
         public int DeleteReservation(int bookingNo)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+
+            relationDB.DeleteRelationByBookingNo(bookingNo, con);
+
+            string deleteReservation = "DELETE *  FROM Reservation WHERE bookingNo = @bookingNo";
+            
+            using(SqlCommand command = new SqlCommand(deleteReservation, con))
+            {
+                command.Parameters.AddWithValue("@bookingNo", bookingNo);
+                int result = command.ExecuteNonQuery();
+                if(result == 1)
+                {
+                    return (int)SqlResult.Success;
+                } else
+                {
+                    return (int)SqlResult.Failure;
+                }
+                
+            }
         }
 
         public ArrayList GetAllReservations()

@@ -23,12 +23,7 @@ namespace AirlineReservations.DatabaseLayer
 
         private Model objectBuilder(SqlDataReader dataReader)
         {
-            Model model = null;
-            if (dataReader.Read())
-            {
-                model = new Model(dataReader.GetString(0), dataReader.GetInt32(1));
-            }
-            
+            Model model = new Model(dataReader.GetString(0), dataReader.GetInt32(1));
             return model;
         }
 
@@ -92,7 +87,7 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public int updateModel(string modelID, Model model)
+        public int UpdateModel(string modelID, Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();

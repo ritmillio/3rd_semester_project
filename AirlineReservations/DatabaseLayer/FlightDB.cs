@@ -24,12 +24,8 @@ namespace AirlineReservations.DatabaseLayer
 
         private Flight objectBuilder(SqlDataReader dataReader)
         {
-            Flight flight = null;
-            if (dataReader.Read())
-            {
-                flight = new Flight(dataReader.GetString(0), dataReader.GetString(5), dataReader.GetString(1), 
+            Flight flight = new Flight(dataReader.GetString(0), dataReader.GetString(5), dataReader.GetString(1), 
                     dataReader.GetString(2), dataReader.GetString(4), dataReader.GetString(3));
-            }
             return flight;
         }
 
@@ -91,12 +87,52 @@ namespace AirlineReservations.DatabaseLayer
 
         public int InsertFlight(Flight flight)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string insertFlight = "INSERT INTO Flight (flightId, departureTime, arrivalTime, departureLocation" +
+                "destination, modelId) VALUES(@flightId, @departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
+            using (SqlCommand command = new SqlCommand(insertFlight, con))
+            {
+                command.Parameters.AddWithValue("@flightid", flight.FlightNo);
+                command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
+                command.Parameters.AddWithValue("@arrivalTime", flight.ArrivalTime);
+                command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
+                command.Parameters.AddWithValue("@destination", flight.Destination);
+                command.Parameters.AddWithValue("@modelId", flight.Model);
+                int result = command.ExecuteNonQuery();
+                if(result == 0)
+                {
+                    con.Dispose();
+                    return (int)SqlResult.Failure;
+                }
+                con.Dispose();
+                return (int)SqlResult.Success;
+            }
         }
 
         public int UpdateFlight(string flightNo, Flight flight)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string updateFlight = "UPDATE Flight SET departureTime = @departureTime, arrivalTime = @arrivalTime" +
+                "departureLocation = @departureLocation, destination = @destination, modelId = @modelId WHERE flightId = @flightId";
+            using(SqlCommand command =new SqlCommand(updateFlight, con))
+            {
+                command.Parameters.AddWithValue("@flightid", flight.FlightNo);
+                command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
+                command.Parameters.AddWithValue("@arrivalTime", flight.ArrivalTime);
+                command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
+                command.Parameters.AddWithValue("@destination", flight.Destination);
+                command.Parameters.AddWithValue("@modelId", flight.Model);
+                int result = command.ExecuteNonQuery();
+                if(result == 0)
+                {
+                    con.Dispose();
+                    return (int)SqlResult.Failure;
+                }
+                con.Dispose();
+                return (int)SqlResult.Success;
+            }
         }
     }
 }
