@@ -33,18 +33,20 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
+            int result = 0;
             string deleteSeat = "DELETE * FROM Seat WHERE seatId = @seatId";
             using(SqlCommand command = new SqlCommand(deleteSeat, con))
             {
                 command.Parameters.AddWithValue("@seatId", seatId);
-                int result = command.ExecuteNonQuery();
-                if(result == 1)
-                {
-                    return (int)SqlResult.Success;
-                } else
-                {
-                    return (int)SqlResult.Failure;
-                }
+                result = command.ExecuteNonQuery();
+            }
+            if (result == 1)
+            {
+                return (int)SqlResult.Success;
+            }
+            else
+            {
+                return (int)SqlResult.Failure;
             }
         }
 
@@ -61,23 +63,81 @@ namespace AirlineReservations.DatabaseLayer
                 {
                     seats.Add(objectBuilder(dataReader));
                 }
-                return seats;
             }
+            con.Dispose();
+            return seats;
         }
 
         public Seat GetSeatById(string seatId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string getSeat = "SELECT * FROM Seat WHERE seatId = @seatId";
+            Seat seat = null;
+            using(SqlCommand command = new SqlCommand(getSeat, con))
+            {
+                command.Parameters.AddWithValue("@seatId", seatId);
+                SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.Read())
+                {
+                    seat = objectBuilder(dataReader);
+                }
+            }
+            con.Dispose();
+            return seat;
         }
 
         public int InsertSeat(Seat seat)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string insertSeat = "INSERT INTO Seat(seatId, seatType, isAvailable, price, flightId) " +
+                "VALUES(@seatId, @seatType, @isAvailable, @price, @flightId)";
+            int result = 0;
+            using(SqlCommand command = new SqlCommand(insertSeat, con))
+            {
+                command.Parameters.AddWithValue("@seatId", seat.SeatId);
+                command.Parameters.AddWithValue("@seatType", seat.Type);
+                command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
+                command.Parameters.AddWithValue("@price", seat.Price);
+                command.Parameters.AddWithValue("@flightId", seat.FlightId);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                con.Dispose();
+                return (int)SqlResult.Success;
+            } else
+            {
+                con.Dispose();
+                return (int)SqlResult.Failure;
+            }
         }
 
         public int UpdateSeat(string seatId, Seat seat)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string updateSeat = "UPDATE Seat SET seatType = @seatType, isAvailable = @isAvailable, price = @price, " +
+                "flightId = @flightId, bookingNo = @bookingNo WHERE seatId = @seatId";
+            using(SqlCommand command = new SqlCommand(updateSeat, con))
+            {
+                command.Parameters.AddWithValue("@seatId", seat.SeatId);
+                command.Parameters.AddWithValue("@seatType", seat.Type);
+                command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
+                command.Parameters.AddWithValue("@price", seat.Price);
+                command.Parameters.AddWithValue("@flightId", seat.FlightId);
+                command.Parameters.AddWithValue("@bookingNo", seat.BookingNo);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                return (int)SqlResult.Success;
+            } else
+            {
+                return (int)SqlResult.Failure;
+            }
         }
     }
 }
