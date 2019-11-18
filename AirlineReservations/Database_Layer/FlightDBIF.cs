@@ -14,7 +14,7 @@ namespace AirlineReservations.DatabaseLayer
         Success
     }
 
-    interface FlightDBIF
+    public interface FlightDBIF
     {
         int InsertFlight(Flight flight);
         Flight GetFlightById(string flightNo);

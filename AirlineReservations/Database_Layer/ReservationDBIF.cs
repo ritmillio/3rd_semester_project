@@ -8,7 +8,7 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    interface ReservationDBIF
+    public interface ReservationDBIF
     {
         int InsertReservation(Reservation reservation);
         Reservation GetReservationById(int bookingNo);
