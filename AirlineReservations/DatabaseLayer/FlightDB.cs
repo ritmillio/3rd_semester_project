@@ -52,7 +52,7 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             ArrayList flights = new ArrayList();
-            string getAllFlights = "SELECT * FROM Flights";
+            string getAllFlights = "SELECT * FROM Flight";
             con.Open();
 
             using(SqlCommand command = new SqlCommand(getAllFlights, con))
