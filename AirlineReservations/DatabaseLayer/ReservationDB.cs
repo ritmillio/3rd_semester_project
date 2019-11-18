@@ -56,22 +56,86 @@ namespace AirlineReservations.DatabaseLayer
 
         public ArrayList GetAllReservations()
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            ArrayList reservations = new ArrayList();
+            string getAllReservations = "SELECT * FROM Reservation";
+            con.Open();
+
+            using (SqlCommand command = new SqlCommand(getAllReservations, con))
+            {
+                SqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    reservations.Add(objectBuilder(dataReader));
+                }
+            }
+            con.Dispose();
+            return reservations;
         }
 
         public Reservation GetReservationById(int bookingNo)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string getReservation = "SELECT * FROM Reservation WHERE bookingNo = @bookingNo";
+            Reservation reservation = null;
+            using(SqlCommand command = new SqlCommand(getReservation, con))
+            {
+                command.Parameters.AddWithValue("@bookingNo", bookingNo);
+                SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.Read())
+                {
+                    reservation = objectBuilder(dataReader);
+                }
+            }
+            con.Dispose();
+            return reservation;
         }
 
-        public int InsertReservation(ReservationDBIF reservation)
+        public int InsertReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string insertReservation = "INSERT INTO Reservation(bookingNo, numberOfSeats, price)" +
+                "VALUES(@bookingNo, @numberOfSeats, @price)";
+            using(SqlCommand command = new SqlCommand(insertReservation, con))
+            {
+                command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
+                command.Parameters.AddWithValue("@numberOfSeats", reservation.NumberOfSeats);
+                command.Parameters.AddWithValue("@price", reservation.Price);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                return (int)SqlResult.Success;
+            } else
+            {
+                return (int)SqlResult.Failure;
+            }
         }
 
         public int UpdateReservation(int bookingNo, Reservation reservation)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string insertReservation = "UPDATE Reservation SET numberOfSeats = @numberOfSeats, price = @price WHERE bookingNo = @bookingNo";
+            using (SqlCommand command = new SqlCommand(insertReservation, con))
+            {
+                command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
+                command.Parameters.AddWithValue("@numberOfSeats", reservation.NumberOfSeats);
+                command.Parameters.AddWithValue("@price", reservation.Price);
+                result = command.ExecuteNonQuery();
+            }
+            if (result == 1)
+            {
+                return (int)SqlResult.Success;
+            }
+            else
+            {
+                return (int)SqlResult.Failure;
+            }
         }
     }
 }

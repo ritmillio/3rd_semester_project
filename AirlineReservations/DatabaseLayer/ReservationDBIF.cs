@@ -10,7 +10,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     interface ReservationDBIF
     {
-        int InsertReservation(ReservationDBIF reservation);
+        int InsertReservation(Reservation reservation);
         Reservation GetReservationById(int bookingNo);
         int DeleteReservation(int bookingNo);
         int UpdateReservation(int bookingNo, Reservation reservation);
