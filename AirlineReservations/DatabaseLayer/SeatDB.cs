@@ -24,23 +24,50 @@ namespace AirlineReservations.DatabaseLayer
 
         private Seat objectBuilder(SqlDataReader dataReader)
         {
-            Seat seat = new Seat(dataReader.GetString(1), );
+            Seat seat = new Seat(dataReader.GetString(1), dataReader.GetBoolean(2), 
+                dataReader.GetDecimal(3), dataReader.GetString(0));
             return seat;
         }
 
         public int DeleteSeat(string seatId)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string deleteSeat = "DELETE * FROM Seat WHERE seatId = @seatId";
+            using(SqlCommand command = new SqlCommand(deleteSeat, con))
+            {
+                command.Parameters.AddWithValue("@seatId", seatId);
+                int result = command.ExecuteNonQuery();
+                if(result == 1)
+                {
+                    return (int)SqlResult.Success;
+                } else
+                {
+                    return (int)SqlResult.Failure;
+                }
+            }
         }
 
         public ArrayList GetAllSeats()
         {
-            throw new NotImplementedException();
+            ArrayList seats = new ArrayList();
+            string getAllSeats = "SELECT * FROM Seat";
+            con.Open();
+
+            using (SqlCommand command = new SqlCommand(getAllSeats, con))
+            {
+                SqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    seats.Add(objectBuilder(dataReader));
+                }
+                return seats;
+            }
         }
 
         public Seat GetSeatById(string seatId)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
         }
 
         public int InsertSeat(Seat seat)

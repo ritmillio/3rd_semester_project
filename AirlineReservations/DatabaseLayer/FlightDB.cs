@@ -50,6 +50,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public ArrayList GetAllFlights()
         {
+            con = new SqlConnection(conStringBuilder.ConnectionString);
             ArrayList flights = new ArrayList();
             string getAllFlights = "SELECT * FROM Flights";
             con.Open();
