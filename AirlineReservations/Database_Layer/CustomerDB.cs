@@ -53,22 +53,82 @@ namespace AirlineReservations.DatabaseLayer
 
         public ArrayList GetAllCustomers()
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            ArrayList customers = new ArrayList();
+            string getAllCustomers = "SELECT * FROM Customer";
+            con.Open();
+
+            using (SqlCommand command = new SqlCommand(getAllCustomers, con))
+            {
+                SqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    customers.Add(ObjectBuilder(dataReader));
+                }
+                return customers;
+            }
         }
 
-        public CustomerDBIF GetCustomerById(string customerId)
+        public Customer GetCustomerById(string customerId)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            Customer cust = null;
+            string getCustomer = "SELECT * FROM Customer WHERE customerId = @customerId";
+            using(SqlCommand command = new SqlCommand(getCustomer, con))
+            {
+                command.Parameters.AddWithValue("@customerId", customerId);
+                SqlDataReader dataReader = command.ExecuteReader();
+                cust = ObjectBuilder(dataReader);
+            }
+            con.Dispose();
+            return cust;
         }
 
         public int InsertCustomer(Customer cust)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string insertCustomer = "INSERT INTO Customer(customerId, customerName, isAdmin) " +
+                "VALUES(@customerId, @customerName, @isAdmin)";
+            using(SqlCommand command = new SqlCommand(insertCustomer, con))
+            {
+                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
+                command.Parameters.AddWithValue("@customerName", cust.Name);
+                command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                return (int)SqlResult.Success;
+            } else
+            {
+                return (int)SqlResult.Failure;
+            }
         }
 
         public int UpdateCUstomer(string customerId, Customer cust)
         {
-            throw new NotImplementedException();
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string updateCustomer = "UPDATE Customer SET customerName = @customerName, isAdmin = @isAdmin WHERE customerId = @customerId";
+            using (SqlCommand command = new SqlCommand(updateCustomer, con))
+            {
+                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
+                command.Parameters.AddWithValue("@customerName", cust.Name);
+                command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
+                result = command.ExecuteNonQuery();
+            }
+            if (result == 1)
+            {
+                return (int)SqlResult.Success;
+            }
+            else
+            {
+                return (int)SqlResult.Failure;
+            }
         }
     }
 }
