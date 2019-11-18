@@ -11,7 +11,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public class ReservationDB : ReservationDBIF
     {
-        SqlConnectionStringBuilder conStringBuilder;
+        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
         CustomerReservationRelationDB relationDB;
         public ReservationDB()
