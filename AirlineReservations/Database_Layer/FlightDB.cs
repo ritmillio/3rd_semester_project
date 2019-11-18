@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    class FlightDB : FlightDBIF
+    public class FlightDB : FlightDBIF
     {
         SqlConnectionStringBuilder conStringBuilder;
         SqlConnection con;

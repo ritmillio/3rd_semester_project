@@ -9,7 +9,7 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    class CustomerDB : CustomerDBIF
+    public class CustomerDB : CustomerDBIF
     {
         private SqlConnectionStringBuilder conStringBuilder;
         private SqlConnection con;
