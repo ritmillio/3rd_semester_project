@@ -10,7 +10,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public class ModelDB : ModelDBIF
     {
-        SqlConnectionStringBuilder conStringBuilder;
+        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
 
         public ModelDB()
@@ -32,18 +32,19 @@ namespace AirlineReservations.DatabaseLayer
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string deleteModel = "DELETE * FROM Model WHERE modelId = @modelId";
+            int result = 0;
             using(SqlCommand command = new SqlCommand(deleteModel, con))
             {
                 command.Parameters.AddWithValue("@modelId", modelId);
-                int result = command.ExecuteNonQuery();
-                if(result == 0)
-                {
-                    con.Dispose();
-                    return (int)SqlResult.Failure;
-                }
-                con.Dispose();
-                return (int)SqlResult.Success;
+                result = command.ExecuteNonQuery();
             }
+            if (result == 0)
+            {
+                con.Dispose();
+                return (int)SqlResult.Failure;
+            }
+            con.Dispose();
+            return (int)SqlResult.Success;
         }
 
         public Model GetModelById(string modelId)
