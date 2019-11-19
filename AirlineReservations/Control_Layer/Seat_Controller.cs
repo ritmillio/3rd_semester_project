@@ -18,10 +18,10 @@ namespace AirlineReservations.Control_Layer
             return 0;
         }
 
-        public Seat GetSeat(string seatID)
-        {
-            return new Seat("", 0); // stub
-        }
+        //public Seat GetSeat(string seatID)
+        //{
+        //    return new Seat("", 0); // stub
+        //}
         
         // releases a seat to be open for reservation
         public int CancelSeat(Seat seat)

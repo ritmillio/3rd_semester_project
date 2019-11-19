@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using AirlineReservations.Control_Layer;
+using AirlineReservations.DatabaseLayer;
 using AirlineReservations.Model_Layer;
 
 namespace Unit_Tests
@@ -9,25 +12,39 @@ namespace Unit_Tests
     public class Tests
     {
         private FlightController flight_control;
+        private FlightDBIF flight_db;
+        private DateTime depart_default;
+        private DateTime arrive_default;
+        
         public Tests()
         {
             this.flight_control = new FlightController();
+            this.flight_db = new FlightDB();
+            this.depart_default = new DateTime(2019, 1, 12, 12, 30, 0);
+            this.arrive_default = new DateTime(2019, 1, 12, 14, 0, 0);
         }
         
         [Test]
-        public void CreateValidFlight()
+        public void CreateRemoveValidFlight()
         {
-            int output = this.flight_control.NewFlight("default");
+            var counter = flight_db.GetAllFlights().Count;
+            var output = this.flight_control.NewFlight("A380", 
+                this.depart_default, this.arrive_default);
             Assert.AreEqual(output, 0);
-            //TODO: missing database reinforcement lookup
+            var flights = flight_db.GetAllFlights();
+            Assert.AreEqual(counter, flights.Count-1); // there is now 1 extra flight
+            var flight = flights[0];
+            // TODO: create test to remove the flight
         }
 
         [Test]
         public void CreateInvalidFlight()
         {
-            int output = this.flight_control.NewFlight("this_model_should_not_exist");
+            var flights = flight_db.GetAllFlights();
+            var output = this.flight_control.NewFlight("this_model_should_not_exist",
+                this.depart_default, this.arrive_default);
             Assert.AreEqual(output, 1);
-            //TODO: missing database reinforcement lookup
+            Assert.AreEqual(flights, flight_db.GetAllFlights());
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AirlineReservations.Control_Layer
         }
 
         //Adds a new flight to the database based on a given model no, returns success state
-        public int NewFlight(string modelNo)
+        public int NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
             return (int)SuccessState.Success;
         }

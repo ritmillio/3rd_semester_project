@@ -8,3 +8,14 @@
 /home/mii/Sem3Project/Unit Tests/obj/Debug/Unit Tests.csproj.CoreCompileInputs.cache
 /home/mii/Sem3Project/Unit Tests/obj/Debug/Unit_Tests.dll
 /home/mii/Sem3Project/Unit Tests/obj/Debug/Unit_Tests.pdb
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/Unit_Tests.dll
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/Unit_Tests.pdb
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/AirlineReservations.exe
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/nunit.framework.dll
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/AirlineReservations.pdb
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/nunit.framework.xml
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/obj/Debug/Unit Tests.csprojAssemblyReference.cache
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/obj/Debug/Unit Tests.csproj.CopyComplete
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/obj/Debug/Unit_Tests.dll
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/obj/Debug/Unit_Tests.pdb
+/home/mii/Data Science 3rd Semester Project Group 3/Unit Tests/bin/Debug/nunit.framework.pdb

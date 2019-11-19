@@ -4,3 +4,8 @@
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.exe
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.pdb
 /home/mii/Sem3Project/AirlineReservations/obj/Debug/AirlineReservations.csprojResolveAssemblyReference.cache
+/home/mii/Data Science 3rd Semester Project Group 3/AirlineReservations/bin/Debug/AirlineReservations.exe
+/home/mii/Data Science 3rd Semester Project Group 3/AirlineReservations/bin/Debug/AirlineReservations.pdb
+/home/mii/Data Science 3rd Semester Project Group 3/AirlineReservations/obj/Debug/AirlineReservations.csprojAssemblyReference.cache
+/home/mii/Data Science 3rd Semester Project Group 3/AirlineReservations/obj/Debug/AirlineReservations.exe
+/home/mii/Data Science 3rd Semester Project Group 3/AirlineReservations/obj/Debug/AirlineReservations.pdb
