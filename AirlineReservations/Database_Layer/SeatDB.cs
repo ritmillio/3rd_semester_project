@@ -11,7 +11,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public class SeatDB : SeatDBIF
     {
-        private SqlConnectionStringBuilder conStringBuilder;
+        private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         private SqlConnection con;
 
         public SeatDB()
