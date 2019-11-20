@@ -34,7 +34,7 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string deleteFlight = "DELETE * FROM Flight WHERE flightId = @flightId";
+            string deleteFlight = "DELETE FROM Flight WHERE flightId = @flightId";
             int result = 0;
             using(SqlCommand command = new SqlCommand(deleteFlight, con))
             {
@@ -92,8 +92,8 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation" +
-                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
+            string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation," +
+                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId)";
             int result = 0;
             using (SqlCommand command = new SqlCommand(insertFlight, con))
             {
