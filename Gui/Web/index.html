@@ -4,90 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="main.css">
     <title>Aalborg Aair</title>
 </head>
 <body>
+    <!--HEAD-->
     <div class="head">
         <div class="topnav">
-            <div class="navbar">
-                <a class="active" href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-                <input type="text" placeholder="Search..">
-            </div>
+            <a class="active" href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <input type="text" placeholder="Search..">
         </div>
     </div>
+    <!--MAIN-->
     <div class="main">
-        <div class="content">
-            <div class="companypic">
-                <img class="companypicture" src="src/aalborgairfinal-1.jpg" alt="aalborgairfinal-1">
+        <main>
+            <div class="content">
+                <!--Logo/Picture-->
+                <div class="companypicture">
+                    <img src="" alt="">
+                </div>
+                <!--Creating Table-->
+                <div class="table">
+                    <table class="center">
+                        <!--FirstRow Start-->
+                        <div class="firstrow">
+                            <tr>
+                                <div class="firstelem">
+                                    <th>
+                                        <div class="dropdown1">
+                                            <select name="dropdownlist1" id="dropdownlist1">
+                                                <option id="return" value="return">Round Trip</option>
+                                                <option id="oneway" value="oneway">One Way</option>
+                                            </select>
+                                        </div>
+                                    </th>
+                                </div>
+                                <div class="secondelem">
+                                    <th>
+                                        <div class="dropdown2">
+                                            <select name="dropdownlist2" id="dropdownlist2">
+                                                <div class="passengers">
+                                                    <option value="passanger1">1 passanger</option>
+                                                    <option value="passanger2">2 passanger</option>
+                                                    <option value="passanger3">3 passanger</option>
+                                                    <option value="passanger4">4 passanger</option>
+                                                    <option value="passanger5">5 passanger</option>
+                                                    <option value="passanger6">6 passanger</option>
+                                                    <option value="passanger7">7 passanger</option>
+                                                    <option value="passanger8">8 passanger</option>
+                                                    <option value="passanger9">9 passanger</option>
+                                                    <option value="passanger10">10 passanger</option>
+                                                    <option value="passanger11">11 passanger</option>
+                                                    <option value="passanger12">12 passanger</option>
+                                                    <option value="passanger13">13 passanger</option>
+                                                    <option value="passanger14">14 passanger</option>
+                                                    <option value="passanger15">15 passanger</option>
+                                                    <option value="passanger16">16 passanger</option>
+                                                    <option value="passanger17">17 passanger</option>
+                                                    <option value="passanger18">18 passanger</option>
+                                                    <option value="passanger19">19 passanger</option>
+                                                    <option value="passanger20">20 passanger</option>
+                                                </div>
+                                            </select>
+                                        </div>
+                                    </th>
+                                </div>
+                                <div class="thirdelem">
+                                    <th>
+                                        <div class="dropdown3">
+                                            <select name="dropdownlist3" id="dropdownlist3">
+                                                <option value="economy">Economy</option>
+                                                <option value="economy/business">Economy/Business</option>
+                                                <option value="business">Business</option>
+                                                <option value="firstclass">First Class</option>
+                                            </select>
+                                        </div>
+                                    </th>
+                                </div>
+                            </tr>
+                        </div>
+                        <!--FirstRow End / SecondRow Start-->
+                        <div class="secondrow">
+                            <tr>
+                                <th>
+                                    <div class="fromsearch">
+                                        <input type="text" id="fromsearcinput" placeholder="From">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="tosearch">
+                                        <input type="text" class="tosearch" placeholder="To">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="searchbutton">
+                                        <button id="searchbutton" type="button">Search</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </div>
+                        <!--SecondRow End-->
+                    </table>
+                </div>
             </div>
-            <div class="table">
-                <table>
-                    <tr class="firstrow">
-                        <th>
-                            <div class="dropdown1">
-                                <select name="dropdownlist1" >
-                                    <option value="return">Round Trip</option>
-                                    <option value="oneway">One Way</option>
-                                </select>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="dropdown2">
-                                <select name="dropdownlist2" >
-                                    <option value="passenger">1 passenger</option>
-                                    <option value="passenger2">2 passengers</option>
-                                    <option value="passenger3">3 passengers</option>
-                                    <option value="passenger4">4 passengers</option>
-                                    <option value="passenger5">5 passengers</option>
-                                    <option value="passenger6">6 passengers</option>
-                                    <option value="passenger7">7 passengers</option>
-                                    <option value="passenger8">8 passengers</option>
-                                    <option value="passenger9">9 passengers</option>
-                                    <option value="passenger10">10 passengers</option>
-                                    <option value="passenger11">11 passengers</option>
-                                    <option value="passenger12">12 passengers</option>
-                                    <option value="passenger13">13 passengers</option>
-                                    <option value="passenger14">14 passengers</option>
-                                    <option value="passenger15">15 passengers</option>
-                                </select>
-                            </div>
-                        </th> 
-                        <th>
-                            <div class="dropdown3">
-                                <select name="dropdownlist3">
-                                    <option value="economy">Economy</option>
-                                    <option value="business">Business</option>
-                                    <option value="firstclass">First Class</option>
-                                </select>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr class="secondrow">
-                        <th>
-                            <div class="fromsearch">
-                                <input type="text" class="fromsearchinput" placeholder="From">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="tosearch">
-                                <input type="text" class="tosearchinput" placeholder="To">
-                            </div>
-                        </th>
-                        <th>
-                            <button type="button">Search</button>
-                            <a href="seatreservation.html">helloworld</a>
-                        </th>
-                    </tr>
-                </table>
-            </div>
-        </div>
+            <h1>seatreserv
+                <a href="seatreservation.html"></a>
+            </h1>
+        </main>
     </div>
+    <!--FOOTER-->
     <footer class="footer">
-        
     </footer>
-    
+    <script src="main.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
 </body>
 </html>
