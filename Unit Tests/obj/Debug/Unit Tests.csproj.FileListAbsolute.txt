@@ -1,0 +1,10 @@
+/home/mii/Sem3Project/Unit Tests/bin/Debug/Unit_Tests.dll
+/home/mii/Sem3Project/Unit Tests/bin/Debug/Unit_Tests.pdb
+/home/mii/Sem3Project/Unit Tests/bin/Debug/AirlineReservations.exe
+/home/mii/Sem3Project/Unit Tests/bin/Debug/nunit.framework.dll
+/home/mii/Sem3Project/Unit Tests/bin/Debug/AirlineReservations.pdb
+/home/mii/Sem3Project/Unit Tests/bin/Debug/nunit.framework.xml
+/home/mii/Sem3Project/Unit Tests/obj/Debug/Unit Tests.csprojResolveAssemblyReference.cache
+/home/mii/Sem3Project/Unit Tests/obj/Debug/Unit Tests.csproj.CoreCompileInputs.cache
+/home/mii/Sem3Project/Unit Tests/obj/Debug/Unit_Tests.dll
+/home/mii/Sem3Project/Unit Tests/obj/Debug/Unit_Tests.pdb
