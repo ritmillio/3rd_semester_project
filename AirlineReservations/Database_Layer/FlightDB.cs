@@ -50,10 +50,10 @@ namespace AirlineReservations.DatabaseLayer
             return SuccessState.Success;
         }
 
-        public ArrayList GetAllFlights()
+        public List<Flight> GetAllFlights()
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
-            ArrayList flights = new ArrayList();
+            List<Flight> flights = new List<Flight>();
             string getAllFlights = "SELECT * FROM Flight";
             con.Open();
 
@@ -134,7 +134,7 @@ namespace AirlineReservations.DatabaseLayer
             if (result == 0)
             {
                 con.Dispose();
-                return SuccessState.DBUnreachable
+                return SuccessState.DBUnreachable;
             }
             con.Dispose();
             return SuccessState.Success;

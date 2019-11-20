@@ -14,7 +14,7 @@ namespace AirlineReservations.DatabaseLayer
         Flight GetFlightById(string flightNo);
         SuccessState DeleteFlight(string flightNo);
         SuccessState UpdateFlight(string flightNo, Flight flight);
-        ArrayList GetAllFlights();
+        List<Flight> GetAllFlights();
         
     }
 }
