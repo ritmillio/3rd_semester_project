@@ -6,6 +6,16 @@ namespace AirlineReservations.Control_Layer
         {
         }
         
-        // create a new reservation
+        // create a new reservation, return booking no.
+        public int NewReservation(int seatAmount)
+        {
+            return -1;
+        }
+
+        // delete a current reservation, return success state
+        public int ReleaseReservation(int bookingNo)
+        {
+            return 0;
+        }
     }
 }

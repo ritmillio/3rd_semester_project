@@ -8,9 +8,9 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    class ModelDB : ModelDBIF
+    public class ModelDB : ModelDBIF
     {
-        SqlConnectionStringBuilder conStringBuilder;
+        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
 
         public ModelDB()
@@ -27,23 +27,24 @@ namespace AirlineReservations.DatabaseLayer
             return model;
         }
 
-        public int DeleteModelById(string modelId)
+        public SuccessState DeleteModelById(string modelId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string deleteModel = "DELETE * FROM Model WHERE modelId = @modelId";
+            int result = 0;
             using(SqlCommand command = new SqlCommand(deleteModel, con))
             {
                 command.Parameters.AddWithValue("@modelId", modelId);
-                int result = command.ExecuteNonQuery();
-                if(result == 0)
-                {
-                    con.Dispose();
-                    return (int)SqlResult.Failure;
-                }
-                con.Dispose();
-                return (int)SqlResult.Success;
+                result = command.ExecuteNonQuery();
             }
+            if (result == 0)
+            {
+                con.Dispose();
+                return SuccessState.DBUnreachable;
+            }
+            con.Dispose();
+            return SuccessState.Success;
         }
 
         public Model GetModelById(string modelId)
@@ -66,7 +67,7 @@ namespace AirlineReservations.DatabaseLayer
             
         }
 
-        public int InsertModel(Model model)
+        public SuccessState InsertModel(Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -80,14 +81,14 @@ namespace AirlineReservations.DatabaseLayer
                 if(result == 0)
                 {
                     con.Dispose();
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
                 con.Dispose();
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
         }
 
-        public int UpdateModel(string modelID, Model model)
+        public SuccessState UpdateModel(string modelID, Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -100,10 +101,10 @@ namespace AirlineReservations.DatabaseLayer
                 if(result == 0)
                 {
                     con.Dispose();
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
                 con.Dispose();
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
         }
     }

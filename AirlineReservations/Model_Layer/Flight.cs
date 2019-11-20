@@ -1,22 +1,21 @@
 
+using System;
+
 namespace AirlineReservations.Model_Layer
 {
     public class Flight
     {
-        private string flightNo;
+        private string flightNo = "unsigned";
         private string model;
-        private string departureTime; //not sure
-        // DateTime departuretime = new DateTime(); could be i guess
-        private string arrivalTime; // not sure
-        // DateTime arrivalTime = new DateTime(); could be i guess
+        DateTime departure_time = new DateTime();
+        DateTime arrival_time = new DateTime();
         private string destination;
         private string departureLocation;
 
-        public Flight(string flightNo , string model , string departureTime , string arrivalTime , string destination , string departureLocation){
-            this.flightNo = flightNo;
+        public Flight(string model , DateTime departureTime , DateTime arrivalTime , string destination , string departureLocation){
             this.model = model;
-            this.departureTime = departureTime;
-            this.arrivalTime = arrivalTime;
+            this.departure_time = departureTime;
+            this.arrival_time = arrivalTime;
             this.destination = destination;
             this.departureLocation = departureLocation;
         }
@@ -29,13 +28,13 @@ namespace AirlineReservations.Model_Layer
             get{return model ;}
             set{this.model = value;}
         }
-        public string DepartureTime{
-            get{return departureTime ;}
-            set{this.departureTime = value;}
+        public DateTime DepartureTime{
+            get{return departure_time ;}
+            set{this.departure_time = value;}
         }
-        public string ArrivalTime{
-            get{return arrivalTime ;}
-            set{this.arrivalTime = value;}
+        public DateTime ArrivalTime{
+            get{return arrival_time ;}
+            set{this.arrival_time = value;}
         }
         public string Destination{
             get{return destination ;}

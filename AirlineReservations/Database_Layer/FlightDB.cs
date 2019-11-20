@@ -9,9 +9,9 @@ using System.Data.SqlClient;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    class FlightDB : FlightDBIF
+    public class FlightDB : FlightDBIF
     {
-        SqlConnectionStringBuilder conStringBuilder;
+        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
 
         public FlightDB()
@@ -24,35 +24,37 @@ namespace AirlineReservations.DatabaseLayer
 
         private Flight objectBuilder(SqlDataReader dataReader)
         {
-            Flight flight = new Flight(dataReader.GetString(0), dataReader.GetString(5), dataReader.GetString(1), 
-                    dataReader.GetString(2), dataReader.GetString(4), dataReader.GetString(3));
+            Flight flight = new Flight(dataReader.GetString(5), dataReader.GetDateTime(1), 
+                    dataReader.GetDateTime(2), dataReader.GetString(4), dataReader.GetString(3));
+            flight.FlightNo = "" + dataReader.GetInt32(0);
             return flight;
         }
 
-        public int DeleteFlight(string flightNo)
+        public SuccessState DeleteFlight(string flightNo)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string deleteFlight = "DELETE * FROM Flight WHERE flightId = @flightId";
+            int result = 0;
             using(SqlCommand command = new SqlCommand(deleteFlight, con))
             {
                 command.Parameters.AddWithValue("@flightId", flightNo);
-                int result = command.ExecuteNonQuery();
-                if(result == 0)
-                {
-                    con.Dispose();
-                    return (int)SqlResult.Failure;
-                }
-                con.Dispose();
-                return (int)SqlResult.Success;
+                result = command.ExecuteNonQuery();
             }
+            if (result == 0)
+            {
+                con.Dispose();
+                return SuccessState.DBUnreachable;
+            }
+            con.Dispose();
+            return SuccessState.Success;
         }
 
-        public ArrayList GetAllFlights()
+        public List<Flight> GetAllFlights()
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
-            ArrayList flights = new ArrayList();
-            string getAllFlights = "SELECT * FROM Flights";
+            List<Flight> flights = new List<Flight>();
+            string getAllFlights = "SELECT * FROM Flight";
             con.Open();
 
             using(SqlCommand command = new SqlCommand(getAllFlights, con))
@@ -62,8 +64,9 @@ namespace AirlineReservations.DatabaseLayer
                 {
                     flights.Add(objectBuilder(dataReader));
                 }
-                return flights;
             }
+            con.Dispose();
+            return flights;
         }
 
         public Flight GetFlightById(string flightNo)
@@ -71,53 +74,53 @@ namespace AirlineReservations.DatabaseLayer
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string getFlight = "SELECT * FROM Flight WHERE flightId = @flightId";
+            Flight flight = null;
             using (SqlCommand command = new SqlCommand(getFlight, con))
             {
                 command.Parameters.AddWithValue("@flightId", flightNo);
                 SqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
-                    con.Dispose();
-                    return objectBuilder(dataReader);
+                    flight = objectBuilder(dataReader);
                 }
-                con.Dispose();
-                return null;
                     
             }
+            return flight;
         }
 
-        public int InsertFlight(Flight flight)
+        public SuccessState InsertFlight(Flight flight)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string insertFlight = "INSERT INTO Flight (flightId, departureTime, arrivalTime, departureLocation" +
-                "destination, modelId) VALUES(@flightId, @departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
+            string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation" +
+                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
+            int result = 0;
             using (SqlCommand command = new SqlCommand(insertFlight, con))
             {
-                command.Parameters.AddWithValue("@flightid", flight.FlightNo);
                 command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
                 command.Parameters.AddWithValue("@arrivalTime", flight.ArrivalTime);
                 command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
                 command.Parameters.AddWithValue("@destination", flight.Destination);
                 command.Parameters.AddWithValue("@modelId", flight.Model);
-                int result = command.ExecuteNonQuery();
-                if(result == 0)
-                {
-                    con.Dispose();
-                    return (int)SqlResult.Failure;
-                }
-                con.Dispose();
-                return (int)SqlResult.Success;
+                result = command.ExecuteNonQuery();
             }
+            if (result == 0)
+            {
+                con.Dispose();
+                return SuccessState.DBUnreachable;
+            }
+            con.Dispose();
+            return SuccessState.Success;
         }
 
-        public int UpdateFlight(string flightNo, Flight flight)
+        public SuccessState UpdateFlight(string flightNo, Flight flight)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string updateFlight = "UPDATE Flight SET departureTime = @departureTime, arrivalTime = @arrivalTime" +
                 "departureLocation = @departureLocation, destination = @destination, modelId = @modelId WHERE flightId = @flightId";
-            using(SqlCommand command =new SqlCommand(updateFlight, con))
+            int result = 0;
+            using (SqlCommand command =new SqlCommand(updateFlight, con))
             {
                 command.Parameters.AddWithValue("@flightid", flight.FlightNo);
                 command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
@@ -125,15 +128,16 @@ namespace AirlineReservations.DatabaseLayer
                 command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
                 command.Parameters.AddWithValue("@destination", flight.Destination);
                 command.Parameters.AddWithValue("@modelId", flight.Model);
-                int result = command.ExecuteNonQuery();
-                if(result == 0)
-                {
-                    con.Dispose();
-                    return (int)SqlResult.Failure;
-                }
-                con.Dispose();
-                return (int)SqlResult.Success;
+                result = command.ExecuteNonQuery();
+                
             }
+            if (result == 0)
+            {
+                con.Dispose();
+                return SuccessState.DBUnreachable;
+            }
+            con.Dispose();
+            return SuccessState.Success;
         }
     }
 }

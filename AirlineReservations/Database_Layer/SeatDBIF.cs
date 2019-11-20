@@ -8,12 +8,12 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    interface SeatDBIF
+    public interface SeatDBIF
     {
-        int InsertSeat(Seat seat);
+        SuccessState InsertSeat(Seat seat);
         Seat GetSeatById(string seatId);
-        int DeleteSeat(string seatId);
-        int UpdateSeat(string seatId, Seat seat);
+        SuccessState DeleteSeat(string seatId);
+        SuccessState UpdateSeat(string seatId, Seat seat);
         ArrayList GetAllSeats();
     }
 }

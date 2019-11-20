@@ -3,22 +3,30 @@ using System.Collections.Generic;
 namespace AirlineReservations.Model_Layer{
 
     public class Reservation{
-        private string bookingNo;
-        private List<string> seats = new List<string>(); 
-        private int price;
+        private string bookingNo { get; set; }
+        private int numberOfSeats { get; set; }
+        private decimal price { get; set; }
 
         public Reservation(string bookingNo , int price){
-            this.SetbookingNo(bookingNo);
+            this.bookingNo = bookingNo;
             this.price = price;
         }
         
         //bookingNo getter/setter
-        public string GetbookingNo()
-        { return GetbookingNo(); }
-        public void SetbookingNo(string value)
-        { SetbookingNo(value); }
+        
+        public string BookingNo
+        {
+            get{ return bookingNo; }
+            set { bookingNo = value; }
+        }
 
-        public int Price
+        public int NumberOfSeats
+        {
+            get { return numberOfSeats; }
+            set { numberOfSeats = value; }
+        }
+
+        public decimal Price
         {
             get { return price; }
             set { price = value; }
