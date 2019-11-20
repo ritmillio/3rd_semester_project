@@ -14,6 +14,7 @@ namespace Unit_Tests
         private Seat_Controller seat_ctr;
         private object currentFlight;
 
+        /*
         public Seat_Control_Test()
         {
             var flight_ctr = new FlightController();
@@ -25,6 +26,7 @@ namespace Unit_Tests
             this.seat_ctr = new Seat_Controller(new Flight("1", "A380", DateTime.Now, 
                 DateTime.Now, "unkown", "unkown"));
         }
+        */
 
         [Test]
         public void ReserveReleaseSeat()

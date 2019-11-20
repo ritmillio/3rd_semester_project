@@ -20,12 +20,13 @@ namespace AirlineReservations.Control_Layer
         //Adds a new flight to the database based on a given model no, returns success state
         public SuccessState NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
+            // Check that the model exists
             Model model = model_db.GetModelById(modelNo);
             if (model == null)
             {
                 return SuccessState.BadInput;
             }
-            Flight new_flight = new Flight(model, departure, arrival,
+            Flight new_flight = new Flight(modelNo, departure, arrival,
                 "TODO", "Aalborg");
 
             return flight_db.InsertFlight(new_flight);
@@ -34,25 +35,25 @@ namespace AirlineReservations.Control_Layer
         //Return the flight object of a flight with a given id
         public Flight GetFlight(string flightID)
         {
-            return new Flight("", "", "", "", "", ""); // stub
+            return flight_db.GetFlightById(flightID);
         }
         
         //Return a list of all active flights
         public List<Flight> ListActiveFlights()
         {
-            return new List<Flight>(); // stub
+            return flight_db.GetAllFlights();
         }
 
-        //Complete a given flight
+        //Complete a given flight, reservations can no longer be made
         public SuccessState CompleteFlight(string flightID)
         {
             return  SuccessState.Success;
         }
         
         //Remove a given flight
-        public int RemoveFlight(string flightID)
+        public SuccessState RemoveFlight(string flightID)
         {
-            return (int) SuccessState.Success;
+            return flight_db.DeleteFlight(flightID);
         }
     }
 }
