@@ -59,6 +59,7 @@
     <Compile Include="Model_Layer\PlaneModel.cs" />
     <Compile Include="Model_Layer\Reservation.cs" />
     <Compile Include="Model_Layer\Seat.cs" />
+    <Compile Include="Model_Layer\SuccessState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,32 +1,38 @@
 using System;
 using System.Collections.Generic;
+using AirlineReservations.DatabaseLayer;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
     public class FlightController
     {
-        private enum SuccessState
-        {
-            Success,
-            BadInput,       // input is incorrect or invalid
-            DBUnreachable   // database can not be connected to
-        }
+        private FlightDBIF flight_db;
+        private ModelDBIF model_db;
 
         //Instantiate the database
         public FlightController()
         {
-            return;
+            this.flight_db = new FlightDB();
+            this.model_db = new ModelDB();
         }
 
         //Adds a new flight to the database based on a given model no, returns success state
-        public int NewFlight(string modelNo, DateTime departure, DateTime arrival)
+        public SuccessState NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
-            return (int)SuccessState.Success;
+            Model model = model_db.GetModelById(modelNo);
+            if (model == null)
+            {
+                return SuccessState.BadInput;
+            }
+            Flight new_flight = new Flight(model, departure, arrival,
+                "TODO", "Aalborg");
+
+            return flight_db.InsertFlight(new_flight);
         }
         
         //Return the flight object of a flight with a given id
-        public Flight GetFlight(string fightID)
+        public Flight GetFlight(string flightID)
         {
             return new Flight("", "", "", "", "", ""); // stub
         }
@@ -38,9 +44,9 @@ namespace AirlineReservations.Control_Layer
         }
 
         //Complete a given flight
-        public int CompleteFlight(string flightID)
+        public SuccessState CompleteFlight(string flightID)
         {
-            return (int) SuccessState.Success;
+            return  SuccessState.Success;
         }
         
         //Remove a given flight
