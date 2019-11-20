@@ -24,8 +24,9 @@ namespace AirlineReservations.DatabaseLayer
 
         private Flight objectBuilder(SqlDataReader dataReader)
         {
-            Flight flight = new Flight(dataReader.GetString(0), dataReader.GetString(5), dataReader.GetString(1), 
-                    dataReader.GetString(2), dataReader.GetString(4), dataReader.GetString(3));
+            Flight flight = new Flight(dataReader.GetString(5), dataReader.GetDateTime(1), 
+                    dataReader.GetDateTime(2), dataReader.GetString(4), dataReader.GetString(3));
+            flight.FlightNo = "" + dataReader.GetInt32(0);
             return flight;
         }
 
@@ -91,12 +92,11 @@ namespace AirlineReservations.DatabaseLayer
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string insertFlight = "INSERT INTO Flight (flightId, departureTime, arrivalTime, departureLocation" +
-                "destination, modelId) VALUES(@flightId, @departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
+            string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation" +
+                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId";
             int result = 0;
             using (SqlCommand command = new SqlCommand(insertFlight, con))
             {
-                command.Parameters.AddWithValue("@flightid", flight.FlightNo);
                 command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
                 command.Parameters.AddWithValue("@arrivalTime", flight.ArrivalTime);
                 command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);

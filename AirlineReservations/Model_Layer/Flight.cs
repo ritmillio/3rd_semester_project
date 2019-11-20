@@ -6,13 +6,13 @@ namespace AirlineReservations.Model_Layer
     public class Flight
     {
         private string flightNo = "unsigned";
-        private Model model;
+        private string model;
         DateTime departure_time = new DateTime();
         DateTime arrival_time = new DateTime();
         private string destination;
         private string departureLocation;
 
-        public Flight(Model model , DateTime departureTime , DateTime arrivalTime , string destination , string departureLocation){
+        public Flight(string model , DateTime departureTime , DateTime arrivalTime , string destination , string departureLocation){
             this.model = model;
             this.departure_time = departureTime;
             this.arrival_time = arrivalTime;
@@ -24,7 +24,7 @@ namespace AirlineReservations.Model_Layer
             get{return flightNo ;}
             set{this.flightNo = value;}
         }
-        public Model Model{
+        public string Model{
             get{return model ;}
             set{this.model = value;}
         }
