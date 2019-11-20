@@ -30,7 +30,7 @@ namespace AirlineReservations.DatabaseLayer
             return flight;
         }
 
-        public int DeleteFlight(string flightNo)
+        public SuccessState DeleteFlight(string flightNo)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -44,10 +44,10 @@ namespace AirlineReservations.DatabaseLayer
             if (result == 0)
             {
                 con.Dispose();
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
             con.Dispose();
-            return (int)SqlResult.Success;
+            return SuccessState.Success;
         }
 
         public ArrayList GetAllFlights()
@@ -88,7 +88,7 @@ namespace AirlineReservations.DatabaseLayer
             return flight;
         }
 
-        public int InsertFlight(Flight flight)
+        public SuccessState InsertFlight(Flight flight)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -107,13 +107,13 @@ namespace AirlineReservations.DatabaseLayer
             if (result == 0)
             {
                 con.Dispose();
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
             con.Dispose();
-            return (int)SqlResult.Success;
+            return SuccessState.Success;
         }
 
-        public int UpdateFlight(string flightNo, Flight flight)
+        public SuccessState UpdateFlight(string flightNo, Flight flight)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -134,10 +134,10 @@ namespace AirlineReservations.DatabaseLayer
             if (result == 0)
             {
                 con.Dispose();
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable
             }
             con.Dispose();
-            return (int)SqlResult.Success;
+            return SuccessState.Success;
         }
     }
 }

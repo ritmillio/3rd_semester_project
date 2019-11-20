@@ -29,7 +29,7 @@ namespace AirlineReservations.DatabaseLayer
             return seat;
         }
 
-        public int DeleteSeat(string seatId)
+        public SuccessState DeleteSeat(string seatId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -42,11 +42,11 @@ namespace AirlineReservations.DatabaseLayer
             }
             if (result == 1)
             {
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
             else
             {
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
         }
 
@@ -87,7 +87,7 @@ namespace AirlineReservations.DatabaseLayer
             return seat;
         }
 
-        public int InsertSeat(Seat seat)
+        public SuccessState InsertSeat(Seat seat)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -106,15 +106,15 @@ namespace AirlineReservations.DatabaseLayer
             if(result == 1)
             {
                 con.Dispose();
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             } else
             {
                 con.Dispose();
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
         }
 
-        public int UpdateSeat(string seatId, Seat seat)
+        public SuccessState UpdateSeat(string seatId, Seat seat)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -133,10 +133,10 @@ namespace AirlineReservations.DatabaseLayer
             }
             if(result == 1)
             {
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             } else
             {
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
         }
     }

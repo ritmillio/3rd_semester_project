@@ -8,18 +8,12 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    enum SqlResult
-    {
-        Failure,
-        Success
-    }
-
     public interface FlightDBIF
     {
-        int InsertFlight(Flight flight);
+        SuccessState InsertFlight(Flight flight);
         Flight GetFlightById(string flightNo);
-        int DeleteFlight(string flightNo);
-        int UpdateFlight(string flightNo, Flight flight);
+        SuccessState DeleteFlight(string flightNo);
+        SuccessState UpdateFlight(string flightNo, Flight flight);
         ArrayList GetAllFlights();
         
     }

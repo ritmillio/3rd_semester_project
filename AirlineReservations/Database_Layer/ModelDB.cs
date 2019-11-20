@@ -27,7 +27,7 @@ namespace AirlineReservations.DatabaseLayer
             return model;
         }
 
-        public int DeleteModelById(string modelId)
+        public SuccessState DeleteModelById(string modelId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -41,10 +41,10 @@ namespace AirlineReservations.DatabaseLayer
             if (result == 0)
             {
                 con.Dispose();
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
             con.Dispose();
-            return (int)SqlResult.Success;
+            return SuccessState.Success;
         }
 
         public Model GetModelById(string modelId)
@@ -67,7 +67,7 @@ namespace AirlineReservations.DatabaseLayer
             
         }
 
-        public int InsertModel(Model model)
+        public SuccessState InsertModel(Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -81,14 +81,14 @@ namespace AirlineReservations.DatabaseLayer
                 if(result == 0)
                 {
                     con.Dispose();
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
                 con.Dispose();
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
         }
 
-        public int UpdateModel(string modelID, Model model)
+        public SuccessState UpdateModel(string modelID, Model model)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -101,10 +101,10 @@ namespace AirlineReservations.DatabaseLayer
                 if(result == 0)
                 {
                     con.Dispose();
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
                 con.Dispose();
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
         }
     }

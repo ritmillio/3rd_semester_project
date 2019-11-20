@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
     class CustomerReservationRelationDB
     {
-        public int DeleteRelationByCustomerId(int customerId, SqlConnection con)
+        public SuccessState DeleteRelationByCustomerId(int customerId, SqlConnection con)
         {
             string deleteRelation = "DELETE * FROM ReservationCustomerRelation WHERE customerId = @customerId";
             using (SqlCommand command = new SqlCommand(deleteRelation, con))
@@ -18,16 +19,16 @@ namespace AirlineReservations.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 if (result == 1)
                 {
-                    return (int)SqlResult.Success;
+                    return SuccessState.Success;
                 }
                 else
                 {
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
             }
         }
 
-        public int DeleteRelationByBookingNo(int bookingNo, SqlConnection con)
+        public SuccessState DeleteRelationByBookingNo(int bookingNo, SqlConnection con)
         {
             string deleteRelation = "DELETE * FROM ReservationCustomerRelation WHERE bookingNo = @bookingNo";
             using(SqlCommand command = new SqlCommand(deleteRelation, con))
@@ -36,10 +37,10 @@ namespace AirlineReservations.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 if(result == 1)
                 {
-                    return (int)SqlResult.Success;
+                    return SuccessState.Success;
                 } else
                 {
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
             }
         }
@@ -74,7 +75,7 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public int InsertRelation(int bookingNo, int customerId, SqlConnection con)
+        public SuccessState InsertRelation(int bookingNo, int customerId, SqlConnection con)
         {
             string insertRelation = "INSERT INTO ReservationCustomerRelation(bookingNo, customerId) " +
                 "VALUES(@bookingNo, @customerId)";
@@ -85,10 +86,10 @@ namespace AirlineReservations.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 if(result == 1)
                 {
-                    return (int)SqlResult.Success;
+                    return SuccessState.Success;
                 } else
                 {
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
             }
         }

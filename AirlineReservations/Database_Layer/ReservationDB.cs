@@ -30,7 +30,7 @@ namespace AirlineReservations.DatabaseLayer
             return reservation;
         }
 
-        public int DeleteReservation(int bookingNo)
+        public SuccessState DeleteReservation(int bookingNo)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -45,10 +45,10 @@ namespace AirlineReservations.DatabaseLayer
                 int result = command.ExecuteNonQuery();
                 if(result == 1)
                 {
-                    return (int)SqlResult.Success;
+                    return SuccessState.Success;
                 } else
                 {
-                    return (int)SqlResult.Failure;
+                    return SuccessState.DBUnreachable;
                 }
                 
             }
@@ -92,7 +92,7 @@ namespace AirlineReservations.DatabaseLayer
             return reservation;
         }
 
-        public int InsertReservation(Reservation reservation)
+        public SuccessState InsertReservation(Reservation reservation)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -108,14 +108,14 @@ namespace AirlineReservations.DatabaseLayer
             }
             if(result == 1)
             {
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             } else
             {
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
         }
 
-        public int UpdateReservation(int bookingNo, Reservation reservation)
+        public SuccessState UpdateReservation(int bookingNo, Reservation reservation)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -130,11 +130,11 @@ namespace AirlineReservations.DatabaseLayer
             }
             if (result == 1)
             {
-                return (int)SqlResult.Success;
+                return SuccessState.Success;
             }
             else
             {
-                return (int)SqlResult.Failure;
+                return SuccessState.DBUnreachable;
             }
         }
     }
