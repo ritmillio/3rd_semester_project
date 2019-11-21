@@ -7,15 +7,15 @@ namespace AirlineReservations.Model_Layer
     {
         private string flightNo = "unsigned";
         private string model;
-        DateTime departure_time = new DateTime();
-        DateTime arrival_time = new DateTime();
+        DateTime departure_time;
+        DateTime arrival_time;
         private string destination;
         private string departureLocation;
 
-        public Flight(string model , DateTime departureTime , DateTime arrivalTime , string destination , string departureLocation){
+        public Flight(string model , DateTime departure_time , DateTime arrival_time , string destination , string departureLocation){
             this.model = model;
-            this.departure_time = departureTime;
-            this.arrival_time = arrivalTime;
+            this.departure_time = departure_time;
+            this.arrival_time = arrival_time;
             this.destination = destination;
             this.departureLocation = departureLocation;
         }

@@ -2,3 +2,6 @@
 # Default ignored files
 /.idea.Data Science 3rd Semester Project Group 3.dir/.idea/workspace.xml
 /.idea.Sem3Project/.idea/workspace.xml
+# Datasource local storage ignored files
+/.idea.Sem3Project/.idea/dataSources.local.xml
+/.idea.Sem3Project/.idea/dataSources/

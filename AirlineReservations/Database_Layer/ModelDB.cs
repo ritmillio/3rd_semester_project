@@ -49,22 +49,22 @@ namespace AirlineReservations.DatabaseLayer
 
         public Model GetModelById(string modelId)
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
-            using(SqlCommand command = new SqlCommand(getModel, con))
+            using (con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                command.Parameters.AddWithValue("@modelId", modelId);
-                SqlDataReader dataReader = command.ExecuteReader();
-                if(dataReader.Read())
+                con.Open();
+                string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
+                using (SqlCommand command = new SqlCommand(getModel, con))
                 {
-                    con.Dispose();
-                    return objectBuilder(dataReader);
+                    command.Parameters.AddWithValue("@modelId", modelId);
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.Read())
+                    {
+                        return objectBuilder(dataReader);
+                    }
                 }
             }
-            con.Dispose();
             return null;
-            
+
         }
 
         public SuccessState InsertModel(Model model)

@@ -21,7 +21,7 @@ namespace AirlineReservations.Control_Layer
         public SuccessState NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
             // Check that the model exists
-            Model model = model_db.GetModelById(modelNo);
+            var model = model_db.GetModelById(modelNo);
             if (model == null)
             {
                 return SuccessState.BadInput;
