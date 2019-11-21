@@ -111,12 +111,6 @@ body{
 .wrapper .qrcode_::after{
     bottom: -30px;
 }
-
-
-
-
-
-
 .button{
     position: fixed;
 }
