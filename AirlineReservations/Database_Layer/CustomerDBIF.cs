@@ -11,9 +11,9 @@ namespace AirlineReservations.DatabaseLayer
     public interface CustomerDBIF
     {
         SuccessState InsertCustomer(Customer cust);
-        Customer GetCustomerById(string customerId);
-        SuccessState DeleteCustomer(string customerId);
-        SuccessState UpdateCUstomer(string customerId, Customer cust);
-        ArrayList GetAllCustomers();
+        Customer GetCustomerById(int customerId);
+        SuccessState DeleteCustomer(int customerId);
+        SuccessState UpdateCustomer(int customerId, Customer cust);
+        List<Customer> GetAllCustomers();
     }
 }

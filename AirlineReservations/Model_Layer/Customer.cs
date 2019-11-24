@@ -2,11 +2,10 @@ namespace AirlineReservations.Model_Layer{
     public class Customer{
         private string name;
         private bool isAdmin;
-        private string customerID;
-        public Customer(string name , bool isAdmin , string customerID){
+        private int customerID;
+        public Customer(string name , bool isAdmin){
             this.name = name;
             this.isAdmin = isAdmin;
-            this.customerID = customerID;
         }
         public string Name
         {
@@ -19,7 +18,7 @@ namespace AirlineReservations.Model_Layer{
             set {isAdmin = value;}
         }
 
-        public string CustomerID{
+        public int CustomerID{
             get{return customerID;}
             set{customerID = value;}
         }
