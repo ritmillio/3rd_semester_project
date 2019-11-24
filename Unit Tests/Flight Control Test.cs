@@ -12,7 +12,6 @@ namespace Unit_Tests
     {
         private FlightController flight_control;
         private FlightDBIF flight_db;
-        private ModelDBIF model_db;
         private DateTime depart_default;
         private DateTime arrive_default;
         
@@ -32,7 +31,7 @@ namespace Unit_Tests
             var output = this.flight_control.NewFlight("A380", 
                 this.depart_default, this.arrive_default);
             Console.WriteLine(output);
-            Assert.AreEqual(output, SuccessState.Success);
+            Assert.AreEqual(SuccessState.Success, output);
             var flights = flight_db.GetAllFlights();
             Assert.AreEqual(counter, flights.Count-1); // there is now 1 extra flight
             var flight = flights[0];

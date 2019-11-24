@@ -10,9 +10,7 @@ namespace Unit_Tests
     [TestFixture]
     public class Seat_Control_Test
     {
-        private SeatDBIF seat_db;
         private Seat_Controller seat_ctr;
-        private object currentFlight;
 
         /*
         public Seat_Control_Test()
@@ -32,7 +30,7 @@ namespace Unit_Tests
         public void ReserveReleaseSeat()
         {
             var seat = new Seat("default", true, 0, "1");
-            var cust = new Customer("cust", false, "invalid_cust");
+            var cust = new Customer("cust", false);
             seat_ctr.ReserveSeat(seat, cust);
             // TODO: The remainder of the test lol
         }

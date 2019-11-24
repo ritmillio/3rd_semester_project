@@ -24,16 +24,17 @@ namespace AirlineReservations.DatabaseLayer
 
         private Customer ObjectBuilder(SqlDataReader dataReader)
         {
-            Customer cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2), dataReader.GetString(0));
+            Customer cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2));
+            cust.CustomerID = dataReader.GetInt32(0);
             return cust;
         }
-        public SuccessState DeleteCustomer(string customerId)
+        public SuccessState DeleteCustomer(int customerId)
         {
             FlightDBIF flightdb = new FlightDB();
 
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string deleteCustomer = "DELETE * FROM Customer WHERE customerId = @customerId";
+            string deleteCustomer = "DELETE FROM Customer WHERE customerId = @customerId";
             int result = 0;
             using(SqlCommand command = new SqlCommand(deleteCustomer, con))
             {
@@ -51,10 +52,10 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public ArrayList GetAllCustomers()
+        public List<Customer> GetAllCustomers()
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
-            ArrayList customers = new ArrayList();
+            List<Customer> customers = new List<Customer>();
             string getAllCustomers = "SELECT * FROM Customer";
             con.Open();
 
@@ -69,7 +70,7 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public Customer GetCustomerById(string customerId)
+        public Customer GetCustomerById(int customerId)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
@@ -90,11 +91,10 @@ namespace AirlineReservations.DatabaseLayer
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
-            string insertCustomer = "INSERT INTO Customer(customerId, customerName, isAdmin) " +
-                "VALUES(@customerId, @customerName, @isAdmin)";
+            string insertCustomer = "INSERT INTO Customer(customerName, isAdmin) " +
+                "VALUES( @customerName, @isAdmin)";
             using(SqlCommand command = new SqlCommand(insertCustomer, con))
             {
-                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
                 result = command.ExecuteNonQuery();
@@ -108,7 +108,7 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public SuccessState UpdateCUstomer(string customerId, Customer cust)
+        public SuccessState UpdateCustomer(int customerId, Customer cust)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
