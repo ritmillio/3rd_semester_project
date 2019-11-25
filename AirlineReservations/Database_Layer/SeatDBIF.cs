@@ -15,5 +15,6 @@ namespace AirlineReservations.DatabaseLayer
         SuccessState DeleteSeat(string seatId);
         SuccessState UpdateSeat(string seatId, Seat seat);
         ArrayList GetAllSeats();
+        SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, double price);
     }
 }

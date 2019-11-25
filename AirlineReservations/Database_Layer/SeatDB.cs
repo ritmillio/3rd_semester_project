@@ -139,5 +139,42 @@ namespace AirlineReservations.DatabaseLayer
                 return SuccessState.DBUnreachable;
             }
         }
+
+        public SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, double price)
+        {
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            //Creates Database Query String with 1 additional set of values for each numberOfSeats
+            string insertMultipleSeats = "INSERT INTO Seat(seatId, price, flightId) VALUES";
+            int result = 0;
+            for(int i = 0; i < numberOfSeats; i++)
+            {
+                insertMultipleSeats += "('" + flightId + "." + i + "', @price" + i + ", @flightId" + i + ")";
+                if(i < numberOfSeats - 1)
+                {
+                    insertMultipleSeats += ",";
+                }
+            }
+            //Replaces placeholder values and inserts query into database
+            using(SqlCommand command = new SqlCommand(insertMultipleSeats, con))
+            {
+                for (int i = 0; i < numberOfSeats; i++)
+                {
+                    command.Parameters.Add(new SqlParameter("@price" + i, price));
+                    command.Parameters.Add(new SqlParameter("@flightId" + i, flightId));
+                }
+
+                Console.WriteLine(command.CommandText);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                return SuccessState.Success;
+            } else
+            {
+                return SuccessState.BadInput;
+            }
+            
+        }
     }
 }

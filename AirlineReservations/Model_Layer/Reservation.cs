@@ -6,10 +6,12 @@ namespace AirlineReservations.Model_Layer{
         private string bookingNo { get; set; }
         private int numberOfSeats { get; set; }
         private decimal price { get; set; }
+        private List<int> customerIds;
 
         public Reservation(string bookingNo , int price){
             this.bookingNo = bookingNo;
             this.price = price;
+            customerIds = new List<int>();
         }
         
         //bookingNo getter/setter
@@ -30,6 +32,16 @@ namespace AirlineReservations.Model_Layer{
         {
             get { return price; }
             set { price = value; }
+        }
+
+        public List<string> CustomerIds
+        {
+            get { return CustomerIds; }
+        }
+
+        public void AddCustomerId(int customerId)
+        {
+            customerIds.Add(customerId);
         }
     }
 }

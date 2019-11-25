@@ -13,9 +13,11 @@ namespace AirlineReservations.DatabaseLayer
     {
         SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
+        SeatDBIF seatdb;
 
         public FlightDB()
         {
+            seatdb = new SeatDB();
             conStringBuilder.InitialCatalog = "dmaa0918_1071480";
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
@@ -104,6 +106,7 @@ namespace AirlineReservations.DatabaseLayer
                 command.Parameters.AddWithValue("@modelId", flight.Model);
                 result = command.ExecuteNonQuery();
             }
+
             if (result == 0)
             {
                 con.Dispose();

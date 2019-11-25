@@ -22,10 +22,33 @@ namespace AirlineReservations.DatabaseLayer
             conStringBuilder.Password = "Password1!";
         }
 
+        //Builds Customer Objects for GetCustomerById and GetAllCustomers
         private Customer ObjectBuilder(SqlDataReader dataReader)
         {
+            //Takes values from SqlDataReader and puts them into a Customer object
             Customer cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2));
             cust.CustomerID = dataReader.GetInt32(0);
+            AddBookingNoToCustomerObject(cust);
+            
+            return cust;
+        }
+
+        //A customer's bookingNo is stored in a many-to-many relation table which is pulled here
+        private Customer AddBookingNoToCustomerObject(Customer cust)
+        {
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string getReservationIds = "SELECT bookingNo FROM ReservationCustomerRelation WHERE customerId = @customerId";
+
+            using (SqlCommand command = new SqlCommand(getReservationIds, con))
+            {
+                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
+                SqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    cust.AddBookingNo(dr.GetString(0));
+                }
+            }
             return cust;
         }
         public SuccessState DeleteCustomer(int customerId)
@@ -80,7 +103,11 @@ namespace AirlineReservations.DatabaseLayer
             {
                 command.Parameters.AddWithValue("@customerId", customerId);
                 SqlDataReader dataReader = command.ExecuteReader();
-                cust = ObjectBuilder(dataReader);
+                if (dataReader.Read())
+                {
+                    cust = ObjectBuilder(dataReader);
+                }
+                
             }
             con.Dispose();
             return cust;
@@ -97,6 +124,28 @@ namespace AirlineReservations.DatabaseLayer
             {
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
+                result = command.ExecuteNonQuery();
+            }
+            if(result == 1)
+            {
+                return SuccessState.Success;
+            } else
+            {
+                return SuccessState.DBUnreachable;
+            }
+        }
+
+        public SuccessState AddReservationToCustomer(int customerId, string bookingNo)
+        {
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            int result = 0;
+            string insertReservationRelation = "INSERT INTO ReservationCustomerRelation(bookingNo, customerId) " +
+                "VALUES(@bookingNo, @customerId)";
+            using(SqlCommand command = new SqlCommand(insertReservationRelation, con))
+            {
+                command.Parameters.AddWithValue("@bookingNo", bookingNo);
+                command.Parameters.AddWithValue("@customerId", customerId);
                 result = command.ExecuteNonQuery();
             }
             if(result == 1)
