@@ -5,7 +5,14 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 body{
-    background: #f18053;
+    background: #fff;    
+}
+#aalborgairpic{
+    height: auto;
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 .topnav{
     overflow: hidden;
@@ -36,9 +43,23 @@ body{
     margin-right: 16px;
     font-size: 17px;
   }
+.aalborgair{
+    position: relative;
+    display: inline-block;
+}
+.aalborgair .aalborgairparag{
+    position: absolute;
+    z-index: 999;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 40%;
+    text-align: center;
+    width: 60%;
+}
 .wrapper{
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50% , -50%);
     display: flex;
@@ -46,7 +67,7 @@ body{
 }
 .wrapper .qrcode_{
     width: 30%;
-    background: #252525;
+    background: #f;
     padding: 20px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -73,7 +94,7 @@ body{
 }
 .wrapper .content .location h1{
     margin-bottom: 5px;
-    color: #252525;
+    color: ;
 }
 .wrapper .content .location p,
 .wrapper .content .info p{
@@ -102,7 +123,7 @@ body{
     right: -25px;
     width: 50px;
     height: 50px;
-    background: #f18053;
+    background: transparent;
     border-radius: 50%;
 }
 .wrapper .qrcode_::before{

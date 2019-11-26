@@ -4,117 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/main.css">
     <title>Aalborg Aair</title>
-    <script src="js/jquery.js"></script>
-    <script src="js/main.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <!--HEADER-->
-    <div class="header">
-        <div class="topnav">
-            <a class="active" href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <input type="text" placeholder="Search..">
+    <div class="container">
+        <div id="navbar" class="navbar">
+            <a href="index2.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="searchdlight.html">Search Flight</a>
         </div>
-    </div>
-    <!--MAIN-->
-    <div class="main">
-        <main>
-            <div class="content">
-                <!--Logo/Picture-->
-                <div class="companypicture">
-                    <img src="" alt="">
-                </div>
-                <!--Creating Table-->
-                <div class="table">
-                    <table class="center">
-                        <!--FirstRow Start-->
-                        <div class="firstrow">
-                            <tr>
-                                <div class="firstelem">
-                                    <th>
-                                        <div class="dropdown1">
-                                            <select name="dropdownlist1" id="dropdownlist1">
-                                                <option id="return" value="return">Round Trip</option>
-                                                <option id="oneway" value="oneway">One Way</option>
-                                            </select>
-                                        </div>
-                                    </th>
+        <div class="content">
+            <div id="booking" class="section">
+                <div class="section-center" >
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7 col-md-push-5">
+                                <div class="booking-cta">
+                                    <h1 id="aalborgair">Aalborg Aair</h1>
+                                    <p id="aalborgairparag">Lorem ipsum dolor sit amet consectetur adipisicing elit.</br>
+                                        Animi facere, soluta magnam consectetur molestias
+                                        itaque
+                                        </br>
+                                        ad sint fugit architecto incidunt iste </br>
+                                        culpa perspiciatis possimus </br>
+                                        voluptates aliquid consequuntur cumque
+                                        quasi.
+                                        </br>
+                                        Perspiciatis.
+                                    </p>
                                 </div>
-                                <div class="secondelem">
-                                    <th>
-                                        <div class="dropdown2">
-                                            <select name="dropdownlist2" id="dropdownlist2">
-                                                <div class="passengers">
-                                                    <option value="passanger1">1 passanger</option>
-                                                    <option value="passanger2">2 passanger</option>
-                                                    <option value="passanger3">3 passanger</option>
-                                                    <option value="passanger4">4 passanger</option>
-                                                    <option value="passanger5">5 passanger</option>
-                                                    <option value="passanger6">6 passanger</option>
-                                                    <option value="passanger7">7 passanger</option>
-                                                    <option value="passanger8">8 passanger</option>
-                                                    <option value="passanger9">9 passanger</option>
-                                                    <option value="passanger10">10 passanger</option>
-                                                    <option value="passanger11">11 passanger</option>
-                                                    <option value="passanger12">12 passanger</option>
-                                                    <option value="passanger13">13 passanger</option>
-                                                    <option value="passanger14">14 passanger</option>
-                                                    <option value="passanger15">15 passanger</option>
-                                                    <option value="passanger16">16 passanger</option>
-                                                    <option value="passanger17">17 passanger</option>
-                                                    <option value="passanger18">18 passanger</option>
-                                                    <option value="passanger19">19 passanger</option>
-                                                    <option value="passanger20">20 passanger</option>
+                            </div>
+                            <div class="col-md-4 col-md-pull-7">
+                                <div class="booking-form">
+                                    <form>
+                                        <div class="form-group">
+                                            <span class="form-label">Departure</span>
+                                            <input id="departurelocation" class="form-control" type="text" placeholder="Enter a destination or hotel name">
+                                        </div>
+                                        <div class="form-group">
+                                                <span class="form-label">Arrival</span>
+                                                <input id="arrivallocation" class="form-control" type="text" placeholder="Enter a destination or hotel name">
+                                            </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Check In</span>
+                                                    <input class="form-control" type="date" required>
                                                 </div>
-                                            </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Check out</span>
+                                                    <input class="form-control" type="date" required>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </th>
-                                </div>
-                                <div class="thirdelem">
-                                    <th>
-                                        <div class="dropdown3">
-                                            <select name="dropdownlist3" id="dropdownlist3">
-                                                <option value="economy">Economy</option>
-                                                <option value="economy/business">Economy/Business</option>
-                                                <option value="business">Business</option>
-                                                <option value="firstclass">First Class</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <span class="form-label">Trip</span>
+                                                    <select class="form-control">
+                                                        <option>Round Trip</option>
+                                                        <option>One Way</option>
+                                                    </select>
+                                                    <span class="select-arrow"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <span class="form-label">Passenger</span>
+                                                    <select class="form-control">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                    </select>
+                                                    <span class="select-arrow"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <span class="form-label">Children</span>
+                                                    <select class="form-control">
+                                                        <option>0</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                    </select>
+                                                    <span class="select-arrow"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </th>
+                                        <div class="form-btn">
+                                            <button onclick="onClick()"class="submit-btn">Check Flights</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </tr>
+                            </div>
                         </div>
-                        <!--FirstRow End / SecondRow Start-->
-                        <div class="secondrow">
-                            <tr>
-                                <th>
-                                    <div class="fromsearch">
-                                        <input type="text" id="fromsearcinput" placeholder="From">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="tosearch">
-                                        <input type="text" class="tosearch" placeholder="To">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="searchbutton">
-                                        <button id="searchbutton" type="button" onclick="search()">Search</button>
-                                    </div>
-                                </th>
-                            </tr>
-                        </div>
-                        <!--SecondRow End-->
-                    </table>
+                    </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-    <!--FOOTER-->
-    <footer class="footer">
-    </footer>
+    <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

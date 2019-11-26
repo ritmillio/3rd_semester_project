@@ -23,11 +23,11 @@ body{
   font-size: 17px;
 }
 .topnav a:hover {
-  background-color: rgb(255, 69, 0);
+  background-color: #f18053;
   color: white;
 }
 .topnav a.active {
-  background-color: rgb(255, 69, 0);
+  background-color: #f18053;
   color: white;
 }
 .topnav input[type = text] {

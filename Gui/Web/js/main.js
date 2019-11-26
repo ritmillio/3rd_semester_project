@@ -1,22 +1,13 @@
+var departureLocation = document.getElementById("departurelocation");
+var arrivalLocation = document.getElementById("arrivallocation");
+var searchButton = document.getElementsByClassName("submit-btn");
 
-/*jquery load test
-if (typeof jQuery == 'undefined') {
-    console.log("good");
+function myFunc(){
+    if (departureLocation == 'Aalborg' ) {
+        alert("HelloWorld");
+    }else{
+        alert("Something went wrong");
+    }
 }
-else{
-    console.log("Somethings wrong");
-}
---> jquery loaded */
-let button;
-let from;
-let to;
-
-button = document.getElementById("searchbutton");
-from = document.getElementById("fromsearchinput");
-to = document.getElementById("tosearchinput");
-
-function search(){
-    window.location("seatreservation.html");
-}
-
-
+setTimeout(myFunc , 5000);
+console.log(departureLocation.innerHTML("Aalborg"));
