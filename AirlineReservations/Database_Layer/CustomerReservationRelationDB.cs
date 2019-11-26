@@ -8,7 +8,7 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.DatabaseLayer
 {
-    class CustomerReservationRelationDB
+    class CustomerReservationRelationDB : CustomerReservationRelationDBIF
     {
         public SuccessState DeleteRelationByCustomerId(int customerId, SqlConnection con)
         {

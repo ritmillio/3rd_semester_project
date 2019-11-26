@@ -22,7 +22,8 @@ namespace AirlineReservations.DatabaseLayer
             conStringBuilder.Password = "Password1!";
         }
 
-        private Seat objectBuilder(SqlDataReader dataReader)
+        //Builds Seat objects for GetSeat methods based on data from SqlDataReader
+        private Seat ObjectBuilder(SqlDataReader dataReader)
         {
             Seat seat = new Seat(dataReader.GetString(1), dataReader.GetBoolean(2), 
                 dataReader.GetDecimal(3), dataReader.GetString(0));
@@ -31,15 +32,19 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState DeleteSeat(string seatId)
         {
+            //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
-            string deleteSeat = "DELETE * FROM Seat WHERE seatId = @seatId";
+            string deleteSeat = "DELETE FROM Seat WHERE seatId = @seatId";
             using(SqlCommand command = new SqlCommand(deleteSeat, con))
             {
+                //Replace placeholder value and execute query
                 command.Parameters.AddWithValue("@seatId", seatId);
                 result = command.ExecuteNonQuery();
+                con.Dispose();
             }
+            //Return SuccessState based on number of rows that were changed in DB
             if (result == 1)
             {
                 return SuccessState.Success;
@@ -49,19 +54,43 @@ namespace AirlineReservations.DatabaseLayer
                 return SuccessState.DBUnreachable;
             }
         }
+        public SuccessState DeleteSeatByFlightId(int flightId)
+        {
+            //Open connection and write query with placeholder value
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            int result = 0;
+            string deleteSeat = "DELETE FROM Seat WHERE flightId = @flightId";
+            using(SqlCommand command = new SqlCommand(deleteSeat, con))
+            {
+                //Replace placeholder parameters and execute query
+                command.Parameters.AddWithValue("@flightId", flightId);
+                con.Open();
+                result = command.ExecuteNonQuery();
+                con.Dispose();
+            }
+            if(result >= 1)
+            {
+                return SuccessState.Success;
+            } else
+            {
+                return SuccessState.BadInput;
+            }
+        }
 
         public ArrayList GetAllSeats()
         {
+            //Open connection and write query string
             ArrayList seats = new ArrayList();
             string getAllSeats = "SELECT * FROM Seat";
             con.Open();
 
             using (SqlCommand command = new SqlCommand(getAllSeats, con))
             {
+                //Execute SqlDataReader and build object
                 SqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    seats.Add(objectBuilder(dataReader));
+                    seats.Add(ObjectBuilder(dataReader));
                 }
             }
             con.Dispose();
@@ -70,17 +99,19 @@ namespace AirlineReservations.DatabaseLayer
 
         public Seat GetSeatById(string seatId)
         {
+            //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string getSeat = "SELECT * FROM Seat WHERE seatId = @seatId";
             Seat seat = null;
             using(SqlCommand command = new SqlCommand(getSeat, con))
             {
+                //Replace placeholder value, execute SqlDataReader, and build object
                 command.Parameters.AddWithValue("@seatId", seatId);
                 SqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
-                    seat = objectBuilder(dataReader);
+                    seat = ObjectBuilder(dataReader);
                 }
             }
             con.Dispose();
@@ -89,6 +120,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState InsertSeat(Seat seat)
         {
+            //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string insertSeat = "INSERT INTO Seat(seatId, seatType, isAvailable, price, flightId) " +
@@ -96,6 +128,7 @@ namespace AirlineReservations.DatabaseLayer
             int result = 0;
             using(SqlCommand command = new SqlCommand(insertSeat, con))
             {
+                //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@seatId", seat.SeatId);
                 command.Parameters.AddWithValue("@seatType", seat.Type);
                 command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
@@ -103,6 +136,7 @@ namespace AirlineReservations.DatabaseLayer
                 command.Parameters.AddWithValue("@flightId", seat.FlightId);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows changed in DB
             if(result == 1)
             {
                 con.Dispose();
@@ -116,6 +150,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState UpdateSeat(string seatId, Seat seat)
         {
+            //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
@@ -123,6 +158,7 @@ namespace AirlineReservations.DatabaseLayer
                 "flightId = @flightId, bookingNo = @bookingNo WHERE seatId = @seatId";
             using(SqlCommand command = new SqlCommand(updateSeat, con))
             {
+                //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@seatId", seat.SeatId);
                 command.Parameters.AddWithValue("@seatType", seat.Type);
                 command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
@@ -131,6 +167,7 @@ namespace AirlineReservations.DatabaseLayer
                 command.Parameters.AddWithValue("@bookingNo", seat.BookingNo);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows changed in DB
             if(result == 1)
             {
                 return SuccessState.Success;
@@ -142,6 +179,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, double price)
         {
+            //Open connection
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             //Creates Database Query String with 1 additional set of values for each numberOfSeats
@@ -167,7 +205,8 @@ namespace AirlineReservations.DatabaseLayer
                 Console.WriteLine(command.CommandText);
                 result = command.ExecuteNonQuery();
             }
-            if(result == 1)
+            //Return SuccessState based on amount of rows added in DB
+            if(result == numberOfSeats)
             {
                 return SuccessState.Success;
             } else
