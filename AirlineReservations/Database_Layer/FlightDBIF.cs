@@ -10,7 +10,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public interface FlightDBIF
     {
-        SuccessState InsertFlight(Flight flight);
+        int InsertFlight(Flight flight);
         Flight GetFlightById(string flightNo);
         SuccessState DeleteFlight(string flightNo);
         SuccessState UpdateFlight(string flightNo, Flight flight);

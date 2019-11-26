@@ -14,10 +14,13 @@ namespace AirlineReservations.DatabaseLayer
         SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
         SeatDBIF seatdb;
+        ModelDBIF modeldb;
 
         public FlightDB()
         {
             seatdb = new SeatDB();
+            modeldb = new ModelDB();
+
             conStringBuilder.InitialCatalog = "dmaa0918_1071480";
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
@@ -90,30 +93,32 @@ namespace AirlineReservations.DatabaseLayer
             return flight;
         }
 
-        public SuccessState InsertFlight(Flight flight)
+        //Inserts Flight into Database
+        public int InsertFlight(Flight flight)
         {
+            //Open connection and write query string with placeholder parameters
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation," +
-                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId)";
-            int result = 0;
+                "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId)" +
+                "SELECT SCOPE_IDENTITY()";
+            int flightId;
             using (SqlCommand command = new SqlCommand(insertFlight, con))
             {
+                //Replace placeholder parameters and insert string. ExecuteScalar is used to return the flights ID
                 command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
                 command.Parameters.AddWithValue("@arrivalTime", flight.ArrivalTime);
                 command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
                 command.Parameters.AddWithValue("@destination", flight.Destination);
                 command.Parameters.AddWithValue("@modelId", flight.Model);
-                result = command.ExecuteNonQuery();
+                flightId = (int)command.ExecuteScalar();
             }
+            //Inserts a number of seats based on numberOfSeats in the flights model
+            Model model = modeldb.GetModelById(flight.Model);
+            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, 100.00);
 
-            if (result == 0)
-            {
-                con.Dispose();
-                return SuccessState.DBUnreachable;
-            }
             con.Dispose();
-            return SuccessState.Success;
+            return flightId;
         }
 
         public SuccessState UpdateFlight(string flightNo, Flight flight)
