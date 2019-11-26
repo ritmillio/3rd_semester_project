@@ -12,6 +12,7 @@ namespace AirlineReservations.DatabaseLayer
     {
         SuccessState InsertCustomer(Customer cust);
         Customer GetCustomerById(int customerId);
+        SuccessState AddReservationToCustomer(int customerId, string bookingNo);
         SuccessState DeleteCustomer(int customerId);
         SuccessState UpdateCustomer(int customerId, Customer cust);
         List<Customer> GetAllCustomers();
