@@ -11,6 +11,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public class CustomerDB : CustomerDBIF
     {
+        CustomerReservationRelationDBIF relationDB;
         private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         private SqlConnection con;
 
@@ -20,6 +21,8 @@ namespace AirlineReservations.DatabaseLayer
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
             conStringBuilder.Password = "Password1!";
+
+            relationDB = new CustomerReservationRelationDB();
         }
 
         //Builds Customer Objects for GetCustomerById and GetAllCustomers
@@ -36,12 +39,14 @@ namespace AirlineReservations.DatabaseLayer
         //A customer's bookingNo is stored in a many-to-many relation table which is pulled here
         private Customer AddBookingNoToCustomerObject(Customer cust)
         {
+            //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string getReservationIds = "SELECT bookingNo FROM ReservationCustomerRelation WHERE customerId = @customerId";
 
             using (SqlCommand command = new SqlCommand(getReservationIds, con))
             {
+                //Replace placeholder value and execute reader
                 command.Parameters.AddWithValue("@customerId", cust.CustomerID);
                 SqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
@@ -53,17 +58,18 @@ namespace AirlineReservations.DatabaseLayer
         }
         public SuccessState DeleteCustomer(int customerId)
         {
-            FlightDBIF flightdb = new FlightDB();
-
+            //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             string deleteCustomer = "DELETE FROM Customer WHERE customerId = @customerId";
             int result = 0;
             using(SqlCommand command = new SqlCommand(deleteCustomer, con))
             {
+                //Replace placeholder value and execute query
                 command.Parameters.AddWithValue("@customerId", customerId);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows changed in DB
             if(result == 1)
             {
                 con.Dispose();
@@ -77,6 +83,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public List<Customer> GetAllCustomers()
         {
+            //Open connection and write query string
             con = new SqlConnection(conStringBuilder.ConnectionString);
             List<Customer> customers = new List<Customer>();
             string getAllCustomers = "SELECT * FROM Customer";
@@ -84,6 +91,7 @@ namespace AirlineReservations.DatabaseLayer
 
             using (SqlCommand command = new SqlCommand(getAllCustomers, con))
             {
+                //Execute SqlDataReader and build object
                 SqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -95,12 +103,14 @@ namespace AirlineReservations.DatabaseLayer
 
         public Customer GetCustomerById(int customerId)
         {
+            //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             Customer cust = null;
             string getCustomer = "SELECT * FROM Customer WHERE customerId = @customerId";
             using(SqlCommand command = new SqlCommand(getCustomer, con))
             {
+                //Replace placeholder value and execute SqlDataReader. Build object.
                 command.Parameters.AddWithValue("@customerId", customerId);
                 SqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read())
@@ -115,6 +125,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState InsertCustomer(Customer cust)
         {
+            //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
@@ -122,10 +133,12 @@ namespace AirlineReservations.DatabaseLayer
                 "VALUES( @customerName, @isAdmin)";
             using(SqlCommand command = new SqlCommand(insertCustomer, con))
             {
+                //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows changed in DB
             if(result == 1)
             {
                 return SuccessState.Success;
@@ -137,6 +150,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState AddReservationToCustomer(int customerId, string bookingNo)
         {
+            //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
@@ -144,10 +158,12 @@ namespace AirlineReservations.DatabaseLayer
                 "VALUES(@bookingNo, @customerId)";
             using(SqlCommand command = new SqlCommand(insertReservationRelation, con))
             {
+                //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@bookingNo", bookingNo);
                 command.Parameters.AddWithValue("@customerId", customerId);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows that were changed in DB
             if(result == 1)
             {
                 return SuccessState.Success;
@@ -159,17 +175,20 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState UpdateCustomer(int customerId, Customer cust)
         {
+            //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
             string updateCustomer = "UPDATE Customer SET customerName = @customerName, isAdmin = @isAdmin WHERE customerId = @customerId";
             using (SqlCommand command = new SqlCommand(updateCustomer, con))
             {
+                //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@customerId", cust.CustomerID);
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
                 result = command.ExecuteNonQuery();
             }
+            //Return SuccessState based on amount of rows that were changed in DB
             if (result == 1)
             {
                 return SuccessState.Success;
