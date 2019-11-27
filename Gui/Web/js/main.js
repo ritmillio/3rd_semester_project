@@ -1,15 +1,18 @@
-var departureLocation = document.getElementById("departurelocation").value;
-var arrivalLocation = document.getElementById("arrivallocation").value;
+var departureLocation = document.getElementById("departurelocation");
+var arrivalLocation = document.getElementById("");
+var checkIn = document.getElementById("");
+var checkOut = document.getElementById("");
+var trip = document.getElementById("");
+var passenger = {
+    passenger = document.getElementById("").value
+};
+var economyOrBusiness = document.getElementById("").value;
 var button = document.getElementById("buttonsubmit");
 
-button.onclick = function search(){};
-
 function search(){
-    if(departureLocation == "Aalbrog" && arrivalLocation == "Copenhagen"){
-        window.location.href("seatreservation.html");
-        alert("Working");
+    if(departureLocation.value == "Aalborg" && arrivalLocation.value == "Copenhagen"){
+        window.location.pathname = "Web/airbus380.html/";
     }else{
-        alert("Cant find");
+
     }
 }
-

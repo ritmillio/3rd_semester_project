@@ -7,7 +7,7 @@
 /*HEAD*/
 /*NAVBAR*/
 body{
-  background: #f18053;
+  background: #fff;
 }
 .topnav{
   overflow: hidden;
@@ -54,7 +54,7 @@ body{
   position: relative;
   overflow: hidden;
   text-align: center;
-  border-bottom: 5px solid #d8d8d8;
+  border-bottom: 5px solid #f18053;
 }
 .cockpit:before {
   content: "";
@@ -65,8 +65,8 @@ body{
   height: 500px;
   width: 100%;
   border-radius: 50%;
-  border-right: 5px solid #d8d8d8;
-  border-left: 5px solid #d8d8d8;
+  border-right: 5px solid #f18053;
+  border-left: 5px solid #f18053;
 }
 .cockpit h1 {
   width: 60%;
@@ -98,8 +98,8 @@ body{
 }
 
 .fuselage {
-  border-right: 5px solid #d8d8d8;
-  border-left: 5px solid #d8d8d8;
+  border-right: 5px solid #f18053;
+  border-left: 5px solid #f18053;
 }
 
 ol {
@@ -161,7 +161,7 @@ ol {
   font-weight: bold;
   line-height: 1.5rem;
   padding: 4px 0;
-  background: #F42536;
+  background: #f18053;
   border-radius: 5px;
   animation-duration: 300ms;
   animation-fill-mode: both;
