@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AirlineReservations.Control_Layer
 {
     public class Reservation_Controller
@@ -7,7 +9,7 @@ namespace AirlineReservations.Control_Layer
         }
         
         // create a new reservation, return booking no.
-        public int NewReservation(int seatAmount)
+        public int NewReservation(List<int> seatids, int customer_id)
         {
             return -1;
         }

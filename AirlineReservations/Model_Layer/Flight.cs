@@ -5,7 +5,7 @@ namespace AirlineReservations.Model_Layer
 {
     public class Flight
     {
-        private string flightNo = "unsigned";
+        private int flightNo;
         private string model;
         DateTime departure_time;
         DateTime arrival_time;
@@ -20,7 +20,7 @@ namespace AirlineReservations.Model_Layer
             this.departureLocation = departureLocation;
         }
 
-        public string FlightNo{
+        public int FlightNo{
             get{return flightNo ;}
             set{this.flightNo = value;}
         }
