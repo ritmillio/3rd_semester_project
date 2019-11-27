@@ -1,13 +1,15 @@
-var departureLocation = document.getElementById("departurelocation");
-var arrivalLocation = document.getElementById("arrivallocation");
-var searchButton = document.getElementsByClassName("submit-btn");
+var departureLocation = document.getElementById("departurelocation").value;
+var arrivalLocation = document.getElementById("arrivallocation").value;
+var button = document.getElementById("buttonsubmit");
 
-function myFunc(){
-    if (departureLocation == 'Aalborg' ) {
-        alert("HelloWorld");
+button.onclick = function search(){};
+
+function search(){
+    if(departureLocation == "Aalbrog" && arrivalLocation == "Copenhagen"){
+        window.location.href("seatreservation.html");
+        alert("Working");
     }else{
-        alert("Something went wrong");
+        alert("Cant find");
     }
 }
-setTimeout(myFunc , 5000);
-console.log(departureLocation.innerHTML("Aalborg"));
+
