@@ -7,6 +7,10 @@
     <title>Aalborg Aair</title>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
     <div class="container">
@@ -52,13 +56,13 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <span class="form-label">Check In</span>
-                                                    <input class="form-control" type="date" required>
+                                                    <input onclick="calendar()" id ="datepicker" class="form-control" type="date" required>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <span class="form-label">Check out</span>
-                                                    <input class="form-control" type="date" required>
+                                                    <input id="datepicker" class="form-control" type="date" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +71,7 @@
                                                 <div class="form-group">
                                                     <span class="form-label">Trip</span>
                                                     <select class="form-control">
-                                                        <option>Round Trip</option>
+                                                        <option placeholder="Round T">Round Trip</option>
                                                         <option>One Way</option>
                                                     </select>
                                                     <span class="select-arrow"></span>
@@ -109,7 +113,7 @@
                                             </div>
                                         </div>
                                         <div class="form-btn">
-                                            <button onclick="search()" id="buttonsubmit" class="submit-btn">Check Flights</button>
+                                            <button id="buttonsubmit" class="submit-btn">Check Flights</button>
                                         </div>
                                     </form>
                                 </div>
@@ -120,6 +124,5 @@
             </div>
         </div>
     </div>
-    <script src="js/main.js"></script>
 </body>
 </html>

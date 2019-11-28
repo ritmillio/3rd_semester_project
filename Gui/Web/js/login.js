@@ -20,7 +20,7 @@ form.addEventListener('submit' , (e) =>{
         e.preventDefault();
         errorElement.innerHTML = messages.join(', ')
     }
-    if(username.value == userName.value && password.value == passWord.value){
+    if(username.value.match(userName) && password.value.match(passWord)){
         return true;
     }
 })
