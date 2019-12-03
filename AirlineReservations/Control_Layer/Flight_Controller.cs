@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AirlineReservations.DatabaseLayer;
 using AirlineReservations.Model_Layer;
@@ -9,12 +10,14 @@ namespace AirlineReservations.Control_Layer
     {
         private FlightDBIF flight_db;
         private ModelDBIF model_db;
+        private SeatDBIF seat_db;
 
         //Instantiate the database
         public FlightController()
         {
             this.flight_db = new FlightDB();
             this.model_db = new ModelDB();
+            this.seat_db = new SeatDB();
         }
 
         //Adds a new flight to the database based on a given model no, returns ID of the flight created
@@ -55,6 +58,12 @@ namespace AirlineReservations.Control_Layer
         public SuccessState RemoveFlight(int flightID)
         {
             return flight_db.DeleteFlight(flightID);
+        }
+
+        //Get all seats for a specific flight
+        public List<Seat> GetAllSeats(int flight_id)
+        {
+            return seat_db.GetAllSeatsByFlight(flight_id);
         }
     }
 }

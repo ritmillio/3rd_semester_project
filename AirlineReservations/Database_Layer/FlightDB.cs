@@ -135,7 +135,7 @@ namespace AirlineReservations.DatabaseLayer
             //Inserts a number of seats based on numberOfSeats in the flights model
             
             Model model = modeldb.GetModelById(flight.Model);
-            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, 100.00);
+            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
 
             con.Dispose();
             return flightId;
