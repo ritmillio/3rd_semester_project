@@ -12,6 +12,7 @@ namespace Unit_Tests
     {
         private FlightController flight_control;
         private FlightDBIF flight_db;
+        private ModelDBIF model_db;
         private DateTime depart_default;
         private DateTime arrive_default;
         
@@ -19,7 +20,10 @@ namespace Unit_Tests
         {
             this.flight_control = new FlightController();
             this.flight_db = new FlightDB();
+            this.model_db = new ModelDB();
 
+            // temporary test model
+            model_db.InsertModel(new Model("flight_ctr_test", 100));
             this.depart_default = new DateTime(2019, 1, 12, 12, 30, 0);
             this.arrive_default = new DateTime(2019, 1, 12, 14, 0, 0);
         }
@@ -27,7 +31,7 @@ namespace Unit_Tests
         [Test]
         public void CreateRemoveValidFlight()
         {
-            var flight_id = this.flight_control.NewFlight("A380", 
+            var flight_id = this.flight_control.NewFlight("flight_ctr_test", 
                 this.depart_default, this.arrive_default);
             Assert.Greater(flight_id, -1);
             Flight newflight = flight_db.GetFlightById(flight_id);
@@ -45,6 +49,13 @@ namespace Unit_Tests
             var output = this.flight_control.NewFlight("this_model_should_not_exist",
                 this.depart_default, this.arrive_default);
             Assert.AreEqual(-1, output);
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            // Assume that if it was successfully added, it can be removed
+            this.model_db.DeleteModelById("flight_ctr_test");
         }
     }
 }

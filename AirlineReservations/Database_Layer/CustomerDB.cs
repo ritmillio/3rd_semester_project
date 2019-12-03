@@ -108,15 +108,18 @@ namespace AirlineReservations.DatabaseLayer
             con.Open();
             int cust_id = 0;
             string insertCustomer = "INSERT INTO Customer(customerName, isAdmin) " +
-                "VALUES( @customerName, @isAdmin)";
+                "VALUES( @customerName, @isAdmin) SELECT SCOPE_IDENTITY()";
             using(SqlCommand command = new SqlCommand(insertCustomer, con))
             {
                 //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
-                
-                var result = command.ExecuteNonQuery(); 
-                string resultString = result.ToString();
+
+                Console.WriteLine("running");
+                var result = command.ExecuteScalar();
+                Console.WriteLine(result);
+                Console.WriteLine(result.ToString());
+                var resultString = result.ToString();
                 cust_id = int.Parse(resultString);
             }
 

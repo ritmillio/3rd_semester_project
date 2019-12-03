@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using AirlineReservations.Control_Layer;
 using AirlineReservations.DatabaseLayer;
@@ -21,8 +22,9 @@ namespace Unit_Tests
         public void CustomerCreateRemoveTest()
         {
             var cust_id = this.custController.CreateCustomer("Customer_Test", false);
-            Assert.Greater(cust_id, -1);
+            Assert.Greater(cust_id, 1);
             Assert.NotNull(custDB.GetCustomerById(cust_id));
+            Console.WriteLine(cust_id);
             var output = this.custController.RemoveCustomer(cust_id);
             Assert.AreEqual(SuccessState.Success, output);
             Assert.IsNull(custDB.GetCustomerById(cust_id));

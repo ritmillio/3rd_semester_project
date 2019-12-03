@@ -33,7 +33,7 @@ namespace AirlineReservations.DatabaseLayer
             //Open connection and write query with placeholder value
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string deleteModel = "DELETE * FROM Model WHERE modelId = @modelId";
+            string deleteModel = "DELETE FROM Model WHERE modelId = @modelId";
             int result = 0;
             using(SqlCommand command = new SqlCommand(deleteModel, con))
             {
