@@ -20,16 +20,12 @@ namespace Unit_Tests
         [Test]
         public void CustomerCreateRemoveTest()
         {
-            var customers = custDB.GetAllCustomers();
-            var output = this.custController.CreateCustomer("Customer_Test", false);
-            Assert.AreEqual(output, SuccessState.Success);
-            var newcustomers = custDB.GetAllCustomers();
-            Assert.AreEqual(customers.Count,  newcustomers.Count-1); // a new customer has been created
-            var cust = newcustomers[0];
-            var output2 = this.custController.RemoveCustomer(cust.CustomerID);
-            Assert.AreEqual(SuccessState.Success, output2);
-            newcustomers = custDB.GetAllCustomers();
-            Assert.AreEqual(customers.Count, newcustomers.Count);
+            var cust_id = this.custController.CreateCustomer("Customer_Test", false);
+            Assert.Greater(cust_id, -1);
+            Assert.NotNull(custDB.GetCustomerById(cust_id));
+            var output = this.custController.RemoveCustomer(cust_id);
+            Assert.AreEqual(SuccessState.Success, output);
+            Assert.IsNull(custDB.GetCustomerById(cust_id));
         }
     }
 }

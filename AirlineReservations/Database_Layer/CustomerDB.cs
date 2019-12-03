@@ -101,12 +101,12 @@ namespace AirlineReservations.DatabaseLayer
             return cust;
         }
 
-        public SuccessState InsertCustomer(Customer cust)
+        public int InsertCustomer(Customer cust)
         {
             //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            int result = 0;
+            int cust_id = 0;
             string insertCustomer = "INSERT INTO Customer(customerName, isAdmin) " +
                 "VALUES( @customerName, @isAdmin)";
             using(SqlCommand command = new SqlCommand(insertCustomer, con))
@@ -114,16 +114,14 @@ namespace AirlineReservations.DatabaseLayer
                 //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
-                result = command.ExecuteNonQuery();
+                
+                var result = command.ExecuteNonQuery(); 
+                string resultString = result.ToString();
+                cust_id = int.Parse(resultString);
             }
-            //Return SuccessState based on amount of rows changed in DB
-            if(result == 1)
-            {
-                return SuccessState.Success;
-            } else
-            {
-                return SuccessState.DBUnreachable;
-            }
+
+            con.Dispose();
+            return cust_id;
         }
 
         public SuccessState UpdateCustomer(int customerId, Customer cust)

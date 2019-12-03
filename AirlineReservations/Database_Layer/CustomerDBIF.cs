@@ -10,7 +10,7 @@ namespace AirlineReservations.DatabaseLayer
 {
     public interface CustomerDBIF
     {
-        SuccessState InsertCustomer(Customer cust);
+        int InsertCustomer(Customer cust);
         Customer GetCustomerById(int customerId);
         SuccessState DeleteCustomer(int customerId);
         SuccessState UpdateCustomer(int customerId, Customer cust);

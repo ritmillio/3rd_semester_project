@@ -14,7 +14,7 @@ namespace AirlineReservations.Control_Layer
         }
         
         // create a new customer
-        public SuccessState CreateCustomer(string name, bool isAdmin)
+        public int CreateCustomer(string name, bool isAdmin)
         {
             var customer = new Customer(name, isAdmin);
             return cust_db.InsertCustomer(customer);
