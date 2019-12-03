@@ -12,7 +12,7 @@ namespace AirlineReservations.DatabaseLayer
     {
         public SuccessState DeleteRelationByCustomerId(int customerId, SqlConnection con)
         {
-            string deleteRelation = "DELETE * FROM ReservationCustomerRelation WHERE customerId = @customerId";
+            string deleteRelation = "DELETE FROM ReservationCustomerRelation WHERE customerId = @customerId";
             using (SqlCommand command = new SqlCommand(deleteRelation, con))
             {
                 command.Parameters.AddWithValue("@customerId", customerId);
@@ -30,7 +30,7 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState DeleteRelationByBookingNo(int bookingNo, SqlConnection con)
         {
-            string deleteRelation = "DELETE * FROM ReservationCustomerRelation WHERE bookingNo = @bookingNo";
+            string deleteRelation = "DELETE FROM ReservationCustomerRelation WHERE bookingNo = @bookingNo";
             using(SqlCommand command = new SqlCommand(deleteRelation, con))
             {
                 command.Parameters.AddWithValue("@bookingNo", bookingNo);

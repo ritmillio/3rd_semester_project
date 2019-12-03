@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AirlineReservations.DatabaseLayer;
 using AirlineReservations.Model_Layer;
@@ -9,22 +10,24 @@ namespace AirlineReservations.Control_Layer
     {
         private FlightDBIF flight_db;
         private ModelDBIF model_db;
+        private SeatDBIF seat_db;
 
         //Instantiate the database
         public FlightController()
         {
             this.flight_db = new FlightDB();
             this.model_db = new ModelDB();
+            this.seat_db = new SeatDB();
         }
 
-        //Adds a new flight to the database based on a given model no, returns success state
-        public SuccessState NewFlight(string modelNo, DateTime departure, DateTime arrival)
+        //Adds a new flight to the database based on a given model no, returns ID of the flight created
+        public int NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
             // Check that the model exists
             var model = model_db.GetModelById(modelNo);
             if (model == null)
             {
-                return SuccessState.BadInput;
+                return -1;
             }
             Flight new_flight = new Flight(modelNo, departure, arrival,
                 "TODO", "Aalborg");
@@ -33,7 +36,7 @@ namespace AirlineReservations.Control_Layer
         }
         
         //Return the flight object of a flight with a given id
-        public Flight GetFlight(string flightID)
+        public Flight GetFlight(int flightID)
         {
             return flight_db.GetFlightById(flightID);
         }
@@ -48,12 +51,19 @@ namespace AirlineReservations.Control_Layer
         public SuccessState CompleteFlight(string flightID)
         {
             return  SuccessState.Success;
+            // TODO: There are no database features for this yet
         }
         
         //Remove a given flight
-        public SuccessState RemoveFlight(string flightID)
+        public SuccessState RemoveFlight(int flightID)
         {
             return flight_db.DeleteFlight(flightID);
+        }
+
+        //Get all seats for a specific flight
+        public List<Seat> GetAllSeats(int flight_id)
+        {
+            return seat_db.GetAllSeatsByFlight(flight_id);
         }
     }
 }

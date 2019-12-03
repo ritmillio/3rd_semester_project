@@ -1,32 +1,23 @@
+using AirlineReservations.DatabaseLayer;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
     public class Seat_Controller
     {
-        private Flight currentFlight;
+        private SeatDBIF seat_db;
         
         // instantiate with the flight that the seat controller controls
-        public Seat_Controller(Flight currentFlight)
+        public Seat_Controller()
         {
-            this.currentFlight = currentFlight;
+            seat_db = new SeatDB();
         }
 
-        // reserves a given seat for a given customer
-        public int ReserveSeat(Seat seat, Customer customer)
+        // get a specific seat
+        public Seat GetSeat(string seatID)
         {
-            return 0;
+            return null;
         }
 
-        //public Seat GetSeat(string seatID)
-        //{
-        //    return new Seat("", 0); // stub
-        //}
-        
-        // releases a seat to be open for reservation
-        public int CancelSeat(Seat seat)
-        {
-            return 0;
-        }
     }
 }

@@ -1,31 +1,23 @@
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace AirlineReservations.Model_Layer{
 
     public class Reservation{
         private string bookingNo { get; set; }
-        private int numberOfSeats { get; set; }
         private decimal price { get; set; }
-        private List<int> customerIds;
+        private int customerId { get; set; }
 
-        public Reservation(string bookingNo , int price){
-            this.bookingNo = bookingNo;
+        public Reservation(decimal price, int customerId = 1)
+        {
+            this.customerId = customerId;
             this.price = price;
-            customerIds = new List<int>();
         }
-        
-        //bookingNo getter/setter
         
         public string BookingNo
         {
             get{ return bookingNo; }
             set { bookingNo = value; }
-        }
-
-        public int NumberOfSeats
-        {
-            get { return numberOfSeats; }
-            set { numberOfSeats = value; }
         }
 
         public decimal Price
@@ -34,14 +26,10 @@ namespace AirlineReservations.Model_Layer{
             set { price = value; }
         }
 
-        public List<string> CustomerIds
+        public int CustomerId
         {
-            get { return CustomerIds; }
-        }
-
-        public void AddCustomerId(int customerId)
-        {
-            customerIds.Add(customerId);
+            get { return customerId; }
+            set { customerId = value; }
         }
     }
 }

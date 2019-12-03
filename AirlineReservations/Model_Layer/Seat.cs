@@ -4,14 +4,12 @@ namespace AirlineReservations.Model_Layer{
     {
         private string seatId { get; set; }
         private string type { get; set; }
-        private bool isAvailable { get; set; }
         private decimal price { get; set; }
         private string flightId { get; set; }
-        private string bookingNo { get; set; }
+        private int bookingNo { get; set; }
 
-        public Seat(string type , bool isAvailable , decimal price, string seatId){
+        public Seat(string type, decimal price, string seatId){
             this.type = type; 
-            this.isAvailable = isAvailable;
             this.price = price;
             this.seatId = seatId;
         }
@@ -31,14 +29,6 @@ namespace AirlineReservations.Model_Layer{
             set{ type = value;}
         }
 
-        public bool IsAvailable
-        {
-            get { return isAvailable; }
-            set
-            {
-                isAvailable = value;
-            }
-        }
         public decimal Price{
             get{return price;}
             set{price = value;}
@@ -50,7 +40,7 @@ namespace AirlineReservations.Model_Layer{
             set { flightId = value;}
         }
 
-        public string BookingNo
+        public int BookingNo
         {
             get { return bookingNo; }
             set { bookingNo = value; }

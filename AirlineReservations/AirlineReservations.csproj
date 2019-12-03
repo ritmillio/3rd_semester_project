@@ -63,6 +63,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Gui\Web\index.cshtml" />
+    <Content Include="Gui\Web\index.html" />
+    <Content Include="Gui\Web\main.css" />
+    <Content Include="Gui\Web\main.js" />
+    <Content Include="Gui\Web\seatreservation.css" />
+    <Content Include="Gui\Web\seatreservation.html" />
+    <Content Include="Gui\Web\src\aalborgairfinal-1.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

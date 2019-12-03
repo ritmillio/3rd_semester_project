@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,13 @@ namespace AirlineReservations.DatabaseLayer
         //Builds Seat objects for GetSeat methods based on data from SqlDataReader
         private Seat ObjectBuilder(SqlDataReader dataReader)
         {
-            Seat seat = new Seat(dataReader.GetString(1), dataReader.GetBoolean(2), 
-                dataReader.GetDecimal(3), dataReader.GetString(0));
+            Seat seat = new Seat(dataReader.GetString(1), 
+                dataReader.GetDecimal(2), dataReader.GetString(0));
+            if (!dataReader.IsDBNull(4))
+            {
+                seat.BookingNo = dataReader.GetInt32(4);
+            }
+
             return seat;
         }
 
@@ -77,16 +83,18 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public ArrayList GetAllSeats()
+        public List<Seat> GetAllSeatsByFlight(int flightId)
         {
             //Open connection and write query string
-            ArrayList seats = new ArrayList();
-            string getAllSeats = "SELECT * FROM Seat";
+            List<Seat> seats = new List<Seat>();
+            string getAllSeats = "SELECT * FROM Seat WHERE flightId = @flightId";
+            con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
 
             using (SqlCommand command = new SqlCommand(getAllSeats, con))
             {
                 //Execute SqlDataReader and build object
+                command.Parameters.AddWithValue("@flightId", flightId);
                 SqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -118,20 +126,40 @@ namespace AirlineReservations.DatabaseLayer
             return seat;
         }
 
+        public List<Seat> GetSeatByBookingNo(int bookingNo)
+        {
+            //Open connection and write query with placeholder value
+            con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
+            string getSeats = "SELECT * FROM Seat WHERE bookingNo = @bookingNo";
+            List<Seat> seats = new List<Seat>();
+            using (SqlCommand command = new SqlCommand(getSeats, con))
+            {
+                //Replace placeholder value, execute SqlDataReader, and build object
+                command.Parameters.AddWithValue("@bookingNo", bookingNo);
+                SqlDataReader dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    seats.Add(ObjectBuilder(dataReader));
+                }
+            }
+            con.Dispose();
+            return seats;
+        }
+
         public SuccessState InsertSeat(Seat seat)
         {
             //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            string insertSeat = "INSERT INTO Seat(seatId, seatType, isAvailable, price, flightId) " +
-                "VALUES(@seatId, @seatType, @isAvailable, @price, @flightId)";
+            string insertSeat = "INSERT INTO Seat(seatId, seatType, price, flightId) " +
+                "VALUES(@seatId, @seatType, @price, @flightId)";
             int result = 0;
             using(SqlCommand command = new SqlCommand(insertSeat, con))
             {
                 //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@seatId", seat.SeatId);
                 command.Parameters.AddWithValue("@seatType", seat.Type);
-                command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
                 command.Parameters.AddWithValue("@price", seat.Price);
                 command.Parameters.AddWithValue("@flightId", seat.FlightId);
                 result = command.ExecuteNonQuery();
@@ -148,23 +176,30 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public SuccessState UpdateSeat(string seatId, Seat seat)
+        // remove boolean is an attempted workaround to be able to cleanly set the reservation back to null
+        // TODO: remove is ugly, figure out something else
+        public SuccessState UpdateSeat(string seatId, Seat seat, bool remove=false)
         {
             //Open connection and write query with placeholder values
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             int result = 0;
-            string updateSeat = "UPDATE Seat SET seatType = @seatType, isAvailable = @isAvailable, price = @price, " +
-                "flightId = @flightId, bookingNo = @bookingNo WHERE seatId = @seatId";
+            string updateSeat = "UPDATE Seat SET seatType = @seatType, price = @price, " +
+                "bookingNo = @bookingNo WHERE seatId = @seatId";
             using(SqlCommand command = new SqlCommand(updateSeat, con))
             {
                 //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@seatId", seat.SeatId);
                 command.Parameters.AddWithValue("@seatType", seat.Type);
-                command.Parameters.AddWithValue("@isAvailable", seat.IsAvailable);
                 command.Parameters.AddWithValue("@price", seat.Price);
-                command.Parameters.AddWithValue("@flightId", seat.FlightId);
-                command.Parameters.AddWithValue("@bookingNo", seat.BookingNo);
+                if (remove)
+                {
+                    command.Parameters.AddWithValue("@bookingNo", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@bookingNo", seat.BookingNo);
+                }
                 result = command.ExecuteNonQuery();
             }
             //Return SuccessState based on amount of rows changed in DB
@@ -177,33 +212,31 @@ namespace AirlineReservations.DatabaseLayer
             }
         }
 
-        public SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, double price)
+        public SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, string seatType, double price)
         {
             //Open connection
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
             //Creates Database Query String with 1 additional set of values for each numberOfSeats
-            string insertMultipleSeats = "INSERT INTO Seat(seatId, price, flightId) VALUES";
+            string insertSeat = "INSERT INTO Seat(seatId, seatType, price, flightId) " +
+                "VALUES(@seatId, @seatType, @price, @flightId)";
             int result = 0;
-            for(int i = 0; i < numberOfSeats; i++)
-            {
-                insertMultipleSeats += "('" + flightId + "." + i + "', @price" + i + ", @flightId" + i + ")";
-                if(i < numberOfSeats - 1)
-                {
-                    insertMultipleSeats += ",";
-                }
-            }
+
+
             //Replaces placeholder values and inserts query into database
-            using(SqlCommand command = new SqlCommand(insertMultipleSeats, con))
+            using(SqlCommand command = new SqlCommand(insertSeat, con))
             {
+                command.Parameters.Add(new SqlParameter("@seatId", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@seatType", seatType));
+                // TODO currently seats are only 1 type
+                command.Parameters.Add(new SqlParameter("@price", price));
+                command.Parameters.Add(new SqlParameter("@flightId", flightId));
                 for (int i = 0; i < numberOfSeats; i++)
                 {
-                    command.Parameters.Add(new SqlParameter("@price" + i, price));
-                    command.Parameters.Add(new SqlParameter("@flightId" + i, flightId));
+                    command.Parameters[0].Value = flightId + "." + i;
+                    command.ExecuteNonQuery();
                 }
 
-                Console.WriteLine(command.CommandText);
-                result = command.ExecuteNonQuery();
             }
             //Return SuccessState based on amount of rows added in DB
             if(result == numberOfSeats)

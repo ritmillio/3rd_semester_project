@@ -30,9 +30,13 @@ namespace AirlineReservations.DatabaseLayer
         private Flight objectBuilder(SqlDataReader dataReader)
         {
             //Builds a Flight object with data from the SqlDataReader
+            Console.WriteLine(dataReader.GetInt32(0));
+            Console.WriteLine(dataReader.GetDataTypeName(1));
+            Console.WriteLine(dataReader.GetDateTime(1));
+            Console.WriteLine(dataReader.GetDateTime(2));
             Flight flight = new Flight(dataReader.GetString(5), dataReader.GetDateTime(1), 
                     dataReader.GetDateTime(2), dataReader.GetString(4), dataReader.GetString(3));
-            flight.FlightNo = "" + dataReader.GetInt32(0);
+            flight.FlightNo = dataReader.GetInt32(0);
             return flight;
         }
 
@@ -131,7 +135,7 @@ namespace AirlineReservations.DatabaseLayer
             //Inserts a number of seats based on numberOfSeats in the flights model
             
             Model model = modeldb.GetModelById(flight.Model);
-            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, 100.00);
+            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
 
             con.Dispose();
             return flightId;

@@ -11,7 +11,6 @@ namespace AirlineReservations.DatabaseLayer
 {
     public class CustomerDB : CustomerDBIF
     {
-        CustomerReservationRelationDBIF relationDB;
         private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         private SqlConnection con;
 
@@ -22,7 +21,6 @@ namespace AirlineReservations.DatabaseLayer
             conStringBuilder.UserID = "dmaa0918_1071480";
             conStringBuilder.Password = "Password1!";
 
-            relationDB = new CustomerReservationRelationDB();
         }
 
         //Builds Customer Objects for GetCustomerById and GetAllCustomers
@@ -31,31 +29,11 @@ namespace AirlineReservations.DatabaseLayer
             //Takes values from SqlDataReader and puts them into a Customer object
             Customer cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2));
             cust.CustomerID = dataReader.GetInt32(0);
-            AddBookingNoToCustomerObject(cust);
             
             return cust;
         }
 
-        //A customer's bookingNo is stored in a many-to-many relation table which is pulled here
-        private Customer AddBookingNoToCustomerObject(Customer cust)
-        {
-            //Open connection and write query with placeholder value
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            string getReservationIds = "SELECT bookingNo FROM ReservationCustomerRelation WHERE customerId = @customerId";
 
-            using (SqlCommand command = new SqlCommand(getReservationIds, con))
-            {
-                //Replace placeholder value and execute reader
-                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
-                SqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    cust.AddBookingNo(dr.GetString(0));
-                }
-            }
-            return cust;
-        }
         public SuccessState DeleteCustomer(int customerId)
         {
             //Open connection and write query with placeholder value
@@ -139,31 +117,6 @@ namespace AirlineReservations.DatabaseLayer
                 result = command.ExecuteNonQuery();
             }
             //Return SuccessState based on amount of rows changed in DB
-            if(result == 1)
-            {
-                return SuccessState.Success;
-            } else
-            {
-                return SuccessState.DBUnreachable;
-            }
-        }
-
-        public SuccessState AddReservationToCustomer(int customerId, string bookingNo)
-        {
-            //Open connection and write query with placeholder values
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            int result = 0;
-            string insertReservationRelation = "INSERT INTO ReservationCustomerRelation(bookingNo, customerId) " +
-                "VALUES(@bookingNo, @customerId)";
-            using(SqlCommand command = new SqlCommand(insertReservationRelation, con))
-            {
-                //Replace placeholder values and execute query
-                command.Parameters.AddWithValue("@bookingNo", bookingNo);
-                command.Parameters.AddWithValue("@customerId", customerId);
-                result = command.ExecuteNonQuery();
-            }
-            //Return SuccessState based on amount of rows that were changed in DB
             if(result == 1)
             {
                 return SuccessState.Success;

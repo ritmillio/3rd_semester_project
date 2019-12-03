@@ -27,17 +27,15 @@ namespace Unit_Tests
         [Test]
         public void CreateRemoveValidFlight()
         {
-            var counter = flight_db.GetAllFlights().Count;
-            var output = this.flight_control.NewFlight("A380", 
+            var flight_id = this.flight_control.NewFlight("A380", 
                 this.depart_default, this.arrive_default);
-            Console.WriteLine(output);
+            Assert.Greater(flight_id, -1);
+            Flight newflight = flight_db.GetFlightById(flight_id);
+            Assert.NotNull(newflight);
+            var output = flight_control.RemoveFlight(newflight.FlightNo);
             Assert.AreEqual(SuccessState.Success, output);
-            var flights = flight_db.GetAllFlights();
-            Assert.AreEqual(counter, flights.Count-1); // there is now 1 extra flight
-            var flight = flights[0];
-            flight_control.RemoveFlight(flight.FlightNo);
-            flights = flight_db.GetAllFlights();
-            Assert.AreEqual(counter, flights.Count);
+            newflight = flight_db.GetFlightById(flight_id);
+            Assert.IsNull(newflight);
         }
 
         [Test]
@@ -46,9 +44,7 @@ namespace Unit_Tests
             var flights = flight_db.GetAllFlights();
             var output = this.flight_control.NewFlight("this_model_should_not_exist",
                 this.depart_default, this.arrive_default);
-            Assert.AreEqual(output, SuccessState.BadInput);
-            // assume that there are no unknown db connections during test
-            Assert.AreEqual(flights.Count, flight_db.GetAllFlights().Count);
+            Assert.AreEqual(-1, output);
         }
     }
 }

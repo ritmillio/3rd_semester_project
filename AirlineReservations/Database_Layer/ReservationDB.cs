@@ -26,7 +26,7 @@ namespace AirlineReservations.DatabaseLayer
 
         private Reservation objectBuilder(SqlDataReader dataReader)
         {
-            Reservation reservation = new Reservation(dataReader.GetString(0), dataReader.GetInt32(2));
+            Reservation reservation = new Reservation(dataReader.GetInt32(2));
             return reservation;
         }
 
@@ -35,9 +35,9 @@ namespace AirlineReservations.DatabaseLayer
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
 
-            relationDB.DeleteRelationByBookingNo(bookingNo, con);
+            //relationDB.DeleteRelationByBookingNo(bookingNo, con);
 
-            string deleteReservation = "DELETE *  FROM Reservation WHERE bookingNo = @bookingNo";
+            string deleteReservation = "DELETE FROM Reservation WHERE bookingNo = @bookingNo";
             
             using(SqlCommand command = new SqlCommand(deleteReservation, con))
             {
@@ -92,27 +92,23 @@ namespace AirlineReservations.DatabaseLayer
             return reservation;
         }
 
-        public SuccessState InsertReservation(Reservation reservation)
+        public int InsertReservation(Reservation reservation)
         {
             con = new SqlConnection(conStringBuilder.ConnectionString);
             con.Open();
-            int result = 0;
-            string insertReservation = "INSERT INTO Reservation(bookingNo, numberOfSeats, price)" +
-                "VALUES(@bookingNo, @numberOfSeats, @price)";
+            int bookingNo = 0;
+            string insertReservation = "INSERT INTO Reservation(price, customerId)" +
+                "VALUES(@price, @customerId)" + "SELECT SCOPE_IDENTITY()";
             using(SqlCommand command = new SqlCommand(insertReservation, con))
             {
-                command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
-                command.Parameters.AddWithValue("@numberOfSeats", reservation.NumberOfSeats);
                 command.Parameters.AddWithValue("@price", reservation.Price);
-                result = command.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
+                var result = command.ExecuteScalar();
+                string resultString = result.ToString();
+                bookingNo = int.Parse(resultString);
             }
-            if(result == 1)
-            {
-                return SuccessState.Success;
-            } else
-            {
-                return SuccessState.DBUnreachable;
-            }
+
+            return bookingNo;
         }
 
         public SuccessState UpdateReservation(int bookingNo, Reservation reservation)
@@ -124,7 +120,6 @@ namespace AirlineReservations.DatabaseLayer
             using (SqlCommand command = new SqlCommand(insertReservation, con))
             {
                 command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
-                command.Parameters.AddWithValue("@numberOfSeats", reservation.NumberOfSeats);
                 command.Parameters.AddWithValue("@price", reservation.Price);
                 result = command.ExecuteNonQuery();
             }

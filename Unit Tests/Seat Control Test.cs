@@ -12,20 +12,12 @@ namespace Unit_Tests
     {
         private Seat_Controller seat_ctr;
 
-        /*
         public Seat_Control_Test()
         {
-            var flight_ctr = new FlightController();
-            var flight_db = new FlightDB();
-            flight_ctr.NewFlight("A380", DateTime.Now, DateTime.Now);
-            this.currentFlight = flight_db.GetAllFlights()[0];
-            
-            this.seat_db = new SeatDB();
-            this.seat_ctr = new Seat_Controller(new Flight("1", "A380", DateTime.Now, 
-                DateTime.Now, "unkown", "unkown"));
-        }
-        */
+            this.seat_ctr = new Seat_Controller();
 
+        }
+/*
         [Test]
         public void ReserveReleaseSeat()
         {
@@ -33,6 +25,8 @@ namespace Unit_Tests
             var cust = new Customer("cust", false);
             seat_ctr.ReserveSeat(seat, cust);
             // TODO: The remainder of the test lol
-        }
+    
+        }*/
     }
+    
 }
