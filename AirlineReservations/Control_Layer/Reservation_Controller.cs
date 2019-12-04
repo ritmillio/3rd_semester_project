@@ -24,17 +24,6 @@ namespace AirlineReservations.Control_Layer
             var reservation = new Reservation(price_sum, customer_id);
             List<string> seat_ids = seats.Select(seat => seat.SeatId).ToList();
             
-            //ugly way to check if all the seats are valid before updating anything
-            foreach (var seat_id in seat_ids)
-            {
-                var seat = seat_db.GetSeatById(seat_id);
-                if (seat == null)
-                {
-                    Console.WriteLine(seat_id);
-                    return 0;
-                }
-            }           
-             
             //create the reservation, the database will return a booking number
             var bookingNo = reserve_db.InsertReservation(reservation);
             Console.WriteLine(bookingNo);
