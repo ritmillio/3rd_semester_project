@@ -48,7 +48,6 @@
     <Compile Include="Flight Control Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation Control Test.cs" />
-    <Compile Include="Seat Control Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AirlineReservations\AirlineReservations.csproj">

@@ -13,15 +13,12 @@ namespace AirlineReservations.DatabaseLayer
     {
         SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         SqlConnection con;
-        CustomerReservationRelationDB relationDB;
         public ReservationDB()
         {
             conStringBuilder.InitialCatalog = "dmaa0918_1071480";
             conStringBuilder.DataSource = "kraka.ucn.dk";
             conStringBuilder.UserID = "dmaa0918_1071480";
             conStringBuilder.Password = "Password1!";
-
-            relationDB = new CustomerReservationRelationDB();
         }
 
         private Reservation objectBuilder(SqlDataReader dataReader)
