@@ -6,7 +6,7 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
-    public class FlightController
+    public class FlightController : Flight_ControllerServiceIF
     {
         private FlightDBIF flight_db;
         private ModelDBIF model_db;

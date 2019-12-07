@@ -1,0 +1,6 @@
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\WcfServiceLibrary1.dll.config
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\WcfServiceLibrary1.dll
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\WcfServiceLibrary1.pdb
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\WcfServiceLibrary1.csprojAssemblyReference.cache
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\WcfServiceLibrary1.dll
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\WcfServiceLibrary1.pdb

@@ -1,5 +1,8 @@
+using System.Runtime.Serialization;
+
 namespace AirlineReservations.Model_Layer{
 
+    [DataContract]
     public class Seat
     {
         private string seatId { get; set; }
@@ -18,28 +21,33 @@ namespace AirlineReservations.Model_Layer{
         {
         }
 
+        [DataMember]
         public string SeatId
         {
             get { return seatId;}
             set { SeatId = value; }
         }
 
+        [DataMember]
         public string Type{
             get{return type;}
             set{ type = value;}
         }
 
+        [DataMember]
         public decimal Price{
             get{return price;}
             set{price = value;}
         }
 
+        [DataMember]
         public string FlightId
         {
             get { return flightId; }
             set { flightId = value;}
         }
 
+        [DataMember]
         public int BookingNo
         {
             get { return bookingNo; }
