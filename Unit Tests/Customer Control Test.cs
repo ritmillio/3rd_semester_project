@@ -1,6 +1,7 @@
+using System;
 using NUnit.Framework;
 using AirlineReservations.Control_Layer;
-using AirlineReservations.DatabaseLayer;
+using AirlineReservations.Database_Layer;
 using AirlineReservations.Model_Layer;
 
 namespace Unit_Tests
@@ -8,28 +9,25 @@ namespace Unit_Tests
     [TestFixture]
     public class CustomerControlTest
     {
-        private Customer_Controller custController;
-        private CustomerDBIF custDB;
+        private CustomerController _custController;
+        private ICustomerDb _custDb;
         
         public CustomerControlTest()
         {
-            this.custController = new Customer_Controller();
-            this.custDB = new CustomerDB();
+            this._custController = new CustomerController();
+            this._custDb = new CustomerDb();
         }
         
         [Test]
         public void CustomerCreateRemoveTest()
         {
-            var customers = custDB.GetAllCustomers();
-            var output = this.custController.CreateCustomer("Customer_Test", false);
-            Assert.AreEqual(output, SuccessState.Success);
-            var newcustomers = custDB.GetAllCustomers();
-            Assert.AreEqual(customers.Count,  newcustomers.Count-1); // a new customer has been created
-            var cust = newcustomers[0];
-            var output2 = this.custController.RemoveCustomer(cust.CustomerID);
-            Assert.AreEqual(SuccessState.Success, output2);
-            newcustomers = custDB.GetAllCustomers();
-            Assert.AreEqual(customers.Count, newcustomers.Count);
+            var custId = this._custController.CreateCustomer("Customer_Test", false);
+            Assert.Greater(custId, 1);
+            Assert.NotNull(_custDb.GetCustomerById(custId));
+            Console.WriteLine(custId);
+            var output = this._custController.RemoveCustomer(custId);
+            Assert.AreEqual(SuccessState.Success, output);
+            Assert.IsNull(_custDb.GetCustomerById(custId));
         }
     }
 }

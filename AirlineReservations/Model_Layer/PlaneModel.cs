@@ -1,22 +1,14 @@
 namespace AirlineReservations.Model_Layer{
     public class Model {
-        private string id;
-        private int numberOfSeats;
+        public string Id { get; set; }
+        public int NumberOfSeats { get; set; }
 
         public Model(string id,
                      int numberOfSeats)
         {
-            this.id = id;
-            this.numberOfSeats = numberOfSeats;
+            this.Id = id;
+            this.NumberOfSeats = numberOfSeats;
         }
 
-        public string Id{
-            get{return id;}
-            set{id = value;}
-        }
-        public int NumberOfSeats{
-            get{return numberOfSeats;}
-            set{numberOfSeats = value;}
-        }
     }
 }

@@ -1,54 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AirlineReservations.Model_Layer;
 using System.Data.SqlClient;
+using AirlineReservations.Model_Layer;
 
-namespace AirlineReservations.DatabaseLayer
+namespace AirlineReservations.Database_Layer
 {
-    public class FlightDB : FlightDBIF
+    public class FlightDb : IFlightDb
     {
-        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
-        SqlConnection con;
-        SeatDBIF seatdb;
-        ModelDBIF modeldb;
+        SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
+        SqlConnection _con;
+        ISeatDb _seatdb;
+        IModelDb _modeldb;
 
-        public FlightDB()
+        public FlightDb()
         {
-            seatdb = new SeatDB();
-            modeldb = new ModelDB();
+            _seatdb = new SeatDb();
+            _modeldb = new ModelDb();
 
-            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            conStringBuilder.DataSource = "kraka.ucn.dk";
-            conStringBuilder.UserID = "dmaa0918_1071480";
-            conStringBuilder.Password = "Password1!";
+            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            _conStringBuilder.DataSource = "kraka.ucn.dk";
+            _conStringBuilder.UserID = "dmaa0918_1071480";
+            _conStringBuilder.Password = "Password1!";
         }
 
-        private Flight objectBuilder(SqlDataReader dataReader)
+        private Flight ObjectBuilder(SqlDataReader dataReader)
         {
             //Builds a Flight object with data from the SqlDataReader
             Console.WriteLine(dataReader.GetInt32(0));
             Console.WriteLine(dataReader.GetDataTypeName(1));
             Console.WriteLine(dataReader.GetDateTime(1));
             Console.WriteLine(dataReader.GetDateTime(2));
-            Flight flight = new Flight(dataReader.GetString(5), dataReader.GetDateTime(1), 
-                    dataReader.GetDateTime(2), dataReader.GetString(4), dataReader.GetString(3));
-            flight.FlightNo = dataReader.GetInt32(0);
+            var flight = new Flight(dataReader.GetString(5), dataReader.GetDateTime(1),
+                dataReader.GetDateTime(2), dataReader.GetString(4), dataReader.GetString(3))
+            {
+                FlightNo = dataReader.GetInt32(0)
+            };
             return flight;
         }
 
         public SuccessState DeleteFlight(int flightNo)
         {
             //Open connection and write query with placeholder value
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string deleteFlight = "DELETE FROM Flight WHERE flightId = @flightId";
-            int result = 0;
-            seatdb.DeleteSeatByFlightId(flightNo);
-            using(SqlCommand command = new SqlCommand(deleteFlight, con))
+            int result;
+            _seatdb.DeleteSeatByFlightId(flightNo);
+            using(var command = new SqlCommand(deleteFlight, _con))
             {
                 //Replace placeholder value and execute query
                 command.Parameters.AddWithValue("@flightId", flightNo);
@@ -58,49 +56,49 @@ namespace AirlineReservations.DatabaseLayer
             //It should always return 1 if the query succeeds, as the flightNo is unique in the database.
             if (result == 0)
             {
-                con.Dispose();
-                return SuccessState.DBUnreachable;
+                _con.Dispose();
+                return SuccessState.DbUnreachable;
             }
-            con.Dispose();
+            _con.Dispose();
             return SuccessState.Success;
         }
 
         public List<Flight> GetAllFlights()
         {
             //Open new connection and write query
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            List<Flight> flights = new List<Flight>();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            var flights = new List<Flight>();
             string getAllFlights = "SELECT * FROM Flight";
-            con.Open();
+            _con.Open();
 
-            using(SqlCommand command = new SqlCommand(getAllFlights, con))
+            using(var command = new SqlCommand(getAllFlights, _con))
             {
                 //Execute SqlDataReader build object.
-                SqlDataReader dataReader = command.ExecuteReader();
+                var dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    flights.Add(objectBuilder(dataReader));
+                    flights.Add(ObjectBuilder(dataReader));
                 }
             }
-            con.Dispose();
+            _con.Dispose();
             return flights;
         }
 
         public Flight GetFlightById(int flightNo)
         {
             //Open new connection and write query with placeholder value
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string getFlight = "SELECT * FROM Flight WHERE flightId = @flightId";
             Flight flight = null;
-            using (SqlCommand command = new SqlCommand(getFlight, con))
+            using (var command = new SqlCommand(getFlight, _con))
             {
                 //Replace placeholder value and execute SqlDataReader and build object
                 command.Parameters.AddWithValue("@flightId", flightNo);
-                SqlDataReader dataReader = command.ExecuteReader();
+                var dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
-                    flight = objectBuilder(dataReader);
+                    flight = ObjectBuilder(dataReader);
                 }
                     
             }
@@ -111,13 +109,13 @@ namespace AirlineReservations.DatabaseLayer
         public int InsertFlight(Flight flight)
         {
             //Open connection and write query string with placeholder parameters
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string insertFlight = "INSERT INTO Flight (departureTime, arrivalTime, departureLocation," +
                 "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId)" +
                 "SELECT SCOPE_IDENTITY()";
-            int flightId = 0;
-            using (SqlCommand command = new SqlCommand(insertFlight, con))
+            int flightId;
+            using (var command = new SqlCommand(insertFlight, _con))
             {
                 //Replace placeholder parameters and insert string. ExecuteScalar is used to return the flights ID
                 command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
@@ -125,31 +123,28 @@ namespace AirlineReservations.DatabaseLayer
                 command.Parameters.AddWithValue("@departureLocation", flight.DepartureLocation);
                 command.Parameters.AddWithValue("@destination", flight.Destination);
                 command.Parameters.AddWithValue("@modelId", flight.Model);
-                /*
-                 * 
-                 */
-                var result = command.ExecuteScalar();
-                string resultString = result.ToString();
-                flightId = int.Parse(resultString);
+                
+                var result = command.ExecuteScalar().ToString();
+                flightId = int.Parse(result);
             }
             //Inserts a number of seats based on numberOfSeats in the flights model
             
-            Model model = modeldb.GetModelById(flight.Model);
-            seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
+            var model = _modeldb.GetModelById(flight.Model);
+            _seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
 
-            con.Dispose();
+            _con.Dispose();
             return flightId;
         }
 
         public SuccessState UpdateFlight(int flightNo, Flight flight)
         {
             //Open new connection and write query wit placeholder values
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string updateFlight = "UPDATE Flight SET departureTime = @departureTime, arrivalTime = @arrivalTime" +
                 "departureLocation = @departureLocation, destination = @destination, modelId = @modelId WHERE flightId = @flightId";
-            int result = 0;
-            using (SqlCommand command =new SqlCommand(updateFlight, con))
+            int result;
+            using (var command = new SqlCommand(updateFlight, _con))
             {
                 //Replace placeholder params with actual data and execute query.
                 command.Parameters.AddWithValue("@flightid", flight.FlightNo);
@@ -161,14 +156,9 @@ namespace AirlineReservations.DatabaseLayer
                 result = command.ExecuteNonQuery();
                 
             }
+            _con.Dispose();
             //Return success state based on number of rows changed in DB
-            if (result == 0)
-            {
-                con.Dispose();
-                return SuccessState.DBUnreachable;
-            }
-            con.Dispose();
-            return SuccessState.Success;
+            return result == 0 ? SuccessState.DbUnreachable : SuccessState.Success;
         }
     }
 }
