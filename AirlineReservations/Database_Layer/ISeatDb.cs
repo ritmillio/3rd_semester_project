@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AirlineReservations.Model_Layer;
 
-namespace AirlineReservations.DatabaseLayer
+namespace AirlineReservations.Database_Layer
 {
-    public interface SeatDBIF
+    public interface ISeatDb
     {
         SuccessState InsertSeat(Seat seat);
         Seat GetSeatById(string seatId);

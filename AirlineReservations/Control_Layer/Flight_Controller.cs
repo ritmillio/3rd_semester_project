@@ -1,69 +1,69 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using AirlineReservations.DatabaseLayer;
+using AirlineReservations.Database_Layer;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
     public class FlightController
     {
-        private FlightDBIF flight_db;
-        private ModelDBIF model_db;
-        private SeatDBIF seat_db;
+        private IFlightDb _flightDb;
+        private IModelDb _modelDb;
+        private ISeatDb _seatDb;
 
         //Instantiate the database
         public FlightController()
         {
-            this.flight_db = new FlightDB();
-            this.model_db = new ModelDB();
-            this.seat_db = new SeatDB();
+            this._flightDb = new FlightDb();
+            this._modelDb = new ModelDb();
+            this._seatDb = new SeatDb();
         }
 
         //Adds a new flight to the database based on a given model no, returns ID of the flight created
         public int NewFlight(string modelNo, DateTime departure, DateTime arrival)
         {
             // Check that the model exists
-            var model = model_db.GetModelById(modelNo);
+            var model = _modelDb.GetModelById(modelNo);
             if (model == null)
             {
                 return -1;
             }
-            Flight new_flight = new Flight(modelNo, departure, arrival,
+            var newFlight = new Flight(modelNo, departure, arrival,
                 "TODO", "Aalborg");
 
-            return flight_db.InsertFlight(new_flight);
+            return _flightDb.InsertFlight(newFlight);
         }
         
         //Return the flight object of a flight with a given id
-        public Flight GetFlight(int flightID)
+        public Flight GetFlight(int flightId)
         {
-            return flight_db.GetFlightById(flightID);
+            return _flightDb.GetFlightById(flightId);
         }
         
         //Return a list of all active flights
         public List<Flight> ListActiveFlights()
         {
-            return flight_db.GetAllFlights();
+            return _flightDb.GetAllFlights();
         }
 
         //Complete a given flight, reservations can no longer be made
-        public SuccessState CompleteFlight(string flightID)
+        public SuccessState CompleteFlight(string flightId)
         {
             return  SuccessState.Success;
             // TODO: There are no database features for this yet
         }
         
         //Remove a given flight
-        public SuccessState RemoveFlight(int flightID)
+        public SuccessState RemoveFlight(int flightId)
         {
-            return flight_db.DeleteFlight(flightID);
+            return _flightDb.DeleteFlight(flightId);
         }
 
         //Get all seats for a specific flight
-        public List<Seat> GetAllSeats(int flight_id)
+        public List<Seat> GetAllSeats(int flightId)
         {
-            return seat_db.GetAllSeatsByFlight(flight_id);
+            return _seatDb.GetAllSeatsByFlight(flightId);
         }
     }
 }

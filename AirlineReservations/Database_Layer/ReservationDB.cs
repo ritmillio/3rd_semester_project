@@ -1,27 +1,26 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AirlineReservations.Model_Layer;
 
-namespace AirlineReservations.DatabaseLayer
+namespace AirlineReservations.Database_Layer
 {
-    public class ReservationDB : ReservationDBIF
+    public class ReservationDb : IReservationDb
     {
-        SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
-        SqlConnection con;
-        public ReservationDB()
+        private SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
+        private SqlConnection _con;
+        private ISeatDb _seatDb;
+    
+        public ReservationDb()
         {
-            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            conStringBuilder.DataSource = "kraka.ucn.dk";
-            conStringBuilder.UserID = "dmaa0918_1071480";
-            conStringBuilder.Password = "Password1!";
+            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            _conStringBuilder.DataSource = "kraka.ucn.dk";
+            _conStringBuilder.UserID = "dmaa0918_1071480";
+            _conStringBuilder.Password = "Password1!";
+            this._seatDb = new SeatDb();
         }
 
-        private Reservation objectBuilder(SqlDataReader dataReader)
+        private Reservation ObjectBuilder(SqlDataReader dataReader)
         {
             Reservation reservation = new Reservation(dataReader.GetInt32(2));
             return reservation;
@@ -29,105 +28,106 @@ namespace AirlineReservations.DatabaseLayer
 
         public SuccessState DeleteReservation(int bookingNo)
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
+            int result;
 
             //relationDB.DeleteRelationByBookingNo(bookingNo, con);
 
             string deleteReservation = "DELETE FROM Reservation WHERE bookingNo = @bookingNo";
             
-            using(SqlCommand command = new SqlCommand(deleteReservation, con))
+            using(var command = new SqlCommand(deleteReservation, _con))
             {
                 command.Parameters.AddWithValue("@bookingNo", bookingNo);
-                int result = command.ExecuteNonQuery();
-                if(result == 1)
-                {
-                    return SuccessState.Success;
-                } else
-                {
-                    return SuccessState.DBUnreachable;
-                }
-                
+                result = command.ExecuteNonQuery();
             }
+            _con.Dispose();
+            return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
 
-        public ArrayList GetAllReservations()
+        public List<Reservation> GetAllReservations()
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            ArrayList reservations = new ArrayList();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            var reservations = new List<Reservation>();
             string getAllReservations = "SELECT * FROM Reservation";
-            con.Open();
+            _con.Open();
 
-            using (SqlCommand command = new SqlCommand(getAllReservations, con))
+            using (var command = new SqlCommand(getAllReservations, _con))
             {
                 SqlDataReader dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    reservations.Add(objectBuilder(dataReader));
+                    reservations.Add(ObjectBuilder(dataReader));
                 }
             }
-            con.Dispose();
+            _con.Dispose();
             return reservations;
         }
 
         public Reservation GetReservationById(int bookingNo)
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string getReservation = "SELECT * FROM Reservation WHERE bookingNo = @bookingNo";
             Reservation reservation = null;
-            using(SqlCommand command = new SqlCommand(getReservation, con))
+            using(var command = new SqlCommand(getReservation, _con))
             {
                 command.Parameters.AddWithValue("@bookingNo", bookingNo);
-                SqlDataReader dataReader = command.ExecuteReader();
+                var dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
-                    reservation = objectBuilder(dataReader);
+                    reservation = ObjectBuilder(dataReader);
                 }
             }
-            con.Dispose();
+            _con.Dispose();
             return reservation;
         }
 
-        public int InsertReservation(Reservation reservation)
+        // Create a reservation, update affected seats
+        public int InsertReservation(Reservation reservation, List<string> seatIds)
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            int bookingNo = 0;
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
+            int bookingNo;
             string insertReservation = "INSERT INTO Reservation(price, customerId)" +
                 "VALUES(@price, @customerId)" + "SELECT SCOPE_IDENTITY()";
-            using(SqlCommand command = new SqlCommand(insertReservation, con))
+            using(var command = new SqlCommand(insertReservation, _con))
             {
                 command.Parameters.AddWithValue("@price", reservation.Price);
                 command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
                 var result = command.ExecuteScalar();
-                string resultString = result.ToString();
+                var resultString = result.ToString();
                 bookingNo = int.Parse(resultString);
             }
 
+            foreach (var seatId in seatIds)
+            {
+                var seat = _seatDb.GetSeatById(seatId);
+                if (seat == null)
+                {
+                    return 0;
+                }
+                seat.BookingNo = bookingNo;
+                _seatDb.UpdateSeat(seatId, seat);
+            }
+            
             return bookingNo;
+
         }
 
         public SuccessState UpdateReservation(int bookingNo, Reservation reservation)
         {
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            int result = 0;
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
+            int result;
             string insertReservation = "UPDATE Reservation SET numberOfSeats = @numberOfSeats, price = @price WHERE bookingNo = @bookingNo";
-            using (SqlCommand command = new SqlCommand(insertReservation, con))
+            using (var command = new SqlCommand(insertReservation, _con))
             {
                 command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
                 command.Parameters.AddWithValue("@price", reservation.Price);
                 result = command.ExecuteNonQuery();
             }
-            if (result == 1)
-            {
-                return SuccessState.Success;
-            }
-            else
-            {
-                return SuccessState.DBUnreachable;
-            }
+            return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
     }
 }

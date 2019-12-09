@@ -4,6 +4,6 @@ namespace AirlineReservations.Model_Layer
     {
         Success,
         BadInput,
-        DBUnreachable
+        DbUnreachable
     }
 }

@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AirlineReservations.Model_Layer;
 
-namespace AirlineReservations.DatabaseLayer
+namespace AirlineReservations.Database_Layer
 {
-    public class CustomerDB : CustomerDBIF
+    public class CustomerDb : ICustomerDb
     {
-        private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
-        private SqlConnection con;
+        private SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
+        private SqlConnection _con;
 
-        public CustomerDB()
+        public CustomerDb()
         {
-            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            conStringBuilder.DataSource = "kraka.ucn.dk";
-            conStringBuilder.UserID = "dmaa0918_1071480";
-            conStringBuilder.Password = "Password1!";
+            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            _conStringBuilder.DataSource = "kraka.ucn.dk";
+            _conStringBuilder.UserID = "dmaa0918_1071480";
+            _conStringBuilder.Password = "Password1!";
 
         }
 
@@ -27,9 +23,11 @@ namespace AirlineReservations.DatabaseLayer
         private Customer ObjectBuilder(SqlDataReader dataReader)
         {
             //Takes values from SqlDataReader and puts them into a Customer object
-            Customer cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2));
-            cust.CustomerID = dataReader.GetInt32(0);
-            
+            var cust = new Customer(dataReader.GetString(1), dataReader.GetBoolean(2))
+            {
+                CustomerId = dataReader.GetInt32(0)
+            };
+
             return cust;
         }
 
@@ -37,40 +35,33 @@ namespace AirlineReservations.DatabaseLayer
         public SuccessState DeleteCustomer(int customerId)
         {
             //Open connection and write query with placeholder value
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             string deleteCustomer = "DELETE FROM Customer WHERE customerId = @customerId";
-            int result = 0;
-            using(SqlCommand command = new SqlCommand(deleteCustomer, con))
+            int result;
+            using(var command = new SqlCommand(deleteCustomer, _con))
             {
                 //Replace placeholder value and execute query
                 command.Parameters.AddWithValue("@customerId", customerId);
                 result = command.ExecuteNonQuery();
             }
             //Return SuccessState based on amount of rows changed in DB
-            if(result == 1)
-            {
-                con.Dispose();
-                return SuccessState.Success;
-            } else
-            {
-                con.Dispose();
-                return SuccessState.DBUnreachable;
-            }
+            _con.Dispose();
+            return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
 
         public List<Customer> GetAllCustomers()
         {
             //Open connection and write query string
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            List<Customer> customers = new List<Customer>();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            var customers = new List<Customer>();
             string getAllCustomers = "SELECT * FROM Customer";
-            con.Open();
+            _con.Open();
 
-            using (SqlCommand command = new SqlCommand(getAllCustomers, con))
+            using (var command = new SqlCommand(getAllCustomers, _con))
             {
                 //Execute SqlDataReader and build object
-                SqlDataReader dataReader = command.ExecuteReader();
+                var dataReader = command.ExecuteReader();
                 while (dataReader.Read())
                 {
                     customers.Add(ObjectBuilder(dataReader));
@@ -82,75 +73,64 @@ namespace AirlineReservations.DatabaseLayer
         public Customer GetCustomerById(int customerId)
         {
             //Open connection and write query with placeholder value
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
             Customer cust = null;
             string getCustomer = "SELECT * FROM Customer WHERE customerId = @customerId";
-            using(SqlCommand command = new SqlCommand(getCustomer, con))
+            using(var command = new SqlCommand(getCustomer, _con))
             {
                 //Replace placeholder value and execute SqlDataReader. Build object.
                 command.Parameters.AddWithValue("@customerId", customerId);
-                SqlDataReader dataReader = command.ExecuteReader();
+                var dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
                     cust = ObjectBuilder(dataReader);
                 }
                 
             }
-            con.Dispose();
+            _con.Dispose();
             return cust;
         }
 
         public int InsertCustomer(Customer cust)
         {
             //Open connection and write query with placeholder values
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            int cust_id = 0;
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
+            int custId;
             string insertCustomer = "INSERT INTO Customer(customerName, isAdmin) " +
                 "VALUES( @customerName, @isAdmin) SELECT SCOPE_IDENTITY()";
-            using(SqlCommand command = new SqlCommand(insertCustomer, con))
+            using(var command = new SqlCommand(insertCustomer, _con))
             {
                 //Replace placeholder values and execute query
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
 
-                Console.WriteLine("running");
-                var result = command.ExecuteScalar();
-                Console.WriteLine(result);
-                Console.WriteLine(result.ToString());
-                var resultString = result.ToString();
-                cust_id = int.Parse(resultString);
+                var result = command.ExecuteScalar().ToString();
+                custId = int.Parse(result);
             }
 
-            con.Dispose();
-            return cust_id;
+            _con.Dispose();
+            return custId;
         }
 
         public SuccessState UpdateCustomer(int customerId, Customer cust)
         {
             //Open connection and write query with placeholder values
-            con = new SqlConnection(conStringBuilder.ConnectionString);
-            con.Open();
-            int result = 0;
+            _con = new SqlConnection(_conStringBuilder.ConnectionString);
+            _con.Open();
+            int result;
             string updateCustomer = "UPDATE Customer SET customerName = @customerName, isAdmin = @isAdmin WHERE customerId = @customerId";
-            using (SqlCommand command = new SqlCommand(updateCustomer, con))
+            using (var command = new SqlCommand(updateCustomer, _con))
             {
                 //Replace placeholder values and execute query
-                command.Parameters.AddWithValue("@customerId", cust.CustomerID);
+                command.Parameters.AddWithValue("@customerId", cust.CustomerId);
                 command.Parameters.AddWithValue("@customerName", cust.Name);
                 command.Parameters.AddWithValue("@isAdmin", cust.IsAdmin);
                 result = command.ExecuteNonQuery();
             }
             //Return SuccessState based on amount of rows that were changed in DB
-            if (result == 1)
-            {
-                return SuccessState.Success;
-            }
-            else
-            {
-                return SuccessState.DBUnreachable;
-            }
+            return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
     }
 }

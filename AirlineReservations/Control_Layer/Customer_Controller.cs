@@ -1,29 +1,29 @@
-using AirlineReservations.DatabaseLayer;
+using AirlineReservations.Database_Layer;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
-    public class Customer_Controller
+    public class CustomerController
     {
-        private CustomerDBIF cust_db;
+        private ICustomerDb _custDb;
         
         // instantiate db
-        public Customer_Controller()
+        public CustomerController()
         {
-            this.cust_db = new CustomerDB();
+            this._custDb = new CustomerDb();
         }
         
         // create a new customer
         public int CreateCustomer(string name, bool isAdmin)
         {
             var customer = new Customer(name, isAdmin);
-            return cust_db.InsertCustomer(customer);
+            return _custDb.InsertCustomer(customer);
         }
         
         // remove an existing customer
-        public SuccessState RemoveCustomer(int customerID)
+        public SuccessState RemoveCustomer(int customerId)
         {
-            return cust_db.DeleteCustomer(customerID);
+            return _custDb.DeleteCustomer(customerId);
         }
 
     }
