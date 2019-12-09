@@ -11,6 +11,7 @@ namespace AirlineReservations.Database_Layer
         private SqlConnection _con;
         private ISeatDb _seatDb;
     
+        //Constructor
         public ReservationDb()
         {
             _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
@@ -20,9 +21,12 @@ namespace AirlineReservations.Database_Layer
             this._seatDb = new SeatDb();
         }
 
+        //Builds Reservation objects for other classes
         private Reservation ObjectBuilder(SqlDataReader dataReader)
         {
-            Reservation reservation = new Reservation(dataReader.GetInt32(2));
+            Reservation reservation = new Reservation(dataReader.GetDecimal(1), dataReader.GetInt32(2));
+            reservation.BookingNo = dataReader.GetInt32(0);
+            
             return reservation;
         }
 

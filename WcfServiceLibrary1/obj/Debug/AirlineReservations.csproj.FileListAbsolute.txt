@@ -1,0 +1,7 @@
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\AirlineReservations.dll.config
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\AirlineReservations.dll
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\bin\Debug\AirlineReservations.pdb
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\XsdGeneratedCode\GeneratedXsdTypes.cs
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\AirlineReservations.dll
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\AirlineReservations.pdb
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV3\DataScience3rdSemesterProjectGroup3\WcfServiceLibrary1\obj\Debug\AirlineReservations.csprojAssemblyReference.cache

@@ -4,7 +4,7 @@ using System.Dynamic;
 namespace AirlineReservations.Model_Layer{
 
     public class Reservation{
-        public string BookingNo { get; set; }
+        public int BookingNo { get; set; }
         public decimal Price { get; set; }
         public int CustomerId { get; set; }
 
