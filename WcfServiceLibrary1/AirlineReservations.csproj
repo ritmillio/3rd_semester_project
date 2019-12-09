@@ -80,7 +80,6 @@
     <Compile Include="Database_Layer\SeatDB.cs" />
     <Compile Include="Database_Layer\SeatDBIF.cs" />
     <Compile Include="Flight_ControllerServiceIF.cs" />
-    <Compile Include="IService1.cs" />
     <Compile Include="Model_Layer\Customer.cs" />
     <Compile Include="Model_Layer\Flight.cs" />
     <Compile Include="Model_Layer\PlaneModel.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="Model_Layer\SuccessState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReservationServiceIF.cs" />
-    <Compile Include="Service1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServiceReference1\AirlineReservations.ServiceReference1.CompositeType.datasource">
