@@ -22,7 +22,9 @@ namespace GUI
             proxy = new ServiceReference1.Flight_ControllerServiceIFClient();
             proxy2 = new ServiceReference2.ReservationServiceIFClient();
             seats = proxy.GetAllSeats(flightId);
-            ListSeats();
+            listBox1.Sorted = true;
+            listBox1.SelectionMode = SelectionMode.MultiSimple;
+            ListSeats();  
         }
 
         private void ListSeats()
@@ -31,6 +33,26 @@ namespace GUI
             {
                listBox1.Items.Add(seat.SeatId);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<ServiceReference1.Seat> selectedSeats = new List<ServiceReference1.Seat>();
+
+            foreach(var cell in listBox1.SelectedItems)
+            {
+                // Get the seat where the seat id is equal to the cell seat id... throw exception if seat not found
+                selectedSeats.Add(seats.Single(s => s.SeatId == cell.ToString()));
+            }
+
+            //proxy2.NewReservation(selectedSeats, 1);
+
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox1.ClearSelected();
         }
     }
 }
