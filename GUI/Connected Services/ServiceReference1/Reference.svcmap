@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="84df8947-3fd4-492c-bc13-528915b1d13d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/FlightController/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e4f49d90-aad6-4201-8cc5-a85c1e0ed0ba" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/FlightController/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ed7571ba-d3cc-4d1f-9424-6924f9394280" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/FlightController/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7d6d7d8e-36e8-4f11-8df6-0960a1a37274" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/FlightController/mex" />
+    <MetadataFile FileName="AirlineReservations.Model_Layer.xsd" MetadataType="Schema" ID="5e970aa1-c359-4bba-a773-0d45b227b2de" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/FlightController/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
