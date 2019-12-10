@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ServiceModel;
 using AirlineReservations.Database_Layer;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class FlightController : Flight_ControllerServiceIF
     {
         private IFlightDb _flightDb;
