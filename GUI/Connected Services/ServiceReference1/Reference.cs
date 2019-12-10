@@ -278,10 +278,10 @@ namespace GUI.ServiceReference1 {
         System.Threading.Tasks.Task<GUI.ServiceReference1.Flight> GetFlightAsync(int flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlights", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlightsResponse")]
-        GUI.ServiceReference1.Flight[] ListActiveFlights();
+        System.Collections.Generic.List<GUI.ServiceReference1.Flight> ListActiveFlights();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlights", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlightsResponse")]
-        System.Threading.Tasks.Task<GUI.ServiceReference1.Flight[]> ListActiveFlightsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.List<GUI.ServiceReference1.Flight>> ListActiveFlightsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlightResponse")]
         GUI.ServiceReference1.SuccessState CompleteFlight(string flightID);
@@ -296,10 +296,10 @@ namespace GUI.ServiceReference1 {
         System.Threading.Tasks.Task<GUI.ServiceReference1.SuccessState> RemoveFlightAsync(int flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeats", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeatsResponse")]
-        GUI.ServiceReference1.Seat[] GetAllSeats(int flight_id);
+        System.Collections.Generic.List<GUI.ServiceReference1.Seat> GetAllSeats(int flight_id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeats", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeatsResponse")]
-        System.Threading.Tasks.Task<GUI.ServiceReference1.Seat[]> GetAllSeatsAsync(int flight_id);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<GUI.ServiceReference1.Seat>> GetAllSeatsAsync(int flight_id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -345,11 +345,11 @@ namespace GUI.ServiceReference1 {
             return base.Channel.GetFlightAsync(flightID);
         }
         
-        public GUI.ServiceReference1.Flight[] ListActiveFlights() {
+        public System.Collections.Generic.List<GUI.ServiceReference1.Flight> ListActiveFlights() {
             return base.Channel.ListActiveFlights();
         }
         
-        public System.Threading.Tasks.Task<GUI.ServiceReference1.Flight[]> ListActiveFlightsAsync() {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<GUI.ServiceReference1.Flight>> ListActiveFlightsAsync() {
             return base.Channel.ListActiveFlightsAsync();
         }
         
@@ -369,11 +369,11 @@ namespace GUI.ServiceReference1 {
             return base.Channel.RemoveFlightAsync(flightID);
         }
         
-        public GUI.ServiceReference1.Seat[] GetAllSeats(int flight_id) {
+        public System.Collections.Generic.List<GUI.ServiceReference1.Seat> GetAllSeats(int flight_id) {
             return base.Channel.GetAllSeats(flight_id);
         }
         
-        public System.Threading.Tasks.Task<GUI.ServiceReference1.Seat[]> GetAllSeatsAsync(int flight_id) {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<GUI.ServiceReference1.Seat>> GetAllSeatsAsync(int flight_id) {
             return base.Channel.GetAllSeatsAsync(flight_id);
         }
     }

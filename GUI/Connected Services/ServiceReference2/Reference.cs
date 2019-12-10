@@ -141,10 +141,10 @@ namespace GUI.ServiceReference2 {
     public interface ReservationServiceIF {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ReservationServiceIF/NewReservation", ReplyAction="http://tempuri.org/ReservationServiceIF/NewReservationResponse")]
-        int NewReservation(GUI.ServiceReference2.Seat[] seats, int customer_id);
+        int NewReservation(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ReservationServiceIF/NewReservation", ReplyAction="http://tempuri.org/ReservationServiceIF/NewReservationResponse")]
-        System.Threading.Tasks.Task<int> NewReservationAsync(GUI.ServiceReference2.Seat[] seats, int customer_id);
+        System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ReservationServiceIF/ReleaseReservation", ReplyAction="http://tempuri.org/ReservationServiceIF/ReleaseReservationResponse")]
         GUI.ServiceReference2.SuccessState ReleaseReservation(int bookingNo);
@@ -180,11 +180,11 @@ namespace GUI.ServiceReference2 {
                 base(binding, remoteAddress) {
         }
         
-        public int NewReservation(GUI.ServiceReference2.Seat[] seats, int customer_id) {
+        public int NewReservation(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id) {
             return base.Channel.NewReservation(seats, customer_id);
         }
         
-        public System.Threading.Tasks.Task<int> NewReservationAsync(GUI.ServiceReference2.Seat[] seats, int customer_id) {
+        public System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id) {
             return base.Channel.NewReservationAsync(seats, customer_id);
         }
         
