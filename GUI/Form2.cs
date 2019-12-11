@@ -31,7 +31,10 @@ namespace GUI
         {
             foreach (var seat in seats)
             {
-               listBox1.Items.Add(seat.SeatId);
+               if(seat.BookingNo == 0)
+                {
+                    listBox1.Items.Add(seat.SeatId);
+                }
             }
         }
 
