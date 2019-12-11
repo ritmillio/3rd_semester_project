@@ -18,10 +18,13 @@ namespace GUI
         public Form2(int flightId)
         {
             InitializeComponent();
-            listBox1.MultiColumn = true;
+            //Instantiate proxies
             proxy = new ServiceReference1.Flight_ControllerServiceIFClient();
             proxy2 = new ServiceReference2.ReservationServiceIFClient();
+            //Service call to get all seats on a flight
             seats = proxy.GetAllSeats(flightId);
+            //Configure ListBox settings
+            listBox1.MultiColumn = true;
             listBox1.Sorted = true;
             listBox1.SelectionMode = SelectionMode.MultiSimple;
             ListSeats();  
@@ -29,6 +32,7 @@ namespace GUI
 
         private void ListSeats()
         {
+            //Lists every seat that has not been reserved
             foreach (var seat in seats)
             {
                if(seat.BookingNo == 0)
@@ -39,20 +43,34 @@ namespace GUI
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            List<ServiceReference1.Seat> selectedSeats = new List<ServiceReference1.Seat>();
+        { 
+            List<ServiceReference2.Seat> selectedSeats = new List<ServiceReference2.Seat>();
 
             foreach(var cell in listBox1.SelectedItems)
             {
-                // Get the seat where the seat id is equal to the cell seat id... throw exception if seat not found
-                selectedSeats.Add(seats.Single(s => s.SeatId == cell.ToString()));
+                //Get the seat where the seat id is equal to the cell seat id... throw exception if seat not found
+                //Convert seat to ServiceReference2.Seat so that it can be passed as a parameter to proxy2's methods
+
+                var seat = (seats.Single(s => s.SeatId == cell.ToString()));
+                var seat2 = new ServiceReference2.Seat
+                {
+                    SeatId = seat.SeatId,
+                    BookingNo = seat.BookingNo,
+                    FlightId = seat.FlightId,
+                    Price = seat.Price,
+                    Type = seat.Type
+                };
+
+                selectedSeats.Add(seat2);
             }
-
-            //proxy2.NewReservation(selectedSeats, 1);
-
+            //Makes a service call to create a new reservation with the selected seats
             
+           
+            int bookingNo = proxy2.NewReservation(selectedSeats);
+
         }
 
+        //Clears all seats selected by the user.
         private void button2_Click(object sender, EventArgs e)
         {
             listBox1.ClearSelected();

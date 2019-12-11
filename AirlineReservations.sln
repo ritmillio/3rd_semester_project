@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{37A72498-7668-4EFC-8291-1F6FECFA09CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{CE9C2B67-F9C7-4EE6-91B9-67702E3BC98D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3BF36FB6-3370-4DDA-BE02-3F31F5B90671} = {3BF36FB6-3370-4DDA-BE02-3F31F5B90671}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

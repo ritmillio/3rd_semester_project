@@ -23,15 +23,20 @@ namespace GUI
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            //Clears rows in data grid
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
+            //Makes service call and adds all active flights as rows in the data grid
             List<ServiceReference1.Flight> flights = proxy.ListActiveFlights();
             foreach (var flight in flights)
             {
-                dataGridView1.Rows.Add(flight.DepartureLocation, flight.Destination, flight.DepartureTime, flight.ArrivalTime , (flight.FlightNo));
+                dataGridView1.Rows.Add(flight.DepartureLocation, flight.Destination, flight.DepartureTime, flight.ArrivalTime , flight.FlightNo);
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //Gets selected flightId and uses it as a parameter to open a new window.
             string flightIdString = dataGridView1.CurrentCell.Value.ToString();
             int flightId = Convert.ToInt32(flightIdString);
             Form2 newform = new Form2(flightId);
