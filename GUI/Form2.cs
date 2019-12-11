@@ -68,6 +68,18 @@ namespace GUI
            
             int bookingNo = proxy2.NewReservation(selectedSeats);
 
+            //Creates and shows message with booking confirmation and details
+            string confirmationMessage = "Your Reservation has been booked." +
+                "\nBooking Number: " + bookingNo;
+
+            foreach(var seat in selectedSeats)
+            {
+                confirmationMessage += "\nSeat Number: " + seat.SeatId;
+            }
+            MessageBox.Show(confirmationMessage);
+            this.Close();
+            Form1 form = new Form1();
+            form.Show();
         }
 
         //Clears all seats selected by the user.
