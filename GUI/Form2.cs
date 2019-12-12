@@ -32,6 +32,7 @@ namespace GUI
 
         private void ListSeats()
         {
+            
             //Lists every seat that has not been reserved
             foreach (var seat in seats)
             {
@@ -65,21 +66,25 @@ namespace GUI
             }
             //Makes a service call to create a new reservation with the selected seats
             
-           
-            int bookingNo = proxy2.NewReservation(selectedSeats);
-
-            //Creates and shows message with booking confirmation and details
-            string confirmationMessage = "Your Reservation has been booked." +
-                "\nBooking Number: " + bookingNo;
-
-            foreach(var seat in selectedSeats)
+           //Must select at least one seat to create a reservation
+           if(selectedSeats.Count >= 1)
             {
-                confirmationMessage += "\nSeat Number: " + seat.SeatId;
+                int bookingNo = proxy2.NewReservation(selectedSeats);
+
+                //Creates and shows message with booking confirmation and details
+                string confirmationMessage = "Your Reservation has been booked." +
+                    "\nBooking Number: " + bookingNo;
+
+                foreach (var seat in selectedSeats)
+                {
+                    confirmationMessage += "\nSeat Number: " + seat.SeatId;
+                }
+                MessageBox.Show(confirmationMessage);
+                this.Close();
+                Form1 form = new Form1();
+                form.Show();
             }
-            MessageBox.Show(confirmationMessage);
-            this.Close();
-            Form1 form = new Form1();
-            form.Show();
+            
         }
 
         //Clears all seats selected by the user.

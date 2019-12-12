@@ -37,12 +37,24 @@ namespace GUI
         private void button2_Click(object sender, EventArgs e)
         {
             //Gets selected flightId and uses it as a parameter to open a new window.
-            string flightIdString = dataGridView1.CurrentCell.Value.ToString();
-            int flightId = Convert.ToInt32(flightIdString);
-            Form2 newform = new Form2(flightId);
-            this.Hide();
-            newform.ShowDialog();
+            string flightIdString = "";
+            if(dataGridView1.CurrentRow != null)
+            {
+                flightIdString = Convert.ToString(dataGridView1.CurrentRow.Cells["Column5"].Value);
+            }
+            if(flightIdString != "")
+            {
+                int flightId = Convert.ToInt32(flightIdString);
+                Form2 newform = new Form2(flightId);
+                this.Hide();
+                newform.ShowDialog();
+            } else
+            {
+                MessageBox.Show("Please click on a row that contains a flight");
+            }
+            
 
         }
+
     }
 }
