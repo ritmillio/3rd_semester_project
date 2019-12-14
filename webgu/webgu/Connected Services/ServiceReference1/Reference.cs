@@ -121,7 +121,7 @@ namespace ServiceReference1
         BadInput = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        DBUnreachable = 2,
+        DbUnreachable = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -212,22 +212,40 @@ namespace ServiceReference1
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/NewFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/NewFlightResponse")]
+        int NewFlight(string modelNo, System.DateTime departure, System.DateTime arrival);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/NewFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/NewFlightResponse")]
         System.Threading.Tasks.Task<int> NewFlightAsync(string modelNo, System.DateTime departure, System.DateTime arrival);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetFlightResponse")]
+        ServiceReference1.Flight GetFlight(int flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetFlightResponse")]
         System.Threading.Tasks.Task<ServiceReference1.Flight> GetFlightAsync(int flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlights", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlightsResponse")]
-        System.Threading.Tasks.Task<ServiceReference1.Flight[]> ListActiveFlightsAsync();
+        System.Collections.Generic.List<ServiceReference1.Flight> ListActiveFlights();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlights", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/ListActiveFlightsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ServiceReference1.Flight>> ListActiveFlightsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlightResponse")]
+        ServiceReference1.SuccessState CompleteFlight(string flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/CompleteFlightResponse")]
         System.Threading.Tasks.Task<ServiceReference1.SuccessState> CompleteFlightAsync(string flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/RemoveFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/RemoveFlightResponse")]
+        ServiceReference1.SuccessState RemoveFlight(int flightID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/RemoveFlight", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/RemoveFlightResponse")]
         System.Threading.Tasks.Task<ServiceReference1.SuccessState> RemoveFlightAsync(int flightID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeats", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeatsResponse")]
-        System.Threading.Tasks.Task<ServiceReference1.Seat[]> GetAllSeatsAsync(int flight_id);
+        System.Collections.Generic.List<ServiceReference1.Seat> GetAllSeats(int flight_id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeats", ReplyAction="http://tempuri.org/Flight_ControllerServiceIF/GetAllSeatsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ServiceReference1.Seat>> GetAllSeatsAsync(int flight_id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
@@ -280,9 +298,19 @@ namespace ServiceReference1
         {
         }
         
+        public int NewFlight(string modelNo, System.DateTime departure, System.DateTime arrival)
+        {
+            return base.Channel.NewFlight(modelNo, departure, arrival);
+        }
+        
         public System.Threading.Tasks.Task<int> NewFlightAsync(string modelNo, System.DateTime departure, System.DateTime arrival)
         {
             return base.Channel.NewFlightAsync(modelNo, departure, arrival);
+        }
+        
+        public ServiceReference1.Flight GetFlight(int flightID)
+        {
+            return base.Channel.GetFlight(flightID);
         }
         
         public System.Threading.Tasks.Task<ServiceReference1.Flight> GetFlightAsync(int flightID)
@@ -290,9 +318,19 @@ namespace ServiceReference1
             return base.Channel.GetFlightAsync(flightID);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Flight[]> ListActiveFlightsAsync()
+        public System.Collections.Generic.List<ServiceReference1.Flight> ListActiveFlights()
+        {
+            return base.Channel.ListActiveFlights();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ServiceReference1.Flight>> ListActiveFlightsAsync()
         {
             return base.Channel.ListActiveFlightsAsync();
+        }
+        
+        public ServiceReference1.SuccessState CompleteFlight(string flightID)
+        {
+            return base.Channel.CompleteFlight(flightID);
         }
         
         public System.Threading.Tasks.Task<ServiceReference1.SuccessState> CompleteFlightAsync(string flightID)
@@ -300,12 +338,22 @@ namespace ServiceReference1
             return base.Channel.CompleteFlightAsync(flightID);
         }
         
+        public ServiceReference1.SuccessState RemoveFlight(int flightID)
+        {
+            return base.Channel.RemoveFlight(flightID);
+        }
+        
         public System.Threading.Tasks.Task<ServiceReference1.SuccessState> RemoveFlightAsync(int flightID)
         {
             return base.Channel.RemoveFlightAsync(flightID);
         }
         
-        public System.Threading.Tasks.Task<ServiceReference1.Seat[]> GetAllSeatsAsync(int flight_id)
+        public System.Collections.Generic.List<ServiceReference1.Seat> GetAllSeats(int flight_id)
+        {
+            return base.Channel.GetAllSeats(flight_id);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ServiceReference1.Seat>> GetAllSeatsAsync(int flight_id)
         {
             return base.Channel.GetAllSeatsAsync(flight_id);
         }

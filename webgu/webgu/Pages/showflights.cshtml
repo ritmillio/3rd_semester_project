@@ -4,22 +4,39 @@
     ViewData["Title"] = "showflights";
 }
 
-<div class="contaier">
-    <div class="tbl">
+@{
+    List<ServiceReference1.Flight> flights;
+    flights = Model.GetFlights();
+
+}
+<div class="text-center">
+    <div class="display-flights">
         <table>
             <tr>
-                <th>From</th>
-                <th>To</th>
-                <th>DepartureTime</th>
-                <th>ArrivalTime</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>FLight ID</th>
             </tr>
             <tr>
-                <th class="filltable"></th>
-                <th class="filltable"></th>
-                <th class="filltable"></th>
-                <th class="filltable"></th>
+                @foreach (var flight in flights)
+                {
+                    <th>@flight.DepartureLocation</th>
+                    <th>@flight.Destination</th>
+                    <th>@flight.DepartureTime</th>
+                    <th>@flight.ArrivalTime</th>
+                    <th>@flight.FlightNo</th>
+                    <th><input type="radio" name="submit" value="flight" />Select Flight</th>
+                }
             </tr>
         </table>
+        <div class="next-button">
+            <button>Select Seat</button>
+        </div>
+        @{ 
+            var number = Request.Form["submit"];
+        }
+        <p>@number</p>
     </div>
 </div>
-

@@ -6723,11 +6723,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PhilipBraarup\\source\\repos\\webgu\\webgu\\webgu.csproj",
+      "projectUniqueName": "C:\\Users\\PhilipBraarup\\Desktop\\3rdSemProjV4\\DataScience3rdSemesterProjectGroup3\\webgu\\webgu\\webgu.csproj",
       "projectName": "webgu",
-      "projectPath": "C:\\Users\\PhilipBraarup\\source\\repos\\webgu\\webgu\\webgu.csproj",
+      "projectPath": "C:\\Users\\PhilipBraarup\\Desktop\\3rdSemProjV4\\DataScience3rdSemesterProjectGroup3\\webgu\\webgu\\webgu.csproj",
       "packagesPath": "C:\\Users\\PhilipBraarup\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PhilipBraarup\\source\\repos\\webgu\\webgu\\obj\\",
+      "outputPath": "C:\\Users\\PhilipBraarup\\Desktop\\3rdSemProjV4\\DataScience3rdSemesterProjectGroup3\\webgu\\webgu\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

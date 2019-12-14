@@ -9,10 +9,16 @@ namespace webgu
 {
     public class showflightsModel : PageModel
     {
-        
+        public ServiceReference1.Flight_ControllerServiceIFClient proxy  = new ServiceReference1.Flight_ControllerServiceIFClient();
+       
         public void OnGet()
         {
-           
+            
+        }
+        public List<ServiceReference1.Flight> GetFlights()
+        {
+            ServiceReference1.Flight_ControllerServiceIFClient proxy = new ServiceReference1.Flight_ControllerServiceIFClient();
+            return proxy.ListActiveFlights();
         }
     }
 }

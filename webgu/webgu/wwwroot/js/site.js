@@ -3,8 +3,8 @@
 
 // Write your Javascript code.
 var button = document.getElementById("buttonsubmit");
-
-function showFlights() {
-    window.location.href("showflights.cshtml");
+function redirect() {
+    
 }
-window.onlick = showFlights;
+
+button.onclick = redirect();
