@@ -10,7 +10,7 @@ namespace AirlineReservations.Database_Layer
         Seat GetSeatById(string seatId);
         SuccessState DeleteSeat(string seatId);
         SuccessState DeleteSeatByFlightId(int flightId);
-        SuccessState UpdateSeat(Seat seat, bool remove = false, SqlCommand command = null);
+        SuccessState UpdateSeat(Seat seat, bool remove = false);
         List<Seat> GetAllSeatsByFlight(int flightId);
         List<Seat> GetSeatByBookingNo(int bookingNo);
         SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, string seatType, double price);

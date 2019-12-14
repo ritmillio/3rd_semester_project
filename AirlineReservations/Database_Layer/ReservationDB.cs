@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Transactions;
 using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Database_Layer
@@ -24,30 +25,31 @@ namespace AirlineReservations.Database_Layer
         {
             int result;
             var deleteReservation = "DELETE FROM Reservation WHERE bookingNo = @bookingNo";
-            
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+
+            using (var scope = new TransactionScope())
             {
-                _con.Open();
-                var transaction = _con.BeginTransaction("Delete Reservation");
-
-                
-                var seats = _seatDb.GetSeatByBookingNo(bookingNo);
-                foreach (var seat in seats)
+                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
                 {
-                    var output = _seatDb.UpdateSeat(seat, true, new SqlCommand(){Connection = _con, Transaction = transaction});
-                    if (output == SuccessState.Success) continue;
-                    transaction.Rollback();
-                    return SuccessState.DbUnreachable;
-                }
-                
-                using (var command = new SqlCommand(deleteReservation, _con, transaction))
-                {
-                    command.Parameters.AddWithValue("@bookingNo", bookingNo);
-                    result = command.ExecuteNonQuery();
-                }
-                transaction.Commit();
+                    _con.Open();
+                    var seats = _seatDb.GetSeatByBookingNo(bookingNo);
+                    foreach (var seat in seats)
+                    {
+                        var output = _seatDb.UpdateSeat(seat, true);
+                        if (output == SuccessState.Success) continue;
+                        return SuccessState.DbUnreachable;
+                    }
 
+                    using (var command = new SqlCommand(deleteReservation, _con))
+                    {
+                        command.Parameters.AddWithValue("@bookingNo", bookingNo);
+                        result = command.ExecuteNonQuery();
+                    }
+
+                    if (result != 1) return SuccessState.DbUnreachable;
+                }
+                scope.Complete();
             }
+
             return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
 
@@ -91,46 +93,53 @@ namespace AirlineReservations.Database_Layer
             int bookingNo;
             var insertReservation = "INSERT INTO Reservation(price, customerId)" +
                                     "VALUES(@price, @customerId)" + "SELECT SCOPE_IDENTITY()";
-            
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
-            { 
-                _con.Open();
-                var transaction = _con.BeginTransaction("Insert Reservation");
-                using (var command = new SqlCommand(insertReservation, _con, transaction))
-                {
-                    command.Parameters.AddWithValue("@price", reservation.Price);
-                    command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
-                    var result = command.ExecuteScalar();
-                    var resultString = result.ToString();
-                    bookingNo = int.Parse(resultString);
 
-                }
-
-                foreach (var seat in seats)
+            using (var scope = new TransactionScope())
+            {
+                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
                 {
-                    seat.BookingNo = bookingNo;
-                    var result = _seatDb.UpdateSeat(seat,false, new SqlCommand(){Connection = _con, Transaction = transaction});
-                    if (result == SuccessState.Success) continue;
-                    transaction.Rollback();
-                    return 0;
+                    _con.Open();
+                    using (var command = new SqlCommand(insertReservation, _con))
+                    {
+                        command.Parameters.AddWithValue("@price", reservation.Price);
+                        command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
+                        var result = command.ExecuteScalar();
+                        var resultString = result.ToString();
+                        bookingNo = int.Parse(resultString);
+                    }
+
+                    foreach (var seat in seats)
+                    {
+                        seat.BookingNo = bookingNo;
+                        //Abort transaction if the seat is already booked
+                        if (_seatDb.GetSeatById(seat.SeatId).BookingNo == bookingNo) return 0;
+                        var result = _seatDb.UpdateSeat(seat);
+                        if (result == SuccessState.Success) continue;
+                        return 0;
+                    }
                 }
-                transaction.Commit();
+                scope.Complete();
             }
+
             return bookingNo;
         }
 
         public SuccessState UpdateReservation(int bookingNo, Reservation reservation)
         {
-            _con = new SqlConnection(_conStringBuilder.ConnectionString);
-            _con.Open();
             int result;
             var insertReservation =
                 "UPDATE Reservation SET numberOfSeats = @numberOfSeats, price = @price WHERE bookingNo = @bookingNo";
-            using (var command = new SqlCommand(insertReservation, _con))
+            
+            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
             {
-                command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
-                command.Parameters.AddWithValue("@price", reservation.Price);
-                result = command.ExecuteNonQuery();
+                _con.Open();
+                using (var command = new SqlCommand(insertReservation, _con))
+                {
+                    command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
+                    command.Parameters.AddWithValue("@price", reservation.Price);
+                    result = command.ExecuteNonQuery();
+                }
+
             }
 
             return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
