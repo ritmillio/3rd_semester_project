@@ -18,6 +18,11 @@ namespace webgu.Pages
             ServiceReference1.Flight_ControllerServiceIFClient proxy = new ServiceReference1.Flight_ControllerServiceIFClient();
             return proxy.ListActiveFlights();
         }
+        public void getUserInput()
+        {
+            var userInput = Request.Form["submit"];
+            
+        }
         
     }
 }

@@ -131,15 +131,11 @@ C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.TagHelpers.input.cache
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.TagHelpers.output.cache
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.RazorCoreGenerate.cache
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\airbus380.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Index.cshtml.g.cs
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Privacy.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_Layout.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\showflights.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewImports.cshtml.g.cs
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewStart.cshtml.g.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.RazorTargetAssemblyInfo.cache
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.RazorTargetAssemblyInfo.cs
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.dll
@@ -241,5 +237,4 @@ C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\bin\Debug\netcoreapp3.1\runtimes\win7\lib\netstandard2.0\System.Private.ServiceModel.dll
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.Views.pdb
 C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\webgu.csproj.CopyComplete
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\aa.cshtml.g.cs
-C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\tisztazat.cshtml.g.cs
+C:\Users\PhilipBraarup\Desktop\3rdSemProjV4\DataScience3rdSemesterProjectGroup3\webgu\webgu\obj\Debug\netcoreapp3.1\Razor\Pages\seatreservation.cshtml.g.cs

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace webgu
 {
-    public class aaModel : PageModel
+    public class seatreservationModel : PageModel
     {
         public void OnGet()
         {
