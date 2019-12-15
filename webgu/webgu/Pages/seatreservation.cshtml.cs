@@ -9,6 +9,16 @@ namespace webgu
 {
     public class seatreservationModel : PageModel
     {
+        ServiceReference1.Flight_ControllerServiceIFClient proxy;
+        List<ServiceReference1.Seat> seats;
+
+        public seatreservationModel()
+        {
+            proxy = new ServiceReference1.Flight_ControllerServiceIFClient();
+            //seats = proxy.GetAllSeats();
+        }
+
+
         public void OnGet()
         {
 
