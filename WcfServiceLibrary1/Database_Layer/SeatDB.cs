@@ -81,8 +81,14 @@ namespace AirlineReservations.Database_Layer
         public Seat GetSeatById(string seatId, SqlConnection con = null)
         {
             var getSeat = "SELECT * FROM Seat WHERE seatId = @seatId";
+            var newConFlag = false;
             Seat seat = null;
-            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
+            if (con == null)
+            {
+                con = new SqlConnection(conStringBuilder.ConnectionString);
+                newConFlag = true;
+            }
+
 
             //Open connection and write query with placeholder value
             con.Open();
@@ -93,7 +99,9 @@ namespace AirlineReservations.Database_Layer
                 var dataReader = command.ExecuteReader();
                 if (dataReader.Read()) seat = ObjectBuilder(dataReader);
             }
-
+            
+            // dispose connection if it was created here
+            if (newConFlag) con.Dispose();
             return seat;
         }
 
@@ -146,10 +154,15 @@ namespace AirlineReservations.Database_Layer
         public SuccessState UpdateSeat(Seat seat, bool remove = false, SqlConnection con = null)
         {
             var result = 0;
+            var newConFlag = false;
             var updateSeat = "UPDATE Seat SET seatType = @seatType, price = @price, " +
                              "bookingNo = @bookingNo WHERE seatId = @seatId";
 
-            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
+            if (con == null)
+            {
+                con = new SqlConnection(conStringBuilder.ConnectionString);
+                newConFlag = true;
+            }
 
             //Open connection and write query with placeholder values
             con.Open();
@@ -167,7 +180,10 @@ namespace AirlineReservations.Database_Layer
 
                 result = command.ExecuteNonQuery();
             }
-
+            
+            // dispose connection if it was created here
+            if (newConFlag) con.Dispose();
+            
             //Return SuccessState based on amount of rows changed in DB
             return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;
         }
@@ -176,11 +192,16 @@ namespace AirlineReservations.Database_Layer
             SqlConnection con = null)
         {
             //Creates Database Query String with 1 additional set of values for each numberOfSeats
+            var result = 0;
+            var newConFlag = false;
             var insertSeat = "INSERT INTO Seat(seatId, seatType, price, flightId) " +
                              "VALUES(@seatId, @seatType, @price, @flightId)";
-            var result = 0;
 
-            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
+            if (con == null)
+            {
+                con = new SqlConnection(conStringBuilder.ConnectionString);
+                newConFlag = true;
+            }
 
             //Open connection
             con.Open();
@@ -200,6 +221,8 @@ namespace AirlineReservations.Database_Layer
                     result += command.ExecuteNonQuery();
                 }
             }
+            // dispose connection if it was created here
+            if (newConFlag) con.Dispose();
 
             //Return SuccessState based on amount of rows added in DB
             return result == numberOfSeats ? SuccessState.Success : SuccessState.BadInput;

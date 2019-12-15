@@ -47,9 +47,15 @@ namespace AirlineReservations.Database_Layer
         public Model GetModelById(string modelId, SqlConnection con = null)
         {
             Model model = null;
+            var newConFlag = false;
             string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
-            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
-            
+            if (con == null)
+            {
+                con = new SqlConnection(conStringBuilder.ConnectionString);
+                newConFlag = true;
+            }
+
+
             //Open connection and write query with placeholder value
                 con.Open();
                 using (var command = new SqlCommand(getModel, con))
@@ -62,6 +68,9 @@ namespace AirlineReservations.Database_Layer
                         model = ObjectBuilder(dataReader);
                     }
                 }
+                
+            // Dispose the connection if it was created here
+            if (newConFlag) con.Dispose();
             return model;
         }
 
