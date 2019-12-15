@@ -184,7 +184,7 @@ namespace GUI.ServiceReference2 {
             return base.Channel.NewReservation(seats, customer_id);
         }
         
-        public System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id) {
+        public System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id = 1) {
             return base.Channel.NewReservationAsync(seats, customer_id);
         }
         

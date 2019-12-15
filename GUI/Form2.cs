@@ -69,7 +69,7 @@ namespace GUI
            //Must select at least one seat to create a reservation
            if(selectedSeats.Count >= 1)
             {
-                int bookingNo = proxy2.NewReservation(selectedSeats);
+                int bookingNo = proxy2.NewReservation(selectedSeats, 1);
 
                 //Creates and shows message with booking confirmation and details
                 string confirmationMessage = "Your Reservation has been booked." +
