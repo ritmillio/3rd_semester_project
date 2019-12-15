@@ -52,12 +52,12 @@ namespace AirlineReservations.Database_Layer
             if (con == null)
             {
                 con = new SqlConnection(conStringBuilder.ConnectionString);
+                con.Open();
                 newConFlag = true;
             }
 
 
             //Open connection and write query with placeholder value
-                con.Open();
                 using (var command = new SqlCommand(getModel, con))
                 {
                     //Replace placeholder value and execute SqlDataReader. Build and return object.
