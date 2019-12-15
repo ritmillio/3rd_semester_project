@@ -50,11 +50,10 @@ namespace AirlineReservations.Database_Layer
                 //Open connection and write query with placeholder value
                 using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
-                    con.Open();
-
                     //Delete seats associated with the flight
                     var output = _seatdb.DeleteSeatByFlightId(flightNo);
-
+                    con.Open();
+                    
                     //Abort transaction if it failed, before an imminent foreign key error
                     if (output != SuccessState.Success) return SuccessState.DbUnreachable;
 
@@ -146,13 +145,14 @@ namespace AirlineReservations.Database_Layer
                         var result = command.ExecuteScalar().ToString();
                         flightId = int.Parse(result);
                     }
-
-                    var model = _modeldb.GetModelById(flight.Model, con);
-                    var output = _seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00, con);
+                    con.Dispose();
                     
-                    //Abort transaction if seats could not be entered
-                    if (output != SuccessState.Success) return 0;
                 }
+                //Abort transaction if seats could not be entered 
+                var model = _modeldb.GetModelById(flight.Model);
+                var output = _seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
+                if (output != SuccessState.Success) return 0;
+
                 scope.Complete();
             }
 

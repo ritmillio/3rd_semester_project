@@ -44,18 +44,13 @@ namespace AirlineReservations.Database_Layer
             return result == 0 ? SuccessState.DbUnreachable : SuccessState.Success;
         }
 
-        public Model GetModelById(string modelId, SqlConnection con = null)
+        public Model GetModelById(string modelId)
         {
             Model model = null;
-            var newConFlag = false;
             string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
-            if (con == null)
-            {
-                con = new SqlConnection(conStringBuilder.ConnectionString);
-                con.Open();
-                newConFlag = true;
-            }
-
+           
+            SqlConnection con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
 
             //Open connection and write query with placeholder value
                 using (var command = new SqlCommand(getModel, con))
@@ -70,7 +65,7 @@ namespace AirlineReservations.Database_Layer
                 }
                 
             // Dispose the connection if it was created here
-            if (newConFlag) con.Dispose();
+            con.Dispose();
             return model;
         }
 

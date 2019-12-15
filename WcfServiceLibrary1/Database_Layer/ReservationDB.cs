@@ -28,16 +28,18 @@ namespace AirlineReservations.Database_Layer
 
             using (var scope = new TransactionScope(TransactionScopeOption.Required, transOptions))
             {
+                var seats = _seatDb.GetSeatByBookingNo(bookingNo);
+                foreach (var seat in seats)
+                {
+                    var output = _seatDb.UpdateSeat(seat, true);
+                    if (output == SuccessState.Success) continue;
+                    return SuccessState.DbUnreachable;
+                }
                 using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
                     con.Open();
-                    var seats = _seatDb.GetSeatByBookingNo(bookingNo);
-                    foreach (var seat in seats)
-                    {
-                        var output = _seatDb.UpdateSeat(seat, true);
-                        if (output == SuccessState.Success) continue;
-                        return SuccessState.DbUnreachable;
-                    }
+                    
+                    
 
                     using (var command = new SqlCommand(deleteReservation, con))
                     {
@@ -112,17 +114,17 @@ namespace AirlineReservations.Database_Layer
                         bookingNo = int.Parse(resultString);
                     }
 
-                    foreach (var seat in seats)
-                    {
-                        seat.BookingNo = bookingNo;
-                        //Abort transaction if the seat is already booked
-                        if (_seatDb.GetSeatById(seat.SeatId, con).BookingNo == bookingNo) return 0;
-                        var result = _seatDb.UpdateSeat(seat, false, con);
-                        if (result == SuccessState.Success) continue;
-                        return 0;
-                    }
+                    
                 }
-
+                foreach (var seat in seats)
+                {
+                    seat.BookingNo = bookingNo;
+                    //Abort transaction if the seat is already booked
+                    if (_seatDb.GetSeatById(seat.SeatId).BookingNo == bookingNo) return 0;
+                    var result = _seatDb.UpdateSeat(seat, false);
+                    if (result == SuccessState.Success) continue;
+                    return 0;
+                }
                 scope.Complete();
             }
 
