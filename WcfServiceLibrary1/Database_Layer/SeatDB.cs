@@ -43,10 +43,15 @@ namespace AirlineReservations.Database_Layer
         {
             int result;
             var deleteSeat = "DELETE FROM Seat WHERE flightId = @flightId";
-            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
+            var newConFlag = false;
+            if (con == null)
+            {
+                con = new SqlConnection(conStringBuilder.ConnectionString);
+                con.Open();
+                newConFlag = true;
+            }
 
             //Open connection and write query with placeholder value
-            con.Open();
             using (var command = new SqlCommand(deleteSeat, con))
             {
                 //Replace placeholder parameters and execute query
@@ -54,6 +59,8 @@ namespace AirlineReservations.Database_Layer
                 result = command.ExecuteNonQuery();
             }
 
+            // dispose connection if it was created here
+            if (newConFlag) con.Dispose();
             return result >= 1 ? SuccessState.Success : SuccessState.BadInput;
         }
 
@@ -86,12 +93,12 @@ namespace AirlineReservations.Database_Layer
             if (con == null)
             {
                 con = new SqlConnection(conStringBuilder.ConnectionString);
+                con.Open();
                 newConFlag = true;
             }
 
 
             //Open connection and write query with placeholder value
-            con.Open();
             using (var command = new SqlCommand(getSeat, con))
             {
                 //Replace placeholder value, execute SqlDataReader, and build object
@@ -161,12 +168,11 @@ namespace AirlineReservations.Database_Layer
             if (con == null)
             {
                 con = new SqlConnection(conStringBuilder.ConnectionString);
+                con.Open();
                 newConFlag = true;
             }
 
-            //Open connection and write query with placeholder values
-            con.Open();
-
+            //write query with placeholder values
             using (var command = new SqlCommand(updateSeat, con))
             {
                 //Replace placeholder values and execute query
@@ -200,12 +206,9 @@ namespace AirlineReservations.Database_Layer
             if (con == null)
             {
                 con = new SqlConnection(conStringBuilder.ConnectionString);
+                con.Open();
                 newConFlag = true;
             }
-
-            //Open connection
-            con.Open();
-
 
             //Replaces placeholder values and inserts query into database
             using (var command = new SqlCommand(insertSeat, con))
