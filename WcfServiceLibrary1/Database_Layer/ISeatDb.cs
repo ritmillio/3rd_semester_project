@@ -7,12 +7,12 @@ namespace AirlineReservations.Database_Layer
     public interface ISeatDb
     {
         SuccessState InsertSeat(Seat seat);
-        Seat GetSeatById(string seatId);
+        Seat GetSeatById(string seatId, SqlConnection con = null);
         SuccessState DeleteSeat(string seatId);
-        SuccessState DeleteSeatByFlightId(int flightId);
-        SuccessState UpdateSeat(Seat seat, bool remove = false);
+        SuccessState DeleteSeatByFlightId(int flightId, SqlConnection con = null);
+        SuccessState UpdateSeat(Seat seat, bool remove = false, SqlConnection con = null);
         List<Seat> GetAllSeatsByFlight(int flightId);
         List<Seat> GetSeatByBookingNo(int bookingNo);
-        SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, string seatType, double price);
+        SuccessState InsertMultipleSeats(int numberOfSeats, int flightId, string seatType, double price, SqlConnection con = null);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Transactions;
 using AirlineReservations.Model_Layer;
@@ -8,16 +7,15 @@ namespace AirlineReservations.Database_Layer
 {
     public class ReservationDb : IReservationDb
     {
-        private SqlConnection _con;
-        private readonly SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
         private readonly ISeatDb _seatDb;
+        private readonly SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
 
         public ReservationDb()
         {
-            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            _conStringBuilder.DataSource = "kraka.ucn.dk";
-            _conStringBuilder.UserID = "dmaa0918_1071480";
-            _conStringBuilder.Password = "Password1!";
+            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            conStringBuilder.DataSource = "kraka.ucn.dk";
+            conStringBuilder.UserID = "dmaa0918_1071480";
+            conStringBuilder.Password = "Password1!";
             _seatDb = new SeatDb();
         }
 
@@ -25,12 +23,14 @@ namespace AirlineReservations.Database_Layer
         {
             int result;
             var deleteReservation = "DELETE FROM Reservation WHERE bookingNo = @bookingNo";
+            var transOptions = new TransactionOptions();
+            transOptions.IsolationLevel = IsolationLevel.ReadCommitted;
 
-            using (var scope = new TransactionScope())
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, transOptions))
             {
-                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+                using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
-                    _con.Open();
+                    con.Open();
                     var seats = _seatDb.GetSeatByBookingNo(bookingNo);
                     foreach (var seat in seats)
                     {
@@ -39,7 +39,7 @@ namespace AirlineReservations.Database_Layer
                         return SuccessState.DbUnreachable;
                     }
 
-                    using (var command = new SqlCommand(deleteReservation, _con))
+                    using (var command = new SqlCommand(deleteReservation, con))
                     {
                         command.Parameters.AddWithValue("@bookingNo", bookingNo);
                         result = command.ExecuteNonQuery();
@@ -47,6 +47,7 @@ namespace AirlineReservations.Database_Layer
 
                     if (result != 1) return SuccessState.DbUnreachable;
                 }
+
                 scope.Complete();
             }
 
@@ -57,33 +58,34 @@ namespace AirlineReservations.Database_Layer
         {
             var getAllReservations = "SELECT * FROM Reservation";
             var reservations = new List<Reservation>();
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
+                con.Open();
 
-                using (var command = new SqlCommand(getAllReservations, _con))
+                using (var command = new SqlCommand(getAllReservations, con))
                 {
                     var dataReader = command.ExecuteReader();
                     while (dataReader.Read()) reservations.Add(ObjectBuilder(dataReader));
                 }
             }
+
             return reservations;
         }
 
         public Reservation GetReservationById(int bookingNo)
         {
-            _con = new SqlConnection(_conStringBuilder.ConnectionString);
-            _con.Open();
+            var con = new SqlConnection(conStringBuilder.ConnectionString);
+            con.Open();
             var getReservation = "SELECT * FROM Reservation WHERE bookingNo = @bookingNo";
             Reservation reservation = null;
-            using (var command = new SqlCommand(getReservation, _con))
+            using (var command = new SqlCommand(getReservation, con))
             {
                 command.Parameters.AddWithValue("@bookingNo", bookingNo);
                 var dataReader = command.ExecuteReader();
                 if (dataReader.Read()) reservation = ObjectBuilder(dataReader);
             }
 
-            _con.Dispose();
+            con.Dispose();
             return reservation;
         }
 
@@ -93,13 +95,15 @@ namespace AirlineReservations.Database_Layer
             int bookingNo;
             var insertReservation = "INSERT INTO Reservation(price, customerId)" +
                                     "VALUES(@price, @customerId)" + "SELECT SCOPE_IDENTITY()";
+            var transOptions = new TransactionOptions();
+            transOptions.IsolationLevel = IsolationLevel.ReadCommitted;
 
-            using (var scope = new TransactionScope())
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, transOptions))
             {
-                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+                using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
-                    _con.Open();
-                    using (var command = new SqlCommand(insertReservation, _con))
+                    con.Open();
+                    using (var command = new SqlCommand(insertReservation, con))
                     {
                         command.Parameters.AddWithValue("@price", reservation.Price);
                         command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
@@ -112,12 +116,13 @@ namespace AirlineReservations.Database_Layer
                     {
                         seat.BookingNo = bookingNo;
                         //Abort transaction if the seat is already booked
-                        if (_seatDb.GetSeatById(seat.SeatId).BookingNo == bookingNo) return 0;
-                        var result = _seatDb.UpdateSeat(seat);
+                        if (_seatDb.GetSeatById(seat.SeatId, con).BookingNo == bookingNo) return 0;
+                        var result = _seatDb.UpdateSeat(seat, false, con);
                         if (result == SuccessState.Success) continue;
                         return 0;
                     }
                 }
+
                 scope.Complete();
             }
 
@@ -129,17 +134,16 @@ namespace AirlineReservations.Database_Layer
             int result;
             var insertReservation =
                 "UPDATE Reservation SET numberOfSeats = @numberOfSeats, price = @price WHERE bookingNo = @bookingNo";
-            
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(insertReservation, _con))
+                con.Open();
+                using (var command = new SqlCommand(insertReservation, con))
                 {
                     command.Parameters.AddWithValue("@bookingNo", reservation.BookingNo);
                     command.Parameters.AddWithValue("@price", reservation.Price);
                     result = command.ExecuteNonQuery();
                 }
-
             }
 
             return result == 1 ? SuccessState.Success : SuccessState.DbUnreachable;

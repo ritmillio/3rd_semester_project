@@ -5,15 +5,14 @@ namespace AirlineReservations.Database_Layer
 {
     public class ModelDb : IModelDb
     {
-        private SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
-        private SqlConnection _con;
+        private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
 
         public ModelDb()
         {
-            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            _conStringBuilder.DataSource = "kraka.ucn.dk";
-            _conStringBuilder.UserID = "dmaa0918_1071480";
-            _conStringBuilder.Password = "Password1!";
+            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            conStringBuilder.DataSource = "kraka.ucn.dk";
+            conStringBuilder.UserID = "dmaa0918_1071480";
+            conStringBuilder.Password = "Password1!";
         }
 
         //Builds Model object with data from SqlDataReader
@@ -29,10 +28,10 @@ namespace AirlineReservations.Database_Layer
             int result;
             
             //Open connection and write query with placeholder value
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(deleteModel, _con))
+                con.Open();
+                using (var command = new SqlCommand(deleteModel, con))
                 {
                     //Replace placeholder value and execute query
                     command.Parameters.AddWithValue("@modelId", modelId);
@@ -45,16 +44,15 @@ namespace AirlineReservations.Database_Layer
             return result == 0 ? SuccessState.DbUnreachable : SuccessState.Success;
         }
 
-        public Model GetModelById(string modelId)
+        public Model GetModelById(string modelId, SqlConnection con = null)
         {
             Model model = null;
             string getModel = "SELECT * FROM Model WHERE modelId = @modelId";
+            if (con == null) con = new SqlConnection(conStringBuilder.ConnectionString);
             
             //Open connection and write query with placeholder value
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
-            {
-                _con.Open();
-                using (var command = new SqlCommand(getModel, _con))
+                con.Open();
+                using (var command = new SqlCommand(getModel, con))
                 {
                     //Replace placeholder value and execute SqlDataReader. Build and return object.
                     command.Parameters.AddWithValue("@modelId", modelId);
@@ -64,7 +62,6 @@ namespace AirlineReservations.Database_Layer
                         model = ObjectBuilder(dataReader);
                     }
                 }
-            }
             return model;
         }
 
@@ -74,10 +71,10 @@ namespace AirlineReservations.Database_Layer
             int result;
             
             //Open connection and write query with placeholder values
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(insertModel, _con))
+                con.Open();
+                using (var command = new SqlCommand(insertModel, con))
                 {
                     //Replace placeholder values and execute query
                     command.Parameters.AddWithValue("@modelId", model.Id);
@@ -97,10 +94,10 @@ namespace AirlineReservations.Database_Layer
             int result;
             
             //Open connection and write query with placeholder values
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(updateModel, _con))
+                con.Open();
+                using (var command = new SqlCommand(updateModel, con))
                 {
                     //Replace placeholder values and execute query
                     command.Parameters.AddWithValue("numberOfSeats", model.NumberOfSeats);
