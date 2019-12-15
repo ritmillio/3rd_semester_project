@@ -114,13 +114,14 @@ namespace AirlineReservations.Database_Layer
                         bookingNo = int.Parse(resultString);
                     }
 
-                    
+
                 }
                 foreach (var seat in seats)
                 {
                     seat.BookingNo = bookingNo;
                     //Abort transaction if the seat is already booked
-                    if (_seatDb.GetSeatById(seat.SeatId).BookingNo == bookingNo) return 0;
+                    var seatFromDB = _seatDb.GetSeatById(seat.SeatId);
+                    if (seatFromDB == null || seatFromDB.BookingNo == bookingNo) return 0;
                     var result = _seatDb.UpdateSeat(seat, false);
                     if (result == SuccessState.Success) continue;
                     return 0;
