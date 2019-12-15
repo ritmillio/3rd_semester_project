@@ -8,8 +8,7 @@ namespace AirlineReservations.Database_Layer
 {
     public class FlightDb : IFlightDb
     {
-        private SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
-        private SqlConnection _con;
+        private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
         private ISeatDb _seatdb;
         private IModelDb _modeldb;
 
@@ -18,10 +17,10 @@ namespace AirlineReservations.Database_Layer
             _seatdb = new SeatDb();
             _modeldb = new ModelDb();
 
-            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            _conStringBuilder.DataSource = "kraka.ucn.dk";
-            _conStringBuilder.UserID = "dmaa0918_1071480";
-            _conStringBuilder.Password = "Password1!";
+            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            conStringBuilder.DataSource = "kraka.ucn.dk";
+            conStringBuilder.UserID = "dmaa0918_1071480";
+            conStringBuilder.Password = "Password1!";
         }
 
         private Flight ObjectBuilder(SqlDataReader dataReader)
@@ -44,13 +43,14 @@ namespace AirlineReservations.Database_Layer
         {
             string deleteFlight = "DELETE FROM Flight WHERE flightId = @flightId";
             int result;
+            var transOptions = new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted};
 
-            using (var scope = new TransactionScope())
+            using (var scope = new TransactionScope(TransactionScopeOption.Required,  transOptions))
             {
                 //Open connection and write query with placeholder value
-                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+                using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
-                    _con.Open();
+                    con.Open();
 
                     //Delete seats associated with the flight
                     var output = _seatdb.DeleteSeatByFlightId(flightNo);
@@ -58,7 +58,7 @@ namespace AirlineReservations.Database_Layer
                     //Abort transaction if it failed, before an imminent foreign key error
                     if (output != SuccessState.Success) return SuccessState.DbUnreachable;
 
-                    using (var command = new SqlCommand(deleteFlight, _con))
+                    using (var command = new SqlCommand(deleteFlight, con))
                     {
                         //Replace placeholder value and execute query
                         command.Parameters.AddWithValue("@flightId", flightNo);
@@ -78,11 +78,11 @@ namespace AirlineReservations.Database_Layer
             string getAllFlights = "SELECT * FROM Flight";
             
             //Open new connection and write query
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
+                con.Open();
 
-                using (var command = new SqlCommand(getAllFlights, _con))
+                using (var command = new SqlCommand(getAllFlights, con))
                 {
                     //Execute SqlDataReader build object.
                     var dataReader = command.ExecuteReader();
@@ -101,10 +101,10 @@ namespace AirlineReservations.Database_Layer
             Flight flight = null;
             
             //Open new connection and write query with placeholder value
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(getFlight, _con))
+                con.Open();
+                using (var command = new SqlCommand(getFlight, con))
                 {
                     //Replace placeholder value and execute SqlDataReader and build object
                     command.Parameters.AddWithValue("@flightId", flightNo);
@@ -113,7 +113,6 @@ namespace AirlineReservations.Database_Layer
                     {
                         flight = ObjectBuilder(dataReader);
                     }
-
                 }
             }
             return flight;
@@ -127,14 +126,15 @@ namespace AirlineReservations.Database_Layer
                                   "destination, modelId) VALUES(@departureTime, @arrivalTime, @departureLocation, @destination, @modelId)" +
                                   "SELECT SCOPE_IDENTITY()";
             int flightId;
+            var transOptions = new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted};
 
-            using (var scope = new TransactionScope())
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, transOptions))
             {
                 //Open connection and write query string with placeholder parameters
-                using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+                using (var con = new SqlConnection(conStringBuilder.ConnectionString))
                 {
-                    _con.Open();
-                    using (var command = new SqlCommand(insertFlight, _con))
+                    con.Open();
+                    using (var command = new SqlCommand(insertFlight, con))
                     {
                         //Replace placeholder parameters and insert string. ExecuteScalar is used to return the flights ID
                         command.Parameters.AddWithValue("@departureTime", flight.DepartureTime);
@@ -147,8 +147,8 @@ namespace AirlineReservations.Database_Layer
                         flightId = int.Parse(result);
                     }
 
-                    var model = _modeldb.GetModelById(flight.Model);
-                    var output = _seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00);
+                    var model = _modeldb.GetModelById(flight.Model, con);
+                    var output = _seatdb.InsertMultipleSeats(model.NumberOfSeats, flightId, "default", 100.00, con);
                     
                     //Abort transaction if seats could not be entered
                     if (output != SuccessState.Success) return 0;
@@ -166,10 +166,10 @@ namespace AirlineReservations.Database_Layer
             int result;
             
             //Open new connection and write query wit placeholder values
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(updateFlight, _con))
+                con.Open();
+                using (var command = new SqlCommand(updateFlight, con))
                 {
                     //Replace placeholder params with actual data and execute query.
                     command.Parameters.AddWithValue("@flightid", flight.FlightNo);

@@ -7,15 +7,14 @@ namespace AirlineReservations.Database_Layer
 {
     public class CustomerDb : ICustomerDb
     {
-        private SqlConnectionStringBuilder _conStringBuilder = new SqlConnectionStringBuilder();
-        private SqlConnection _con;
+        private SqlConnectionStringBuilder conStringBuilder = new SqlConnectionStringBuilder();
 
         public CustomerDb()
         {
-            _conStringBuilder.InitialCatalog = "dmaa0918_1071480";
-            _conStringBuilder.DataSource = "kraka.ucn.dk";
-            _conStringBuilder.UserID = "dmaa0918_1071480";
-            _conStringBuilder.Password = "Password1!";
+            conStringBuilder.InitialCatalog = "dmaa0918_1071480";
+            conStringBuilder.DataSource = "kraka.ucn.dk";
+            conStringBuilder.UserID = "dmaa0918_1071480";
+            conStringBuilder.Password = "Password1!";
 
         }
 
@@ -39,10 +38,10 @@ namespace AirlineReservations.Database_Layer
             int result;
             
             //Open connection and write query with placeholder value
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(deleteCustomer, _con))
+                con.Open();
+                using (var command = new SqlCommand(deleteCustomer, con))
                 {
                     //Replace placeholder value and execute query
                     command.Parameters.AddWithValue("@customerId", customerId);
@@ -61,11 +60,11 @@ namespace AirlineReservations.Database_Layer
             string getAllCustomers = "SELECT * FROM Customer";
             
             //Open connection and write query string
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
+                con.Open();
 
-                using (var command = new SqlCommand(getAllCustomers, _con))
+                using (var command = new SqlCommand(getAllCustomers, con))
                 {
                     //Execute SqlDataReader and build object
                     var dataReader = command.ExecuteReader();
@@ -85,10 +84,10 @@ namespace AirlineReservations.Database_Layer
             string getCustomer = "SELECT * FROM Customer WHERE customerId = @customerId";
             
             //Open connection and write query with placeholder value
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(getCustomer, _con))
+                con.Open();
+                using (var command = new SqlCommand(getCustomer, con))
                 {
                     //Replace placeholder value and execute SqlDataReader. Build object.
                     command.Parameters.AddWithValue("@customerId", customerId);
@@ -110,10 +109,10 @@ namespace AirlineReservations.Database_Layer
                 "VALUES( @customerName, @isAdmin) SELECT SCOPE_IDENTITY()";
             
             //Open connection and write query with placeholder values
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(insertCustomer, _con))
+                con.Open();
+                using (var command = new SqlCommand(insertCustomer, con))
                 {
                     //Replace placeholder values and execute query
                     command.Parameters.AddWithValue("@customerName", cust.Name);
@@ -132,10 +131,10 @@ namespace AirlineReservations.Database_Layer
             string updateCustomer = "UPDATE Customer SET customerName = @customerName, isAdmin = @isAdmin WHERE customerId = @customerId";
             
             //Open connection and write query with placeholder values
-            using (_con = new SqlConnection(_conStringBuilder.ConnectionString))
+            using (var con = new SqlConnection(conStringBuilder.ConnectionString))
             {
-                _con.Open();
-                using (var command = new SqlCommand(updateCustomer, _con))
+                con.Open();
+                using (var command = new SqlCommand(updateCustomer, con))
                 {
                     //Replace placeholder values and execute query
                     command.Parameters.AddWithValue("@customerId", cust.CustomerId);
