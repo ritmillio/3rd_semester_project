@@ -94,12 +94,14 @@ namespace AirlineReservations.Database_Layer
         // Create a reservation, update affected seats
         public int InsertReservation(Reservation reservation, List<Seat> seats)
         {
+            //Write query and set scope isolation level to ReadCommited
             int bookingNo;
             var insertReservation = "INSERT INTO Reservation(price, customerId)" +
                                     "VALUES(@price, @customerId)" + "SELECT SCOPE_IDENTITY()";
             var transOptions = new TransactionOptions();
             transOptions.IsolationLevel = IsolationLevel.ReadCommitted;
 
+            //Start scope and connection
             using (var scope = new TransactionScope(TransactionScopeOption.Required, transOptions))
             {
                 using (var con = new SqlConnection(conStringBuilder.ConnectionString))
@@ -107,6 +109,7 @@ namespace AirlineReservations.Database_Layer
                     con.Open();
                     using (var command = new SqlCommand(insertReservation, con))
                     {
+                        //Replace placeholder parameters in query and ExecuteScalar
                         command.Parameters.AddWithValue("@price", reservation.Price);
                         command.Parameters.AddWithValue("@customerId", reservation.CustomerId);
                         var result = command.ExecuteScalar();
@@ -116,12 +119,14 @@ namespace AirlineReservations.Database_Layer
 
 
                 }
+                //Update seats
                 foreach (var seat in seats)
                 {
                     seat.BookingNo = bookingNo;
                     //Abort transaction if the seat is already booked
                     var seatFromDB = _seatDb.GetSeatById(seat.SeatId);
-                    if (seatFromDB == null || seatFromDB.BookingNo == bookingNo) return 0;
+                    if (seatFromDB == null || seatFromDB.BookingNo >= 1) return 0;
+                    //If seats were successfully updated, complete the scope.
                     var result = _seatDb.UpdateSeat(seat, false);
                     if (result == SuccessState.Success) continue;
                     return 0;

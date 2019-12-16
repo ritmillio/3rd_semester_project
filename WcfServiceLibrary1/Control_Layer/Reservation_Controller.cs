@@ -6,11 +6,11 @@ using AirlineReservations.Model_Layer;
 
 namespace AirlineReservations.Control_Layer
 {
-    public class Reservation_Controller : ReservationServiceIF
+    public class ReservationController : ReservationServiceIF
     {
         private IReservationDb _reserveDb;
         private ISeatDb _seatDb;
-        public Reservation_Controller()
+        public ReservationController()
         {
             this._reserveDb = new ReservationDb();
             this._seatDb = new SeatDb();

@@ -29,7 +29,7 @@ namespace Unit_Tests
             DateTime departure = new DateTime(2019, 1, 12, 14, 0, 0);
             DateTime arrival = new DateTime(2019, 1, 12, 12, 30, 0);
 
-            _modelDb.InsertModel(new Model("reserve_ctr_test", 10));
+            //_modelDb.InsertModel(new Model("reserve_ctr_test", 10));
             this._testFlight = _flightCtr.NewFlight("reserve_ctr_test", departure, arrival);
         }
 
@@ -71,6 +71,24 @@ namespace Unit_Tests
 
             var checkSeat = _seatDb.GetSeatById(seats[0].SeatId);
             Assert.AreEqual(0, checkSeat.BookingNo);
+        }
+
+        [Test]
+        public void ReserveReservedSeats()
+        {
+            var seats = _seatDb.GetSeatByBookingNo(6);
+            var output = _reserveCtr.NewReservation(seats);
+            Assert.AreEqual(0, output);
+        }
+
+        [Test]
+        public void ReserveOneReservedSeatFourAvailable()
+        {
+            var seats = _seatDb.GetSeatByBookingNo(6);
+            decimal deci = (decimal)50.00;
+            seats.Add(new Seat("default", deci, "2.17"));
+            var output = _reserveCtr.NewReservation(seats);
+            Assert.AreEqual(0, output);
         }
 
         [OneTimeTearDown]

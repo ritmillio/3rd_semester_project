@@ -180,11 +180,11 @@ namespace GUI.ServiceReference2 {
                 base(binding, remoteAddress) {
         }
         
-        public int NewReservation(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id = 1) {
+        public int NewReservation(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id) {
             return base.Channel.NewReservation(seats, customer_id);
         }
         
-        public System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id = 1) {
+        public System.Threading.Tasks.Task<int> NewReservationAsync(System.Collections.Generic.List<GUI.ServiceReference2.Seat> seats, int customer_id) {
             return base.Channel.NewReservationAsync(seats, customer_id);
         }
         
