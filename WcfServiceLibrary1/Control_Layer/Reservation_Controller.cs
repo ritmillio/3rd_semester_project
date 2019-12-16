@@ -22,10 +22,9 @@ namespace AirlineReservations.Control_Layer
             //get the full price of the reservation
             var priceSum = seats.Sum(seat => seat.Price);
             var reservation = new Reservation(priceSum, customerId);
-            var seatIds = seats.Select(seat => seat.SeatId).ToList();
             
             //create the reservation, the database will return a booking number
-            var bookingNo = _reserveDb.InsertReservation(reservation, seatIds);
+            var bookingNo = _reserveDb.InsertReservation(reservation, seats);
             
             return bookingNo;
         }
@@ -34,18 +33,7 @@ namespace AirlineReservations.Control_Layer
         public SuccessState ReleaseReservation(int bookingNo)
         {
             // check if the reservation exists
-            if (_reserveDb.GetReservationById(bookingNo) == null)
-            {
-                return SuccessState.BadInput;
-            }
-            
-            var seats = _seatDb.GetSeatByBookingNo(bookingNo);
-            foreach (var seat in seats)
-            {
-                _seatDb.UpdateSeat(seat.SeatId, seat, true);
-            }
-
-            return _reserveDb.DeleteReservation(bookingNo);
+            return _reserveDb.GetReservationById(bookingNo) == null ? SuccessState.BadInput : _reserveDb.DeleteReservation(bookingNo);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace AirlineReservations.Database_Layer
 {
     public interface IReservationDb
     {
-        int InsertReservation(Reservation reservation, List<string> seatIds);
+        int InsertReservation(Reservation reservation, List<Seat> seats);
         Reservation GetReservationById(int bookingNo);
         SuccessState DeleteReservation(int bookingNo);
         SuccessState UpdateReservation(int bookingNo, Reservation reservation);

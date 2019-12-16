@@ -20,6 +20,7 @@ namespace Unit_Tests
 
         public ReservationControlTest()
         {
+            this._seatDb = new SeatDb();
             this._reserveCtr = new ReservationController();
             this._flightCtr = new FlightController();
             this._reserveDb = new ReservationDb();
@@ -62,9 +63,14 @@ namespace Unit_Tests
         public void CreateInvalidReservation()
         {
             var seats = new List<Seat>();
+            // Add 1 valid seat
+            seats.Add(_seatDb.GetAllSeatsByFlight(_testFlight)[0]);
             seats.Add(new Seat("type", 10, "invalidID"));
             var reserveId = _reserveCtr.NewReservation(seats);
             Assert.AreEqual(0, reserveId);
+
+            var checkSeat = _seatDb.GetSeatById(seats[0].SeatId);
+            Assert.AreEqual(0, checkSeat.BookingNo);
         }
 
         [OneTimeTearDown]
