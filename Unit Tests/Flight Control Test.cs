@@ -23,7 +23,7 @@ namespace Unit_Tests
             this._modelDb = new ModelDb();
 
             // temporary test model
-            _modelDb.InsertModel(new Model("flight_ctr_test", 100));
+           // _modelDb.InsertModel(new Model("flight_ctr_test", 100));
             this._departDefault = new DateTime(2019, 1, 12, 12, 30, 0);
             this._arriveDefault = new DateTime(2019, 1, 12, 14, 0, 0);
         }
@@ -49,6 +49,14 @@ namespace Unit_Tests
             var output = this._flightControl.NewFlight("this_model_should_not_exist",
                 this._departDefault, this._arriveDefault);
             Assert.AreEqual(-1, output);
+        }
+
+        [Test]
+        public void AddFlight()
+        {
+            Model model = new Model("Test2", 100);
+            _modelDb.InsertModel(model);
+            _flightControl.NewFlight("Test2", _departDefault, _arriveDefault);
         }
 
         [OneTimeTearDown]

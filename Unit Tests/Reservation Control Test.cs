@@ -11,7 +11,7 @@ namespace Unit_Tests
     [TestFixture]
     public class ReservationControlTest
     {
-        private ReservationController _reserveCtr;
+        private Reservation_Controller _reserveCtr;
         private FlightController _flightCtr;
         private IReservationDb _reserveDb;
         private ISeatDb _seatDb;
@@ -21,7 +21,7 @@ namespace Unit_Tests
         public ReservationControlTest()
         {
             this._seatDb = new SeatDb();
-            this._reserveCtr = new ReservationController();
+            this._reserveCtr = new Reservation_Controller();
             this._flightCtr = new FlightController();
             this._reserveDb = new ReservationDb();
             this._modelDb = new ModelDb();
@@ -29,7 +29,7 @@ namespace Unit_Tests
             DateTime departure = new DateTime(2019, 1, 12, 14, 0, 0);
             DateTime arrival = new DateTime(2019, 1, 12, 12, 30, 0);
 
-            _modelDb.InsertModel(new Model("reserve_ctr_test", 10));
+            //_modelDb.InsertModel(new Model("reserve_ctr_test", 10));
             this._testFlight = _flightCtr.NewFlight("reserve_ctr_test", departure, arrival);
         }
 
@@ -71,6 +71,32 @@ namespace Unit_Tests
 
             var checkSeat = _seatDb.GetSeatById(seats[0].SeatId);
             Assert.AreEqual(0, checkSeat.BookingNo);
+        }
+
+        [Test]
+        public void ReserveReservedSeats()
+        {
+            var seats = _seatDb.GetSeatByBookingNo(6);
+            var output = _reserveCtr.NewReservation(seats);
+            Assert.AreEqual(0, output);
+        }
+
+        [Test]
+        public void ReserveOneReservedSeatFourAvailable()
+        {
+            var seats = _seatDb.GetSeatByBookingNo(6);
+            decimal deci = (decimal)50.00;
+            seats.Add(new Seat("default", deci, "2.17"));
+            var output = _reserveCtr.NewReservation(seats);
+            Assert.AreEqual(0, output);
+        }
+
+        [Test]
+        public void ReserveZeroSeats()
+        {
+            var seats = new List<Seat>();
+            var output = _reserveCtr.NewReservation(seats);
+            Assert.AreEqual(10, output);
         }
 
         [OneTimeTearDown]
