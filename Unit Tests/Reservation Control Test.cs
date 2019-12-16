@@ -11,7 +11,7 @@ namespace Unit_Tests
     [TestFixture]
     public class ReservationControlTest
     {
-        private Reservation_Controller _reserveCtr;
+        private ReservationController _reserveCtr;
         private FlightController _flightCtr;
         private IReservationDb _reserveDb;
         private ISeatDb _seatDb;
@@ -21,7 +21,7 @@ namespace Unit_Tests
         public ReservationControlTest()
         {
             this._seatDb = new SeatDb();
-            this._reserveCtr = new Reservation_Controller();
+            this._reserveCtr = new ReservationController();
             this._flightCtr = new FlightController();
             this._reserveDb = new ReservationDb();
             this._modelDb = new ModelDb();
