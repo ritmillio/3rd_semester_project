@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="91d87f97-d9d7-474d-b9ef-cf43093ae2fc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ed97c2c2-1f3f-43da-aaed-0a2f3e0f76ff" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -21,13 +21,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="c06b9cf4-25d2-40dc-97ae-b6af20b4c4d7" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="bef123a1-b99c-451a-9cf4-602680c0e4f7" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="f7dd349b-c1cb-4fef-8066-9db53eba25cc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller/mex" />
-    <MetadataFile FileName="AirlineReservations.Model_Layer.xsd" MetadataType="Schema" ID="28186192-1009-47e7-8f7c-f5cb1aa0bc62" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="066c7e14-1313-4098-ac87-c349327d17cc" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="16b981ee-def4-490d-87af-9ff0286eac5f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="5d25b162-a25b-45a3-8b50-621fd6bee6cf" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController/mex" />
+    <MetadataFile FileName="AirlineReservations.Model_Layer.xsd" MetadataType="Schema" ID="bb672cd1-1435-45f1-b99a-48c4466e9234" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

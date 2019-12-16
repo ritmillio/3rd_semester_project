@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="5OJuSqIEWDPYF4hBg3CjdGYLAMk=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="pQsB7vvw7PChEQOzeTnm+7z+vQ4=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsHttpBinding" name="WSHttpBinding_ReservationServiceIF">
       <properties>
@@ -127,10 +127,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSHttpBinding_ReservationServiceIF" contract="ServiceReference2.ReservationServiceIF" bindingType="wsHttpBinding" address="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller" bindingConfiguration="WSHttpBinding_ReservationServiceIF">
+    <endpoint name="WSHttpBinding_ReservationServiceIF" contract="ServiceReference2.ReservationServiceIF" bindingType="wsHttpBinding" address="http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController" bindingConfiguration="WSHttpBinding_ReservationServiceIF">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Reservation_Controller</serializedValue>
+          <serializedValue>http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/ReservationController</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
