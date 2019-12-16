@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{C
 		{3BF36FB6-3370-4DDA-BE02-3F31F5B90671} = {3BF36FB6-3370-4DDA-BE02-3F31F5B90671}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webgu", "webgu\webgu\webgu.csproj", "{F33747B6-4D13-4388-878E-C1AE9EA040C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{CE9C2B67-F9C7-4EE6-91B9-67702E3BC98D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9C2B67-F9C7-4EE6-91B9-67702E3BC98D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9C2B67-F9C7-4EE6-91B9-67702E3BC98D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F33747B6-4D13-4388-878E-C1AE9EA040C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F33747B6-4D13-4388-878E-C1AE9EA040C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F33747B6-4D13-4388-878E-C1AE9EA040C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F33747B6-4D13-4388-878E-C1AE9EA040C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

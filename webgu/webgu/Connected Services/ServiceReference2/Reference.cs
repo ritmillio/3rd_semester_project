@@ -13,7 +13,7 @@ namespace ServiceReference2
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Seat", Namespace="http://schemas.datacontract.org/2004/07/AirlineReservations.Model_Layer")]
     public partial class Seat : object
     {
@@ -94,7 +94,7 @@ namespace ServiceReference2
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SuccessState", Namespace="http://schemas.datacontract.org/2004/07/AirlineReservations.Model_Layer")]
     public enum SuccessState : int
     {
@@ -109,7 +109,7 @@ namespace ServiceReference2
         DbUnreachable = 2,
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference2.ReservationServiceIF")]
     public interface ReservationServiceIF
     {
@@ -127,13 +127,13 @@ namespace ServiceReference2
         System.Threading.Tasks.Task<ServiceReference2.SuccessState> ReleaseReservationAsync(int bookingNo);
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     public interface ReservationServiceIFChannel : ServiceReference2.ReservationServiceIF, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     public partial class ReservationServiceIFClient : System.ServiceModel.ClientBase<ServiceReference2.ReservationServiceIF>, ServiceReference2.ReservationServiceIF
     {
         
@@ -226,7 +226,7 @@ namespace ServiceReference2
             if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ReservationServiceIF))
             {
                 return new System.ServiceModel.EndpointAddress("http://localhost:8733/Design_Time_Addresses/AirlineReservations.Control_Layer/Res" +
-                        "ervation_Controller");
+                        "ervationController");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
