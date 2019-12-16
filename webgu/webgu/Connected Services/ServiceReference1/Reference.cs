@@ -13,7 +13,7 @@ namespace ServiceReference1
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Flight", Namespace="http://schemas.datacontract.org/2004/07/AirlineReservations.Model_Layer")]
     public partial class Flight : object
     {
@@ -109,7 +109,7 @@ namespace ServiceReference1
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SuccessState", Namespace="http://schemas.datacontract.org/2004/07/AirlineReservations.Model_Layer")]
     public enum SuccessState : int
     {
@@ -125,7 +125,7 @@ namespace ServiceReference1
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Seat", Namespace="http://schemas.datacontract.org/2004/07/AirlineReservations.Model_Layer")]
     public partial class Seat : object
     {
@@ -206,7 +206,7 @@ namespace ServiceReference1
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.Flight_ControllerServiceIF")]
     public interface Flight_ControllerServiceIF
     {
@@ -248,13 +248,13 @@ namespace ServiceReference1
         System.Threading.Tasks.Task<System.Collections.Generic.List<ServiceReference1.Seat>> GetAllSeatsAsync(int flight_id);
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     public interface Flight_ControllerServiceIFChannel : ServiceReference1.Flight_ControllerServiceIF, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.1")]
     public partial class Flight_ControllerServiceIFClient : System.ServiceModel.ClientBase<ServiceReference1.Flight_ControllerServiceIF>, ServiceReference1.Flight_ControllerServiceIF
     {
         
