@@ -91,14 +91,6 @@ namespace Unit_Tests
             Assert.AreEqual(0, output);
         }
 
-        [Test]
-        public void ReserveZeroSeats()
-        {
-            var seats = new List<Seat>();
-            var output = _reserveCtr.NewReservation(seats);
-            Assert.AreEqual(10, output);
-        }
-
         [OneTimeTearDown]
         public void Cleanup()
         {
