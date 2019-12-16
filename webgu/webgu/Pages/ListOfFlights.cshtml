@@ -1,0 +1,57 @@
+﻿@page
+@model webgu.Pages.ListOfFlightsModel
+@{
+    ViewData["Title"] = "ListOfFlights";
+}
+
+@{
+    List<ServiceReference1.Flight> flights;
+    flights = Model.GetFlights();
+}
+<div class="text-center">
+    <div class="display-flights">
+        <table>
+            <tr>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>FLight ID</th>
+            </tr>
+            <tr>
+                @foreach (var flight in flights)
+                {
+                <div class="foreach">
+                    <th>@flight.DepartureLocation</th>
+                    <th>@flight.Destination</th>
+                    <th>@flight.DepartureTime</th>
+                    <th>@flight.ArrivalTime</th>
+                    <th>@flight.FlightNo</th>
+                    @using (Html.BeginForm("CheckRadio", "Home", FormMethod.Post))
+                    {
+                        <div>
+                            Select Flight @Html.RadioButton("Select", "select");
+                            <p>@flight.FlightNo</p>
+                        </div>
+                    }
+                    <tr></tr>
+                    </div>
+                 }
+            </tr>
+       </table>
+       <div class="next-button">
+           <a asp-page="seatreservation">Reserve Seat</a>
+       </div>
+   </div>
+</div>
+
+ <script>
+                                function buttonValue() {
+                                    var type = document.getElementsByName("submit");
+                                    for (var i = 0; i < type.length; i++) {
+                                        if (type[i].checked) {
+                                            return type[i];
+                                        }
+                                    }
+                                }
+                            </script>
